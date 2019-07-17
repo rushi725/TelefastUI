@@ -1,0 +1,20 @@
+<div class="card shadow">
+    <div class="card-header">
+        <div>Transfer Task</div>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="transferTaskForm" class="example-form" (ngSubmit)="handleFormSubmit($event)"
+            *ngIf="!isSubmitted">
+            <mat-form-field class="example-full-width">
+                <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl"
+                    [matAutocomplete]="auto" formControlName="teamMember">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of options" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <button class="btn btn-dark">Sumbit</button>
+        </form>
+    </div>
+</div>

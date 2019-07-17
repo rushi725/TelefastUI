@@ -1,0 +1,42 @@
+
+<nav class="navbar navbar-expand-md bg-bar navbar-light shadow">
+    <!-- Brand -->
+    <a class="navbar-brand" routerLink="/dashboard">Telefast</a>
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed"
+    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+            <span class="navbar-toggler-icon"></span>
+    </button>
+     <div class="collapse navbar-collapse" id="collapseExample" [ngbCollapse]="isCollapsed">
+    
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/orderedTasks"><i class="fa fa-briefcase" style="font-size:25px;"></i>&nbsp;Team Manager</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/orderedTask"><i class="fa fa-info-circle" style="font-size:25px;"></i>&nbsp;Team Member</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/orderedServices"><i class="fa fa-cog" style="font-size:25px;"></i>&nbsp;Project Manager</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/serviceManager"><i class="fa fa-cog" style="font-size:25px;"></i>&nbsp;Service Manager
+                </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/workflow"><i class="fa fa-cog" style="font-size:25px;"></i>&nbsp;Work Flow
+                </a>
+        </li>
+        <!-- <li class="nav-item">
+            <button class="btn btn-outline nav-link" data-toggle="modal" data-target="#myModal3"
+                routerLink="/dashboard">
+                <span class="fa fa-plus"></span> Add Task
+            </button>
+        </li> -->
+        <li class="nav-item"><a class="nav-link" href="#" id="profile"><span class="fa fa-user" style="font-size:25px;"></span>&nbsp;Jon Doe</a></li>
+        </ul>
+    </div>
+    </nav>
+      
+
+    

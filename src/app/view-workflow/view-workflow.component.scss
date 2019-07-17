@@ -1,0 +1,81 @@
+.example-tree-progress-bar {
+    margin-left: 65px;
+  }
+  
+  .example-tree-nested-node {
+    padding-left: 65px;
+  }
+  
+  mat-tree {
+    margin-left: 65px;
+  }
+  .mat-tree-node {
+    padding: 10px;
+    background-color:white;
+  }
+  
+  .mat-nested-tree-node {
+    top: -65px;
+  }
+  
+  ul, li { 
+    list-style: none; 
+    margin: 0; 
+    padding: 0;  
+  }
+  
+  li.example-tree-container {
+    border-bottom: 0;
+  }
+  
+  ul { 
+    padding-left: 55px; 
+  }
+  
+  li { 
+    padding-left: 55px;
+    border: 1px solid black;
+    border-width: 0 0 1px 1px; 
+    position: relative;
+    margin-left: 19px;
+    top: -50px;
+  }
+  
+  li.mat-tree-node,
+  li div { 
+    margin: 0;
+    position: relative;
+    top: 50px; 
+  }
+  
+  li ul {
+    border-top: 1px solid black;
+    margin-left: -55px;
+    padding-left: 65px;
+  }
+  
+  .mat-nested-tree-node:last-child ul {
+    border-left: 1px solid white;
+    margin-left: -56px;
+  }
+  
+  .mat-icon-button {
+    z-index: 100;
+  }
+
+  .workflow{
+    padding: 20px;
+    margin-top : 50px;
+  }
+
+  .cards {
+    padding: 50px;
+  }
+
+  .nod {
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border: 1px solid black;
+  }

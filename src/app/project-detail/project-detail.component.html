@@ -1,0 +1,10 @@
+<div class="card">
+    <div class="card-header">
+        <label><h5>{{type}} : </h5></label>
+        <button type="button" class="btn btn-outline-dark mx-2"  (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"><h5>{{value}}</h5></button></div>
+    <div class="card-body"  id="collapseExample" [ngbCollapse]="isCollapsed">
+        <ng-content></ng-content>
+    </div>
+</div>
+

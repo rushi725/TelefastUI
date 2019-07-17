@@ -1,0 +1,23 @@
+<div>
+    <div *ngIf="isSubmitted">Team  Added Successfully</div>
+    <form [formGroup]="teamForm" (ngSubmit)="handleFormSubmit($event)" *ngIf= "!isSubmitted">
+      <div class="form-group">
+        <label>Name:</label>
+        <input (blur)="handleBlur(teamForm.get('name'))" 
+               autofocus class="form-control" 
+               [class.is-invalid]="errors.name" 
+               formControlName="name" />
+        <div class="text-danger">{{errors.name}}</div>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea type="text" class="form-control" formControlName="desc"></textarea>
+      </div>
+      <div class="form-group">
+              <label>Team Manager</label>
+              <textarea type="number" class="form-control" formControlName="manager_id"></textarea>
+            </div>
+      <button class="btn btn-dark">submit</button>
+    </form>
+
+

@@ -1,0 +1,28 @@
+<div>
+    <div *ngIf="isSubmitted">Task  Added Successfully</div>
+    <form [formGroup]="taskForm" (ngSubmit)="handleFormSubmit($event)" *ngIf= "!isSubmitted">
+      <div class="form-group">
+        <label>Name:</label>
+        <input (blur)="handleBlur(taskForm.get('name'))" 
+               autofocus class="form-control" 
+               [class.is-invalid]="errors.name" 
+               formControlName="name"/>
+        <div class="text-danger">{{errors.name}}</div>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea type="text" class="form-control" formControlName="desc"></textarea>
+      </div>
+      <div class="form-group">
+              <label>task Duration</label>
+              <input type="number" class="form-control" formControlName="duration"/>
+        </div>
+        <div class="form-group">
+            <label>Approval Needed</label>
+            <mat-radio-group aria-label="Select an option" formControlName="approval">
+                <mat-radio-button value="true">Yes</mat-radio-button>
+                <mat-radio-button value="false">No</mat-radio-button>
+            </mat-radio-group>
+        </div>
+      <button class="btn btn-dark">submit</button>
+    </form>
