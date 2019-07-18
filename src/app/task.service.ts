@@ -1,64 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  tasks = [
-    {
-      id: 1,
-      name : 'task1',
-      desc : 'desc 1',
-      duration: '12',
-      approval : true,
-    },
-    {
-      id: 1,
-      name : 'task1',
-      desc : 'desc 1',
-      duration: '12',
-      approval : true,
-    },
-    {
-      id: 1,
-      name : 'task1',
-      desc : 'desc 1',
-      duration: '12',
-      approval : true,
-    },
-    {
-      id: 1,
-      name : 'task1',
-      desc : 'desc 1',
-      duration: '12',
-      approval : true,
-    },
-    {
-      id: 1,
-      name : 'task1',
-      desc : 'desc 1',
-      duration: '12',
-      approval : true,
-    }
-  ];
-  constructor() { }
-  orderedTasksStream: Subject<any> = new Subject();
+  constructor(private http: HttpClient) { }
 
+  tasks: Array<any> = [];
   getTaskStream() {
-    return this.orderedTasksStream;
+    const api = 'http://localhost:8082/sfs/tasks';
+    return this.http.get(api);
+
   }
 
   getTasks() {
+    const api = 'http://localhost:8082/sfs/tasks';
+    this.http.get(api).subscribe((e: any) => this.tasks = e);
+    console.log(this.tasks);
     return this.tasks;
   }
 
-  publishStream() {
-    this.orderedTasksStream.next({orderedTasks: this.tasks});
-  }
 
   addTask(task) {
-    this.tasks.push(task);
-    this.publishStream();
+    const api = 'http://localhost:8082/sfs/tasks';
+    this.http.post(api, task).subscribe();
   }
 }

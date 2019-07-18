@@ -12,17 +12,16 @@ export class ServiceFormComponent implements OnInit {
 
   serviceForm: FormGroup;
   errors = {};
-  isSubmitted=false;
+  isSubmitted = false;
 
   constructor(private fb: FormBuilder,
               private router: Router,
-              private route: ActivatedRoute,
               private service: ServiceService) {}
 
   ngOnInit() {
     this.serviceForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      desc: ''
+      description: ''
     });
 
 
@@ -59,7 +58,10 @@ export class ServiceFormComponent implements OnInit {
       const formModel = this.serviceForm.value;
       this.service.addService(formModel);
       console.log(formModel);
-      this.isSubmitted=true;
+      this.isSubmitted = true;
+      this.router.navigate(['/dashboard'], {
+        queryParams: { refresh: new Date().getTime() }
+      });
     } else {
       console.log('invalid form..');
     }

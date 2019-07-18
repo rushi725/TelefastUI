@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TaskService } from '../task.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-form',
@@ -12,15 +13,14 @@ export class TaskFormComponent implements OnInit {
   taskForm: FormGroup;
   errors = {};
 
-  constructor(private fb: FormBuilder,
-    private taskService: TaskService) { }
+  constructor(private fb: FormBuilder, private taskService: TaskService, private router: Router) { }
 
   ngOnInit() {
     this.taskForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      desc: '',
+      description: '',
       duration: [],
-      approval : '',
+      approvalNeeded : '',
     });
     this.isSubmitted = false;
 
@@ -56,6 +56,9 @@ export class TaskFormComponent implements OnInit {
       this.taskService.addTask(formModel);
       console.log(formModel);
       this.isSubmitted = true;
+      this.router.navigate(['/dashboard'], {
+        queryParams: { refresh: new Date().getTime() }
+      });
     } else {
       console.log('invalid form..');
     }

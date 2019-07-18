@@ -10,8 +10,7 @@ export class AppComponent {
   constructor(private router: Router, private route: ActivatedRoute) { }
 
 
-  ngOnInit(){
-    this.router.navigate([{outlets: {primary: 'dashboard'}}], 
-    {relativeTo: this.route});
+  ngOnInit() {
+    this.router.navigate([{outlets: {primary: 'dashboard'}}], {relativeTo: this.route});
   }
 }

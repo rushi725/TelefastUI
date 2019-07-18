@@ -1,56 +1,34 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceService {
 
-  services = [
-    {
-      id: 1,
-      name: 'Service 1',
-      desc: 'desc 1'
-    },
-    {
-      id: 1,
-      name: 'Service 1',
-      desc: 'desc 1'
-    },
-    {
-      id: 1,
-      name: 'Service 1',
-      desc: 'desc 1'
-    },
-    {
-      id: 1,
-      name: 'Service 1',
-      desc: 'desc 1'
-    },
-    {
-      id: 1,
-      name: 'Service 1',
-      desc: 'desc 1'
-    },
-  ];
-  constructor() { }
-  serviceStream: Subject<any> = new Subject();
+  constructor(private http: HttpClient) { }
+
+  services: Array<any> = [];
+
   getServicesStream() {
-    return this.serviceStream;
+    const api = 'http://localhost:8082/sfs/services';
+    return this.http.get(api);
+
   }
 
   getServices() {
+    const api = 'http://localhost:8082/sfs/services';
+    this.http.get(api).subscribe((e: any) => this.services = e);
+    console.log(this.services);
     return this.services;
   }
 
 
   addService(service) {
-    this.services.push(service);
-    this.publishStream();
+    const api = 'http://localhost:8082/sfs/services';
+    this.http.post(api, service).subscribe();
   }
 
-  publishStream() {
-    this.serviceStream.next({services: this.services});
-    console.log(this.services);
-  }
 }
