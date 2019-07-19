@@ -59,9 +59,6 @@ export class ServiceFormComponent implements OnInit {
       this.service.addService(formModel);
       console.log(formModel);
       this.isSubmitted = true;
-      this.router.navigate(['/dashboard'], {
-        queryParams: { refresh: new Date().getTime() }
-      });
     } else {
       console.log('invalid form..');
     }

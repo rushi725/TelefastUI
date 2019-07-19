@@ -3,10 +3,10 @@
         <h3>Change Status </h3>
     </div>
     <div class="card-body">
-        <div class="form">
+        <form [formGroup]="statusForm" (submit)="handleFormSubmit($event)" class="form">
             <mat-form-field>
                 <mat-label>Change Status</mat-label>
-                <mat-select>
+                <mat-select formControlName='status'>
                     <mat-option *ngFor="let status of status" [value]="status.value">
                         {{status.viewValue}}
                     </mat-option>
@@ -15,6 +15,6 @@
             <div class="form-group-lg">
                 <button class="btn btn-dark mr-2">Change Status</button>
             </div>
-        </div>
-    </div>
+        </form>
+</div>
 </div>

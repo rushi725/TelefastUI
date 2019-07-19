@@ -11,12 +11,12 @@ export class TeamService {
 
   teams: Array<any> = [];
   getTeamStream() {
-    const api = 'http://localhost:8082/sfs/teams';
+    const api = 'http://localhost:8081/sfs/teams';
     return this.http.get(api);
   }
 
   getTeams() {
-    const api = 'http://localhost:8082/sfs/teams';
+    const api = 'http://localhost:8081/sfs/teams';
     this.http.get(api).subscribe((e: any) => this.teams = e);
     console.log(this.teams);
     return this.teams;
@@ -24,7 +24,7 @@ export class TeamService {
 
 
   addTeam(team) {
-    const api = 'http://localhost:8082/sfs/teams';
+    const api = 'http://localhost:8081/sfs/teams';
     this.http.post(api, team).subscribe();
   }
 }

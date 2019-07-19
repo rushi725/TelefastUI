@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-ordered-task-detail',
@@ -9,6 +9,8 @@ export class OrderedTaskDetailComponent implements OnInit {
 
   constructor() { }
 
+  // @Input()
+  
   ngOnInit() {
   }
 

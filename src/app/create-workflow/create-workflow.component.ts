@@ -3,18 +3,26 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, Injectable, OnInit } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
+import { TaskService } from '../task.service';
+import { HttpClient } from '@angular/common/http';
+import { TeamService } from '../team.service';
+import { WorkflowService } from '../workflow.service';
 
 /**
  * Node for to-do item
  */
 export class TodoItemNode {
     children: TodoItemNode[];
-    item: string;
+    item: any;
+    prev: number;
+    id: number;
 }
 
 /** Flat to-do item node with expandable and level information */
 export class TodoItemFlatNode {
-    item: string;
+    item: any;
     level: number;
     expandable: boolean;
 }
@@ -22,22 +30,14 @@ export class TodoItemFlatNode {
 /**
  * The Json object for to-do list data.
  */
-const TREE_DATA = {
-    Groceries: {
-        'Almond Meal flour': null,
-        'Organic eggs': null,
-        'Protein Powder': null,
-        Fruits: {
-            Apple: null,
-            Berries: ['Blueberry', 'Raspberry'],
-            Orange: null
-        }
-    },
-    Reminders: [
-        'Cook dinner',
-        'Read the Material Design spec',
-        'Upgrade Application to Angular'
-    ]
+// let tasks = {
+//     taskId: { value: 1, viewValue: 'Task' },
+//     teamId: { value: 2, viewValue: 'Team' }
+// }
+
+let TREE_DATA = {
+    Start: {
+},
 };
 
 /**
@@ -87,15 +87,17 @@ export class ChecklistDatabase {
     }
 
     /** Add an item to to-do list */
-    insertItem(parent: TodoItemNode, name: string) {
+    insertItem(parent: TodoItemNode, name: any, pre: number, id: number) {
         if (parent.children) {
-            parent.children.push({ item: name } as TodoItemNode);
+            parent.children.push({ item: name, children: [], prev: pre ,id: id } as TodoItemNode);
             this.dataChange.next(this.data);
         }
     }
 
-    updateItem(node: TodoItemNode, name: string) {
+    updateItem(node: TodoItemNode, name: any, prev: number, id: number) {
         node.item = name;
+        node.prev = prev;
+        node.id = id;
         this.dataChange.next(this.data);
     }
 }
@@ -105,17 +107,40 @@ export class ChecklistDatabase {
  */
 
 @Component({
-    selector: 'create-workflow',
+    selector: 'app-create-workflow',
     templateUrl: './create-workflow.component.html',
     styleUrls: ['./create-workflow.component.scss'],
     providers: [ChecklistDatabase]
 })
 export class CreateWorkflowComponent implements OnInit {
 
+    constructor(private _database: ChecklistDatabase,
+                private activatedRoute: ActivatedRoute,
+                private fb: FormBuilder,
+                private http: HttpClient,
+                private taskService: TaskService,
+                private teamService: TeamService,
+                private workflowService: WorkflowService) {
+        this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
+            this.isExpandable, this.getChildren);
+        this.treeControl = new FlatTreeControl<TodoItemFlatNode>(this.getLevel, this.isExpandable);
+        this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-    ngOnInit() {
-        
+        _database.dataChange.subscribe(data => {
+            this.dataSource.data = data;
+        });
     }
+    service;
+
+    seqNum = 1;
+
+    flowForm: FormGroup;
+
+    tasks: Array<any> = [];
+
+    teams: Array<any> = [];
+
+
     /** Map from flat node to nested node. This helps us finding the nested node to be modified */
     flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
 
@@ -126,7 +151,9 @@ export class CreateWorkflowComponent implements OnInit {
     selectedParent: TodoItemFlatNode | null = null;
 
     /** The new item's name */
-    newItemName = '';
+    newItemName = null;
+
+    prev = null;
 
     treeControl: FlatTreeControl<TodoItemFlatNode>;
 
@@ -136,16 +163,45 @@ export class CreateWorkflowComponent implements OnInit {
 
     /** The selection for checklist */
     checklistSelection = new SelectionModel<TodoItemFlatNode>(true /* multiple */);
-
-    constructor(private _database: ChecklistDatabase) {
-        this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
-            this.isExpandable, this.getChildren);
-        this.treeControl = new FlatTreeControl<TodoItemFlatNode>(this.getLevel, this.isExpandable);
-        this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
-        _database.dataChange.subscribe(data => {
-            this.dataSource.data = data;
+    ngOnInit() {
+        this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
+            this.service = paramMap.get('service');
         });
+        // this.activatedRoute.paramMap.pipe(map(() => window.history.state);
+        this.service = window.history.state.service;
+        this.taskService.getTaskStream().subscribe((e: any) => this.tasks = e);
+        this.teamService.getTeamStream().subscribe((e: any) => this.teams = e);
+        console.log(this.tasks);
+        console.log(this.teams);
+        this.flowForm = this.fb.group({
+            task: ['', [Validators.required]],
+            team: ['', [Validators.required]],
+            seqNumber: this.seqNum,
+            nextTasks: null,
+            service: null
+        });
+
+        const taskControl = this.flowForm.get('task');
+        taskControl.valueChanges
+            .subscribe(e => {
+                console.log(e);
+            });
+    }
+
+    handleFormSubmit(event, node) {
+        if (this.flowForm.valid) {
+            let formModel = this.flowForm.value;
+            formModel.nextTasks = this.prev.id;
+            this.seqNum++;
+            formModel.seqNumber = this.seqNum;
+            formModel.service = this.service;
+            console.log(formModel);
+            this.workflowService.addWorkFlow(formModel);
+            this.saveNode(node, this.flowForm.value.task.name, this.prev.id, this.flowForm.value.task.id);
+            this.tasks.splice(this.tasks.findIndex(e => e === this.flowForm.value.task), 1);
+        } else {
+            console.log('invalid form..');
+        }
     }
 
     getLevel = (node: TodoItemFlatNode) => node.level;
@@ -257,14 +313,16 @@ export class CreateWorkflowComponent implements OnInit {
     /** Select the category so we can insert the new item. */
     addNewItem(node: TodoItemFlatNode) {
         const parentNode = this.flatNodeMap.get(node);
-        this._database.insertItem(parentNode!, '');
+        this.prev = parentNode;
+        console.log(parentNode);
+        this._database.insertItem(parentNode!, '', null, null);
         this.treeControl.expand(node);
     }
 
     /** Save the node to database */
-    saveNode(node: TodoItemFlatNode, itemValue: string) {
+    saveNode(node: TodoItemFlatNode, itemValue: any, prev: number, id: number) {
         const nestedNode = this.flatNodeMap.get(node);
-        this._database.updateItem(nestedNode!, itemValue);
+        this._database.updateItem(nestedNode!, itemValue, prev, id);
     }
 }
 

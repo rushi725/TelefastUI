@@ -10,13 +10,13 @@ export class TaskService {
 
   tasks: Array<any> = [];
   getTaskStream() {
-    const api = 'http://localhost:8082/sfs/tasks';
+    const api = 'http://localhost:8081/sfs/tasks';
     return this.http.get(api);
 
   }
 
   getTasks() {
-    const api = 'http://localhost:8082/sfs/tasks';
+    const api = 'http://localhost:8081/sfs/tasks';
     this.http.get(api).subscribe((e: any) => this.tasks = e);
     console.log(this.tasks);
     return this.tasks;
@@ -24,7 +24,7 @@ export class TaskService {
 
 
   addTask(task) {
-    const api = 'http://localhost:8082/sfs/tasks';
+    const api = 'http://localhost:8081/sfs/tasks';
     this.http.post(api, task).subscribe();
   }
 }

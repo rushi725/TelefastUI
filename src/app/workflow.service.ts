@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Task } from './task.model';
 import { Employee } from './employee.model';
 import { Team } from './team.model';
 import { toUnicode } from 'punycode';
+import { HttpClient } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +19,22 @@ export class TaskNode {
   }
 }
 
-export class WorkflowService {
+export class WorkflowService implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   workFlowStream: Subject<any> = new Subject();
 
+  ngOnInit() {
+    // const api = 'http://localhost:8081/sfs/serviceWorkFlow';
+    // this.http.get(api).subscribe((e: any) => this.workFlow = e);
+
+    // const api2 = 'http://localhost:8081/sfs/orderedTask';
+    // this.http.get(api2).subscribe((e: any) => this.orderedTasks = e);
+  }
+
+  // orderedTasks = [];
+  // tslint:disable-next-line: member-ordering
   workFlow = [
     {
       id : 1,
@@ -61,6 +73,7 @@ export class WorkflowService {
       prev : 3
     },
   ];
+  // tslint:disable-next-line: member-ordering
   orderedTasks = [
     {
         id: 1,
@@ -120,6 +133,11 @@ export class WorkflowService {
   getWorkFlow() {
     this.createWorkflow();
     return this.taskWorkflow;
+  }
+
+  addWorkFlow(workflow) {
+    const api = 'http://localhost:8081/sfs/serviceWorkFlow';
+    this.http.post(api, workflow).subscribe(e => console.log(e));
   }
 
   publishStream() {
