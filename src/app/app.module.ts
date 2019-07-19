@@ -40,7 +40,9 @@ import { ServiceManagerComponent } from './service-manager/service-manager.compo
 import { TransferTaskFormComponent } from './transfer-task-form/transfer-task-form.component';
 import { ViewWorkflowComponent } from './view-workflow/view-workflow.component';
 import { WorkflowService } from './workflow.service';
-
+import { LoginFormComponent } from './login-form/login-form.component';
+import {HttpClientModule} from '@angular/common/http';
+import { EmployeeComponent } from './employee/employee.component';
 const routes: Routes = [
   // { path: '', component: NavbarComponent},
   { path: 'dashboard', component: ServiceListComponent},
@@ -51,7 +53,9 @@ const routes: Routes = [
   {path : 'orderedTask', component: TaskStatusComponent},
   {path : 'orderedServices', component: ProjectManagerComponent},
   {path : 'serviceManager', component: ServiceManagerComponent},
-  {path : 'workflow', component: ViewWorkflowComponent}
+  {path : 'workflow', component: ViewWorkflowComponent},
+  { path: 'login', component: LoginFormComponent },
+  { path: 'employee', component: EmployeeComponent}
 ];
 
 @NgModule({
@@ -76,11 +80,14 @@ const routes: Routes = [
     ProjectManagerComponent,
     ServiceManagerComponent,
     TransferTaskFormComponent,
-    ViewWorkflowComponent
+    ViewWorkflowComponent,
+    LoginFormComponent,
+    EmployeeComponent
     
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     ScrollingModule,
     ReactiveFormsModule,

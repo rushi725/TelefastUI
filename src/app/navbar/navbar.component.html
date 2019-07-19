@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-md bg-bar navbar-light shadow">
     <!-- Brand -->
-    <a class="navbar-brand" routerLink="/dashboard">Telefast</a>
+    <a class="navbar-brand"   routerLink="/dashboard">Telefast</a>
     <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed"
     [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
             <span class="navbar-toggler-icon"></span>
@@ -11,20 +11,28 @@
     <!-- Links -->
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" routerLink="/orderedTasks"><i class="fa fa-briefcase" style="font-size:25px;"></i>&nbsp;Team Manager</a>
+            <a class="nav-link" *ngIf="role==='ROLE_TEAM_MANAGER'" routerLink="/orderedTasks"><i class="fa fa-briefcase" style="font-size:25px;"></i>&nbsp;Team Manager</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="/orderedTask"><i class="fa fa-info-circle" style="font-size:25px;"></i>&nbsp;Team Member</a>
+            <a class="nav-link" *ngIf="role==='ROLE_TEAM_MEMBER'" routerLink="/orderedTask"><i class="fa fa-info-circle" style="font-size:25px;"></i>&nbsp;Team Member</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="/orderedServices"><i class="fa fa-cog" style="font-size:25px;"></i>&nbsp;Project Manager</a>
+            <a class="nav-link" *ngIf="role==='ROLE_PROJECT_MANAGER'" routerLink="/orderedServices"><i class="fa fa-cog" style="font-size:25px;"></i>&nbsp;Project Manager</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="/serviceManager"><i class="fa fa-cog" style="font-size:25px;"></i>&nbsp;Service Manager
+            <a class="nav-link" *ngIf="role==='ROLE_SERVICE_MANAGER'" routerLink="/serviceManager"><i class="fa fa-cog" style="font-size:25px;"></i>&nbsp;Service Manager
                 </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="/workflow"><i class="fa fa-cog" style="font-size:25px;"></i>&nbsp;Work Flow
+            <a class="nav-link" *ngIf="role==='ROLE_PRODUCT_MANAGER'" routerLink="/workflow"><i class="fa fa-cog" style="font-size:25px;"></i>&nbsp;Work Flow
+                </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" *ngIf="!user" routerLink="/login"><i class="fa fa-cog" style="font-size:25px;"></i>&nbsp;login
+                </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" *ngIf="user" (click)="handleLogout($event)" routerLink="/login"><i class="fa fa-cog" style="font-size:25px;"></i>&nbsp;logout
                 </a>
         </li>
         <!-- <li class="nav-item">
@@ -33,7 +41,7 @@
                 <span class="fa fa-plus"></span> Add Task
             </button>
         </li> -->
-        <li class="nav-item"><a class="nav-link" href="#" id="profile"><span class="fa fa-user" style="font-size:25px;"></span>&nbsp;Jon Doe</a></li>
+        <li class="nav-item"><a class="nav-link" *ngIf="user" href="#" id="profile"><span class="fa fa-user" style="font-size:25px;"></span>&nbsp;{{user}}</a></li>
         </ul>
     </div>
     </nav>
