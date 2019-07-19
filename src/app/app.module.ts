@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ScrollingModule} from '@angular/cdk/scrolling';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { RouterModule, Routes } from '@angular/router';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import {MatTreeModule} from '@angular/material/tree';
@@ -14,6 +14,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+
+
+
+
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -31,8 +35,8 @@ import { StatusChangeComponent } from './status-change/status-change.component';
 import { TaskStatusComponent } from './task-status/task-status.component';
 import { OrderedServiceListComponent } from './ordered-service-list/ordered-service-list.component';
 import { TaskFormComponent } from './task-form/task-form.component';
-import {MatSelectModule} from '@angular/material/select';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
 import { ProductManagerComponent } from './product-manager/product-manager.component';
 import { ProjectManagerComponent } from './project-manager/project-manager.component';
@@ -43,9 +47,14 @@ import { WorkflowService } from './workflow.service';
 import { LoginFormComponent } from './login-form/login-form.component';
 import {HttpClientModule} from '@angular/common/http';
 import { EmployeeComponent } from './employee/employee.component';
+import { ProjectFormComponent } from './project-form/project-form.component';
+import { CustomerFormComponent } from './customer-form/customer-form.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { CreateWorkflowComponent } from './create-workflow/create-workflow.component';
+
 const routes: Routes = [
   // { path: '', component: NavbarComponent},
-  { path: 'dashboard', component: ServiceListComponent},
+  { path: 'dashboard', component: ServiceListComponent },
   // { path:'dashboard',outlet:"addService",component:ServiceFormComponent},
   // { path:'dashboard',outlet:"addTeam",component:TeamFormComponent},
   { path: 'dashboard', component: TeamListComponent},
@@ -82,8 +91,10 @@ const routes: Routes = [
     TransferTaskFormComponent,
     ViewWorkflowComponent,
     LoginFormComponent,
-    EmployeeComponent
-    
+    EmployeeComponent,
+    ProjectFormComponent,
+    CustomerFormComponent,
+    CreateWorkflowComponent
   ],
   imports: [
     BrowserModule,
@@ -104,7 +115,8 @@ const routes: Routes = [
     MatIconModule,
     MatButtonModule,
     MatBottomSheetModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    HttpClientModule
   ],
   providers: [WorkflowService],
   bootstrap: [AppComponent]

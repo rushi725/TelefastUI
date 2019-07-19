@@ -65,7 +65,7 @@
 
   .workflow{
     padding: 20px;
-    margin-top : 50px;
+    margin-top : 20px;
   }
 
   .cards {
@@ -75,6 +75,14 @@
   .nod {
     padding-left: 40px;
     padding-right: 40px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border: 1px solid black;
+  }
+
+  .nod-status {
+    padding-left: 15px;
+    padding-right: 15px;
     padding-top: 30px;
     padding-bottom: 30px;
     border: 1px solid black;

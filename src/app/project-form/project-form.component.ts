@@ -1,26 +1,52 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { TaskService } from '../task.service';
-import { Router } from '@angular/router';
+import { CustomerService } from '../customer.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+
 
 @Component({
-  selector: 'app-task-form',
-  templateUrl: './task-form.component.html',
-  styleUrls: ['./task-form.component.scss']
+  selector: 'app-project-form',
+  templateUrl: './project-form.component.html',
+  styleUrls: ['./project-form.component.scss']
 })
-export class TaskFormComponent implements OnInit {
+export class ProjectFormComponent implements OnInit {
+  
+  myControl = new FormControl();
+
+  cid = this.myControl.value;
   isSubmitted = false;
   taskForm: FormGroup;
+  customerOptions: Array<any> = [];
+
   errors = {};
 
-  constructor(private fb: FormBuilder, private taskService: TaskService, private router: Router) { }
+  constructor(private fb: FormBuilder,
+    private taskService: TaskService,
+    private customeService:CustomerService,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+
+     this.activatedRoute.queryParamMap.subscribe((paramMap:ParamMap)=>{
+      const refresh = paramMap.get('refresh');
+      if(refresh) {
+        this.customerOptions = this.customeService.getCustomerList();
+      }
+    })
+    this.customeService.getCustomers();
+
+    this.customeService.getCustomerStream()
+    .subscribe((e:any)=>{
+      this.customerOptions=e;
+    })
+
     this.taskForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      description: '',
-      duration: [],
-      approvalNeeded : '',
+      // desc: '',
+      id:'',
+      startDate:'',
+      deliveryDate:''
     });
     this.isSubmitted = false;
 
@@ -29,6 +55,8 @@ export class TaskFormComponent implements OnInit {
       .subscribe(e => {
          //console.log(e)
       });
+
+
 
     nameControl.statusChanges
       .subscribe(e => {
@@ -47,6 +75,12 @@ export class TaskFormComponent implements OnInit {
 
 
   }
+
+
+  setId(customer) {
+    this.taskForm.get("id").patchValue(customer.firstName);
+   }
+
   handleBlur(control) {
     control.setValue(control.value);
   }
@@ -54,11 +88,7 @@ export class TaskFormComponent implements OnInit {
     if (this.taskForm.valid) {
       const formModel = this.taskForm.value;
       this.taskService.addTask(formModel);
-      console.log(formModel);
       this.isSubmitted = true;
-      this.router.navigate(['/dashboard'], {
-        queryParams: { refresh: new Date().getTime() }
-      });
     } else {
       console.log('invalid form..');
     }

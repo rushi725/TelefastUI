@@ -1,61 +1,31 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderedTaskService {
-  orderedTasks = [
-    {
-      id: 1,
-      taskName : 'task1',
-      teamMember : 'Member 1',
-      status : 'InProgress',
-      approved : false,
-      date : '06/06/2019'
-    },
-    {
-      id: 1,
-      taskName : 'task2',
-      teamMember : 'Member 2',
-      status : 'Pending',
-      approved : false,
-      date : '06/06/2019'
-    },
-    {
-      id: 1,
-      taskName : 'task3',
-      teamMember : 'Member 3',
-      status : 'NotStarted',
-      approved : false,
-      date : '06/06/2019'
-    },
-    {
-      id: 1,
-      taskName : 'task4',
-      teamMember : 'Member 4',
-      status : 'Cancelled',
-      approved : false,
-      date : '06/06/2019'
-    },
-    {
-      id: 1,
-      taskName : 'task5',
-      teamMember : 'Member 5',
-      status : 'Completed',
-      approved : false,
-      date : '06/06/2019'
-    }
-  ];
-  constructor() { }
+  
+  orderedTasks:any=[];
+
+  constructor(private _http:HttpClient) { }
   orderedTasksStream: Subject<any> = new Subject();
 
   getStream() {
     return this.orderedTasksStream;
   }
 
-  getOrderedTasks() {
-    return this.orderedTasks;
+  getOrderedTasksByTeamManager(id) {
+    console.log("in getOrderedTask()")
+    let apiUrl=`http://localhost:8081/sfs/orderedTask/teamManager/${id}`;
+    return this._http.get(apiUrl);
+  }
+
+  getOrderedTaskInfoByEmployeeId(id){
+    console.log("in getOrderedTaskByEmployeeId()")
+    let apiUrl=`http://localhost:8081/sfs/orderedTask/employee/${id}`;
+    return this._http.get(apiUrl);
   }
 
   publishStream() {

@@ -1,0 +1,30 @@
+<div>
+    <div *ngIf="isSubmitted">Customer Added Successfully</div>
+    <form [formGroup]="taskForm" (ngSubmit)="handleFormSubmit($event)" *ngIf= "!isSubmitted">
+      <div class="form-group">
+        <label>First Name:</label>
+        <input (blur)="handleBlur(taskForm.get('firstName'))" 
+               autofocus class="form-control" 
+               [class.is-invalid]="errors.name" 
+               formControlName="firstName"/>
+        <div class="text-danger">{{errors.name}}</div>
+      </div>
+      <div class="form-group">
+        <label>Last Name:</label>
+        <input (blur)="handleBlur(taskForm.get('lastName'))" 
+               autofocus class="form-control" 
+               [class.is-invalid]="errors.name" 
+               formControlName="lastName"/>
+        <div class="text-danger">{{errors.name}}</div>
+      </div>
+      <div class="form-group">
+        <label>Address</label>
+        <textarea type="text" class="form-control" formControlName="address"></textarea>
+      </div>
+      <div class="form-group">
+              <label>Contact-No</label>
+              <input type="text" class="form-control" formControlName="contactNo"/>
+        </div>
+        
+      <button class="btn btn-dark">submit</button>
+    </form>
