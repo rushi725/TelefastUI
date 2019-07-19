@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../task.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ParamMap, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-task-list',
@@ -8,17 +9,25 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./task-list.component.scss']
 })
 export class TaskListComponent implements OnInit {
-  constructor(private taskService: TaskService, private modalService: NgbModal) { }
-  isCollapsed = false;
+  constructor(private service: TaskService, private modalService: NgbModal, private activatedRoute: ActivatedRoute) { }
   tasks = [];
-
+  isCollapsed = false;
   closeResult: string;
 
   ngOnInit() {
-    this.tasks = this.taskService.getTasks();
-    this.taskService.getTaskStream().subscribe(e => {
-      this.tasks.concat(e);
-    })
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
+      const refresh = paramMap.get('refresh');
+      if (refresh) {
+        this.service.getTaskStream().subscribe((e: any) => {
+          this.tasks = e;
+        });
+      }
+    });
+
+    this.service.getTaskStream().subscribe((e: any) => {
+      this.tasks = e;
+    });
+
   }
   open(content) {
     console.log('Modal open');
@@ -38,6 +47,5 @@ export class TaskListComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
 
 }

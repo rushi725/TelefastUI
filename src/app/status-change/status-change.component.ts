@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 export interface Status {
   value: string;
@@ -12,8 +13,10 @@ export interface Status {
 })
 export class StatusChangeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
+  // @Input()
+  statusForm: FormGroup;
   status: Status[] = [
     { value: 'PENDING', viewValue: 'Pending' },
     { value: 'COMPLETED', viewValue: 'Completed' },
@@ -21,6 +24,22 @@ export class StatusChangeComponent implements OnInit {
   ];
 
   ngOnInit() {
+    this.statusForm = this.fb.group({
+      status: ['']
+    });
+
+
+
+    const statusControl = this.statusForm.get('status');
+    statusControl.valueChanges
+      .subscribe(e => {
+        console.log(e);
+      });
+
   }
 
+  handleFormSubmit(event) {
+      const formModel = this.statusForm.value;
+      console.log(formModel);
+  }
 }

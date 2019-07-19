@@ -23,7 +23,7 @@ export class OrderedTaskService {
   }
 
   getOrderedTaskInfoByEmployeeId(id){
-    console.log("in  getOrderedTaskByEmployeeId()")
+    console.log("in getOrderedTaskByEmployeeId()")
     let apiUrl=`http://localhost:8081/sfs/orderedTask/employee/${id}`;
     return this._http.get(apiUrl);
   }

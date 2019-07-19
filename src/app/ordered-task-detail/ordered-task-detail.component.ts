@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { OrderedTaskService } from '../ordered-task.service';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-ordered-task-detail',
@@ -12,7 +12,7 @@ export class OrderedTaskDetailComponent implements OnInit {
   employeeId=5;
 
   constructor(private orderedTaskService:OrderedTaskService) { }
-
+  
   ngOnInit() {
     this.orderedTaskService.getOrderedTaskInfoByEmployeeId(this.employeeId)
     .subscribe((response:any)=>{

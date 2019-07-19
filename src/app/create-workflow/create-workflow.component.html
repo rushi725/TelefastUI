@@ -1,0 +1,52 @@
+<h4>Design Service Workflow for service</h4>
+<hr />
+<div class="card shadow">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding class="nody">
+            <button mat-icon-button disabled></button>
+            <div class="checklist-leaf-node shadow" (change)="todoLeafItemSelectionToggle(node)" class="tnode">{{node.item}}
+            </div>
+        </mat-tree-node>
+
+        <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding class="nody">
+            <button mat-icon-button disabled></button>
+            <form [formGroup]="flowForm" (submit)="handleFormSubmit($event,node)" class="form-inline">
+                <mat-form-field class="formGroup">
+                    <mat-select formControlName='task' placeholder="Enter Task">
+                        <mat-option *ngFor="let tsk of tasks" [value]="tsk">
+                            {{tsk.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="formGroup"> 
+                    <mat-label>Assign Team</mat-label>
+                    <mat-select formControlName='team'>
+                        <mat-option *ngFor="let tam of teams" [value]="tam">
+                            {{tam.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="form-group-lg formGroup py-1">
+                    <button class="btn btn-dark mr-2">Submit</button>
+                </div>
+            </form>
+        </mat-tree-node>
+
+        <mat-tree-node class="nody" *matTreeNodeDef="let node; when: hasChild;" matTreeNodePadding>
+            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+                <mat-icon class="mat-icon-rtl-mirror">
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                </mat-icon>
+            </button>
+            <div (change)="todoItemSelectionToggle(node)" class="tnode shadow">{{node.item}}</div>
+            <button mat-icon-button (click)="addNewItem(node)">
+                <mat-icon>add</mat-icon>
+            </button>
+        </mat-tree-node>
+    </mat-tree>
+</div>
+
+
+<!-- Copyright 2019 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

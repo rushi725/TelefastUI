@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TeamService } from '../team.service';
-import { NgbModal,ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-team-list',
@@ -9,20 +9,28 @@ import { NgbModal,ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class TeamListComponent implements OnInit {
 
-  constructor(private teamService: TeamService,private modalService: NgbModal) { }
-  isCollapsed = false; 
+  constructor(private teamService: TeamService, private modalService: NgbModal) { }
+  isCollapsed = false;
   teams = [];
-  ngOnInit() {
 
-    this.teams = this.teamService.getTeams();
-    this.teamService.getTeamStream().subscribe((e) => {
-        this.teams.concat(e);
+  closeResult: string;
+
+
+  // ngDoCheck() {
+
+  //   this.teamService.getTeamStream().subscribe((e: any) => {
+  //     this.teams = e;
+  //   });
+  // }
+
+  ngOnInit() {
+    this.teamService.getTeamStream().subscribe((e: any) => {
+        this.teams = e ;
     });
   }
 
-  closeResult: string;
   open(content) {
-    console.log("Modal open")
+    console.log('Modal open');
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
