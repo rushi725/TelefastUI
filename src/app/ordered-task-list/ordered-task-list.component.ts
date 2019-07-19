@@ -11,14 +11,23 @@ export class OrderedTaskListComponent implements OnInit {
 
   constructor(private orderedTaskservice: OrderedTaskService, private modalService: NgbModal ) { }
 
-  orderedTasks = [];
+  teamManagerId=14;
+  orderedTasks:Array<any> = [];
   isClicked=false;
 
   ngOnInit() {
 
-    this.orderedTasks = this.orderedTaskservice.getOrderedTasks();
+    this.orderedTaskservice.getOrderedTasksByTeamManager(this.teamManagerId)
+    .subscribe((response:any)=>{
+      this.orderedTasks = response;
+      
+    console.log("in subscribe()");
+    console.log(this.orderedTasks);
+    })
+
+
     this.orderedTaskservice.getStream().subscribe(e =>
-      this.orderedTasks.concat(e));
+    this.orderedTasks.concat(e));
   }
 
   transferTask() {

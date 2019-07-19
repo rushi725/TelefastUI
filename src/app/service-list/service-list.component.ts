@@ -20,6 +20,7 @@ services = [];
     })
 
   }
+  
   closeResult: string;
   open(content) {
     console.log("Modal open")

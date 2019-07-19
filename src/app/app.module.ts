@@ -14,6 +14,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { HttpClientModule } from '@angular/common/http';
+
+
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -40,6 +43,9 @@ import { ServiceManagerComponent } from './service-manager/service-manager.compo
 import { TransferTaskFormComponent } from './transfer-task-form/transfer-task-form.component';
 import { ViewWorkflowComponent } from './view-workflow/view-workflow.component';
 import { WorkflowService } from './workflow.service';
+import { ProjectFormComponent } from './project-form/project-form.component';
+import { CustomerFormComponent } from './customer-form/customer-form.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 const routes: Routes = [
   // { path: '', component: NavbarComponent},
@@ -76,7 +82,9 @@ const routes: Routes = [
     ProjectManagerComponent,
     ServiceManagerComponent,
     TransferTaskFormComponent,
-    ViewWorkflowComponent
+    ViewWorkflowComponent,
+    ProjectFormComponent,
+    CustomerFormComponent
     
   ],
   imports: [
@@ -97,9 +105,12 @@ const routes: Routes = [
     MatIconModule,
     MatButtonModule,
     MatBottomSheetModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    HttpClientModule
   ],
-  providers: [WorkflowService],
+  providers: [
+    WorkflowService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -14,19 +14,19 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let task of orderedTasks" class="shadow-sm mx-2">
-                <td>{{task.taskName}}</td>
+            <tr *ngFor="let orderedTask of orderedTasks" class="shadow-sm mx-2">
+                <td>{{orderedTask.task.name}}</td>
                 <td><span [ngClass]="{'bg bg-info':true, 'rounded-lg':true, 'border border-dark':true, 'p-2':true,
-                    'bg bg-success':task.status==='Completed',
-                               'bg bg-danger':task.status==='Cancelled',
-                               'bg bg-warning':task.status==='Pending',
-                               'bg bg-info':task.status==='InProgress',
-                            'bg bg-secondary':task.status=='NotStarted'}
-                            ">{{task.status}}</span></td>
-                <td>{{task.teamMember}}</td>
+                    'bg bg-success':orderedTask.taskStatus==='Completed',
+                               'bg bg-danger':orderedTask.taskStatus==='Cancelled',
+                               'bg bg-warning':orderedTask.taskStatus==='Pending',
+                               'bg bg-info':orderedTask.taskStatus==='InProgress',
+                            'bg bg-secondary':orderedTask.taskStatus=='NotStarted'}
+                            ">{{orderedTask.taskStatus}}</span></td>
+                <td>{{orderedTask.employee.firstName}}</td>
                 <td><button class="btn btn-outline-dark"><i class="fa fa-envelope" style="font-size: 26px"></i></button></td>
                 <td><button class="btn btn-outline-dark"  (click)="transferTask()"><i class="fa fa-share-square" style="font-size: 26px"></i></button></td>
-                <td *ngIf="task.status!=='Cancelled'"><button class="btn btn-outline-danger"><i class="fa fa-close" style="font-size: 26px"></i></button></td>
+                <td *ngIf="orderedTask.taskStatus!=='Cancelled'"><button class="btn btn-outline-danger"><i class="fa fa-close" style="font-size: 26px"></i></button></td>
             </tr>
         </tbody>
     </table>

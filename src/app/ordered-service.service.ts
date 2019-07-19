@@ -1,85 +1,45 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderedServiceService {
+  orderServiceStream: Subject<any> = new Subject();
+  orderedServices:any=[];
 
-  constructor() { }
+  constructor(private _http:HttpClient) { }
 
-  orderedServices = [
-    {
-      id : 1,
-      serviceName : 'Service 1',
-      projectName : 'Project 2',
-      serviceManager : 'Manager 1',
-      installationAddress : 'Address 1',
-      status : 'InProgress',
-      progress : 70,
-      date : '04/03/2018'
-    },
-    {
-      id : 2,
-      serviceName : 'Service 2',
-      projectName : 'Project 3',
-      serviceManager : 'Manager 2',
-      installationAddress : 'Address 1',
-      status : 'Completed',
-      progress : 100,
-      date : '04/03/2018'
-    },
-    {
-      id : 3,
-      serviceName : 'Service 3',
-      projectName : 'Project 1',
-      serviceManager : 'Manager 2',
-      installationAddress : 'Address 1',
-      status : 'Pending',
-      progress : 60,
-      date : '04/03/2018'
-    },
-    {
-      id : 4,
-      serviceName : 'Service 5',
-      projectName : 'Project 1',
-      serviceManager : 'Manager 1',
-      installationAddress : 'Address 1',
-      status : 'Not Started',
-      progress : 0,
-      date : '04/03/2018'
-    },
-    {
-      id : 5,
-      serviceName : 'Service 1',
-      projectName : 'Project 2',
-      serviceManager : 'Manager 1',
-      installationAddress : 'Address 1',
-      status : 'InProgress',
-      progress : 90,
-      date : '04/03/2018'
-    }
-  ];
-
-  stream: Subject<any> = new Subject();
-
-  getStream() {
+  getorderServiceStream() {
     this.publishStream();
-    return this.stream;
+    return this.orderServiceStream;
   }
 
-  getOrderedServices() {
+  getOrderedServiceList() {
     return this.orderedServices;
+  }
+
+  getOrderedService(){
+    let apiUrl="http://localhost:8081/sfs/orderedServices";
+    this._http.get(apiUrl)
+    .subscribe(e=>{
+      this.orderedServices = e;
+    })
+    this.publishStream();
   }
 
 
 
   addOrderedServices(service) {
-      this.orderedServices.push(service);
+    let apiUrl="http://localhost:8081/sfs/orderedServices";
+    this._http.post(apiUrl,service)
+    .subscribe(e=>{
       this.publishStream();
+    })    
   }
 
   publishStream() {
-    this.stream.next(e => {orderedServices: this.orderedServices; });
+    this.orderServiceStream.next(e => {orderedServices: this.orderedServices; });
   }
 }
