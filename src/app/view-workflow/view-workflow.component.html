@@ -9,10 +9,10 @@
           <div class="mat-tree-node">
             <h6 class="nod shadow">{{node.task.task.name}}</h6>
             <span>
-              <h6 class="nod-status shadow bg bg-success">In Progress</h6>
+              <h6 class="nod-status shadow bg bg-success">{{node.task.taskStatus}}</h6>
             </span>
             <span>
-              <h6 class="nod-status shadow">Team Member 1</h6>
+              <h6 class="nod-status shadow" *ngIf = "node.task.employee">{{node.task.employee}}</h6>
             </span>
           </div>
         </li>
@@ -27,10 +27,10 @@
             </button>
             <h6 class="nod shadow">{{node.task.task.name}}</h6>
             <span>
-              <h6 class="nod-status shadow bg bg-secondary">Not Started</h6>
+              <h6 class="nod-status shadow bg bg-secondary">{{node.task.taskStatus}}</h6>
             </span>
             <span>
-              <h6 class="nod-status shadow">Team Member 1</h6>
+              <h6 class="nod-status shadow" *ngIf = "node.task.employee">{{node.task.employee}}</h6>
             </span>
 
           </div>

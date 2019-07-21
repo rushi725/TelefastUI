@@ -48,6 +48,8 @@ import { ProjectFormComponent } from './project-form/project-form.component';
 import { CustomerFormComponent } from './customer-form/customer-form.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CreateWorkflowComponent } from './create-workflow/create-workflow.component';
+import { OrderedServiceFormComponent } from './ordered-service-form/ordered-service-form.component';
+import { WorkflowResolverService } from './workflow-resolver.service';
 
 const routes: Routes = [
   // { path: '', component: NavbarComponent},
@@ -59,7 +61,12 @@ const routes: Routes = [
   { path: 'orderedTask', component: TaskStatusComponent },
   { path: 'orderedServices', component: ProjectManagerComponent },
   { path: 'serviceManager', component: ServiceManagerComponent },
-  { path: 'workflow', component: ViewWorkflowComponent },
+  { path: 'workflow',
+    component: ViewWorkflowComponent,
+    resolve: {
+      taskWorkflow: WorkflowResolverService
+    }
+  },
   { path: 'cworkflow', component: CreateWorkflowComponent }
 ];
 
@@ -88,7 +95,8 @@ const routes: Routes = [
     ViewWorkflowComponent,
     ProjectFormComponent,
     CustomerFormComponent,
-    CreateWorkflowComponent
+    CreateWorkflowComponent,
+    OrderedServiceFormComponent
   ],
   imports: [
     BrowserModule,

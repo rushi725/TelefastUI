@@ -14,7 +14,7 @@ export class ServiceManagerComponent implements OnInit {
 
 
   ngOnInit() {
-    this.orderedServices = this.service.getOrderedServiceList();
-    this.service.getorderServiceStream().subscribe(e => this.orderedServices.concat(e));
+    this.service.getOrderedService().subscribe((e: any) => this.orderedServices = e);
+    this.service.getorderServiceStream().subscribe(e => this.orderedServices = e.orderedServices);
   }
 }

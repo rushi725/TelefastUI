@@ -7,39 +7,45 @@ import { HttpClient } from '@angular/common/http';
 })
 export class OrderedServiceService {
   orderServiceStream: Subject<any> = new Subject();
-  orderedServices:any=[];
+  orderedServices: any = [];
 
-  constructor(private _http:HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   getorderServiceStream() {
-    this.publishStream();
     return this.orderServiceStream;
   }
 
-  getOrderedServiceList() {
-    return this.orderedServices;
-  }
+  // getOrderedServiceList() {
+  //   return this.orderedServices;
+  // }
 
-  getOrderedService(){
-    let apiUrl="http://localhost:8081/sfs/orderedServices";
-    this._http.get(apiUrl)
-    .subscribe(e=>{
-      this.orderedServices = e;
-    })
-    this.publishStream();
-  }
+  // getOrderedService() {
+  //   const apiUrl = 'http://localhost:8081/sfs/orderedServices';
+  //   this._http.get(apiUrl)
+  //   .subscribe(e => {
+  //     this.orderedServices = e;
+  //   });
+  //   this.publishStream();
+  // }
 
 
 
   addOrderedServices(service) {
-    let apiUrl="http://localhost:8081/sfs/orderedServices";
-    this._http.post(apiUrl,service)
-    .subscribe(e=>{
-      this.publishStream();
-    })    
+    const apiUrl = 'http://localhost:8081/sfs/orderedServices';
+    this._http.post(apiUrl, service)
+    .subscribe(e => {
+      this.orderedServices.push(e);
+      this.orderServiceStream.next({orderedServices: this.orderedServices});
+    });
   }
 
-  publishStream() {
-    this.orderServiceStream.next(e => {orderedServices: this.orderedServices; });
+  // publishStream() {
+  //   this.orderServiceStream.next(e => {orderedServices: this.orderedServices; });
+  // }
+
+  getOrderedService() {
+    const apiUrl = 'http://localhost:8081/sfs/orderedServices';
+    this._http.get(apiUrl).subscribe((e: any) => this.orderedServices = e);
+    return this._http.get(apiUrl);
   }
 }

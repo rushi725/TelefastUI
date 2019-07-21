@@ -1,5 +1,13 @@
 <div class="orderedService">
-    <h3>Services</h3>
+    <div class="row">
+        <div class="mx-5 my-2 col-md-8 col-sm-6">
+            <h4>Services</h4>
+        </div>
+        <button class="btn btn-outline-dark nav-link mx-auto" (click)="open(content)" *ngIf="type==='Project Manager'">
+            <span class="fa fa-plus"></span> Add Service
+        </button>
+    </div>
+    <hr>
     <table class="table table-responsive-md">
         <thead class="thead-dark shadow mb-2">
             <tr>
@@ -21,13 +29,33 @@
                                'bg bg-info':orderedService.serviceStatus==='InProgress',
                             'bg bg-secondary':orderedService.serviceStatus=='NotStarted'}
                             ">{{orderedService.serviceStatus}}</span></td>
-                <td><p>
-                    <ngb-progressbar type="success" [value]="orderedService.progress" [striped]="true" [animated]="true"><i>{{orderedService.progress}}%</i></ngb-progressbar>
-                </p></td>
+                <td>
+                    <p>
+                        <ngb-progressbar type="success" [value]="orderedService.progress" [striped]="true"
+                            [animated]="true"><i>{{orderedService.progress}}%</i></ngb-progressbar>
+                    </p>
+                </td>
                 <td *ngIf="type==='Project Manager'">{{orderedService.employee.firstName}}</td>
                 <td *ngIf="type==='Service Manager'">{{orderedService.project.name}}</td>
-                <td><button class="btn btn-outline-dark"><i class="fa fa-envelope" style="font-size: 26px"></i></button></td>
+                <td><button class="btn btn-outline-dark"><i class="fa fa-envelope" style="font-size: 26px"></i></button>
+                </td>
             </tr>
         </tbody>
     </table>
+
+
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Add Service</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <app-ordered-service-form [value]="project"></app-ordered-service-form>
+        </div>
+        <!-- <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">submit</button>
+                </div> -->
+    </ng-template>
 </div>

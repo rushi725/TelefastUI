@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderedServiceService } from '../ordered-service.service';
 import { ServiceService } from '../service.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ProjectService } from '../project.service';
 
 @Component({
   selector: 'app-project-manager',
@@ -10,36 +11,27 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ProjectManagerComponent implements OnInit {
 
-  serviceExists=true;
-  orderedServices:any= [];
-  type = 'Project Manager';
-  projectManagerId=5;
-
   constructor(private orderService: OrderedServiceService,
-              private service: ServiceService,
-              private modalService: NgbModal) { }
+              private projectService: ProjectService) { }
 
-
-  ngOnInit() {
-    if(this.orderedServices.length!=0){
-      this.serviceExists=true;
-    }
-    this.orderedServices = this.orderService.getOrderedServiceList();
-    this.orderService.getOrderedService()
-    this.orderService. getorderServiceStream()
-    .subscribe(e => this.orderedServices.concat(e));
-  }
+  serviceExists = true;
+  orderedServices: any = [];
+  type = 'Project Manager';
+  projectManagerId = 60;
+  project = null;
 
   closeResult: string;
 
-  // open(content) {
-  //   console.log("Modal open")
-  //   this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-  //     this.closeResult = `Closed with: ${result}`;
-  //   }, (reason) => {
-  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //   });
-  // }
 
+  ngOnInit() {
+    this.projectService.getProjectByManager(this.projectManagerId)
+    .subscribe((e: any) => this.project = e
+    );
 
+    this.orderService.getOrderedService().subscribe((e: any) => this.orderedServices = e);
+
+    this.orderService.getorderServiceStream().subscribe((e: any) => this.orderedServices = e.orderedServices);
+
+    this.projectService.getProjectStream().subscribe((e: any) => this.project = e.project);
+  }
 }

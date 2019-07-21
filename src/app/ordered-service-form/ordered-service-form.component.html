@@ -1,0 +1,38 @@
+<div *ngIf="isSubmitted">Service Added Successfully</div>
+<form [formGroup]="orderedServiceForm" (ngSubmit)="handleFormSubmit($event)" *ngIf="!isSubmitted" class="form">
+    <mat-form-field class="formGroup">
+        <mat-label>Select Service</mat-label>
+        <mat-select formControlName="service">
+            <mat-option *ngFor="let service of serviceOptions" [value]="service">
+                {{service.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br/>
+
+
+    <mat-form-field class="formGroup">
+        <mat-label>Assign Service Manager</mat-label>
+        <mat-select formControlName="employee">
+            <mat-option *ngFor="let manager of managerOptions" [value]="manager">
+                {{manager.firstName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="form-group">
+        <label>Installation Address</label>
+        <textarea type="text" class="form-control" formControlName="installationAddress"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Start Date:</label>
+        <input type="date" class="form-control" formControlName="startDate" />
+    </div>
+
+    <div class="form-group">
+        <label>Expected Delivery Date:</label>
+        <input type="date" class="form-control" formControlName="deliveryDate" />
+    </div>
+    <button class="btn btn-dark">submit</button>
+</form>

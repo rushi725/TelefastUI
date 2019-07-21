@@ -10,23 +10,25 @@ import { ParamMap, ActivatedRoute } from '@angular/router';
 })
 export class TaskListComponent implements OnInit {
   constructor(private service: TaskService, private modalService: NgbModal, private activatedRoute: ActivatedRoute) { }
-  tasks = [];
+  tasks: Array<any> = [];
   isCollapsed = false;
   closeResult: string;
 
   ngOnInit() {
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
-      const refresh = paramMap.get('refresh');
-      if (refresh) {
-        this.service.getTaskStream().subscribe((e: any) => {
-          this.tasks = e;
-        });
-      }
-    });
+    // this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
+    //   const refresh = paramMap.get('refresh');
+    //   if (refresh) {
+    //     this.service.getTaskStream().subscribe((e: any) => {
+    //       this.tasks = e;
+    //     });
+    //   }
+    // });
 
     this.service.getTaskStream().subscribe((e: any) => {
       this.tasks = e;
     });
+
+    this.service.getTasks().subscribe((e: any) => this.tasks = e.tasks);
 
   }
   open(content) {

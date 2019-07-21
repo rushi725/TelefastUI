@@ -10,25 +10,17 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ServiceListComponent implements OnInit {
-  constructor(private service: ServiceService, private modalService: NgbModal,private activatedRoute: ActivatedRoute) { }
+  constructor(private service: ServiceService, private modalService: NgbModal, private activatedRoute: ActivatedRoute) { }
   services = [];
   isCollapsed = false;
 
   ngOnInit() {
-    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
-      const refresh = paramMap.get('refresh');
-      if (refresh) {
-        this.service.getServicesStream().subscribe((e: any) => {
-          this.services = e;
-        });
-      }
-    });
-
     this.service.getServicesStream().subscribe((e: any) => {
         this.services = e;
     });
 
   }
+  
   closeResult: string;
 
   open(content) {

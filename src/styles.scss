@@ -4,3 +4,8 @@
 /* @import '../node_modules/bootstrap/dist/css/bootstrap.css'; */
  @import '../node_modules/font-awesome/css/font-awesome.css';
  @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+
+ .cdk-global-overlay-wrapper, .cdk-overlay-container {
+     z-index: 99999 !important;
+  }

@@ -7,39 +7,41 @@ import { Subject } from 'rxjs';
 })
 export class CustomerService {
 
-  customerStream:Subject<any> = new Subject();
-  customerList:any=[]
+  customerStream: Subject<any> = new Subject();
+  customerList: any = [];
 
-  constructor(private _http:HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
-  getCustomerList(){
+  getCustomerList() {
     return this.customerList;
   }
 
-  getCustomerStream(){
-    return this.customerStream;
+  getCustomerStream() {
+    // return this.customerStream;
+    const apiUrl = 'http://localhost:8081/sfs/customer';
+    return this._http.get(apiUrl);
   }
 
-  getCustomers(){
-    let apiUrl="http://localhost:8081/sfs/customer";
+  getCustomers() {
+    const apiUrl = 'http://localhost:8081/sfs/customer';
     this._http.get(apiUrl)
-    .subscribe(e=>{
-      this.customerList=e;
-    })
+    .subscribe(e => {
+      this.customerList = e;
+    });
     this.publishStream();
 
   }
 
-  addCustomer(customer){
+  addCustomer(customer) {
     this.customerList.push(customer);
-    let apiUrl="http://localhost:8081/sfs/customer";
-    this._http.post(apiUrl,customer)
-    .subscribe(e=>{
+    const apiUrl = 'http://localhost:8081/sfs/customer';
+    this._http.post(apiUrl, customer)
+    .subscribe(e => {
       this.publishStream();
-    })
+    });
   }
 
-  publishStream(){
+  publishStream() {
     this.customerStream.next({customerList: this.customerList});
   }
 }
