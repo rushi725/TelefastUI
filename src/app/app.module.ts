@@ -14,7 +14,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -44,6 +44,9 @@ import { ServiceManagerComponent } from './service-manager/service-manager.compo
 import { TransferTaskFormComponent } from './transfer-task-form/transfer-task-form.component';
 import { ViewWorkflowComponent } from './view-workflow/view-workflow.component';
 import { WorkflowService } from './workflow.service';
+import { LoginFormComponent } from './login-form/login-form.component';
+import {HttpClientModule} from '@angular/common/http';
+import { EmployeeComponent } from './employee/employee.component';
 import { ProjectFormComponent } from './project-form/project-form.component';
 import { CustomerFormComponent } from './customer-form/customer-form.component';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -54,13 +57,14 @@ const routes: Routes = [
   { path: 'dashboard', component: ServiceListComponent },
   // { path:'dashboard',outlet:"addService",component:ServiceFormComponent},
   // { path:'dashboard',outlet:"addTeam",component:TeamFormComponent},
-  { path: 'dashboard', component: TeamListComponent },
-  { path: 'orderedTasks', component: OrderedTaskListComponent },
-  { path: 'orderedTask', component: TaskStatusComponent },
-  { path: 'orderedServices', component: ProjectManagerComponent },
-  { path: 'serviceManager', component: ServiceManagerComponent },
-  { path: 'workflow', component: ViewWorkflowComponent },
-  { path: 'cworkflow', component: CreateWorkflowComponent }
+  { path: 'dashboard', component: TeamListComponent},
+  { path: 'orderedTasks', component: OrderedTaskListComponent},
+  {path : 'orderedTask', component: TaskStatusComponent},
+  {path : 'orderedServices', component: ProjectManagerComponent},
+  {path : 'serviceManager', component: ServiceManagerComponent},
+  {path : 'workflow', component: ViewWorkflowComponent},
+  { path: 'login', component: LoginFormComponent },
+  { path: 'employee', component: EmployeeComponent}
 ];
 
 @NgModule({
@@ -86,12 +90,15 @@ const routes: Routes = [
     ServiceManagerComponent,
     TransferTaskFormComponent,
     ViewWorkflowComponent,
+    LoginFormComponent,
+    EmployeeComponent,
     ProjectFormComponent,
     CustomerFormComponent,
     CreateWorkflowComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     ScrollingModule,
     ReactiveFormsModule,
