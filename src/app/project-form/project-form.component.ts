@@ -17,6 +17,10 @@ export class ProjectFormComponent implements OnInit {
 
   myControl = new FormControl();
 
+  projectManager={
+    "id":5
+  }
+
   cid = this.myControl.value;
   isSubmitted = false;
   projectForm: FormGroup;
@@ -89,6 +93,7 @@ export class ProjectFormComponent implements OnInit {
       console.log(formModel);
       this.projectService.addProject(formModel);
       this.isSubmitted = true;
+      this.projectService.addProject(formModel);     
     } else {
       console.log('invalid form..');
     }

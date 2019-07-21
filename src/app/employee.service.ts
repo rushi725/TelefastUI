@@ -6,14 +6,15 @@ import { HttpClient } from '@angular/common/http';
 })
 export class EmployeeService {
 
-  constructor(private http: HttpClient) { }
-  employees: Array<any> = [];
-  getEmployees() {
-    return this.employees;
+  constructor(private _http: HttpClient) { }
+
+  getAvailableEmployees(teamId) {
+    const apiUrl = `http://localhost:8081/sfs/employees/${teamId}/employees`;
+    return this._http.get(apiUrl);
   }
 
   getEmployeeStream() {
     const api = 'http://localhost:8081/sfs/employees';
-    return this.http.get(api);
+    return this._http.get(api);
   }
 }

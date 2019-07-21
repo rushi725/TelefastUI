@@ -11,27 +11,28 @@ import { ProjectService } from '../project.service';
 })
 export class ProjectManagerComponent implements OnInit {
 
-  constructor(private orderService: OrderedServiceService,
+  constructor(private orderedService: OrderedServiceService,
+              private orderService: OrderedServiceService,
               private projectService: ProjectService) { }
 
   serviceExists = true;
   orderedServices: any = [];
-  type = 'Project Manager';
+  type = 'PROJECT MANAGER';
   projectManagerId = 60;
   project = null;
 
-  closeResult: string;
-
-
   ngOnInit() {
     this.projectService.getProjectByManager(this.projectManagerId)
-    .subscribe((e: any) => this.project = e
-    );
+      .subscribe((e: any) => this.project = e
+      );
 
-    this.orderService.getOrderedService().subscribe((e: any) => this.orderedServices = e);
+    this.orderedService.loadOrderedServices(this.type, this.projectManagerId);
 
-    this.orderService.getorderServiceStream().subscribe((e: any) => this.orderedServices = e.orderedServices);
+    this.orderedService.getOrderedServiceStream(this.type).subscribe((e: any) => this.orderedServices = e);
 
     this.projectService.getProjectStream().subscribe((e: any) => this.project = e.project);
+  }
+  ngDoCheck() {
+    this.orderedServices = this.orderedService.getOrderedServices(this.type);
   }
 }

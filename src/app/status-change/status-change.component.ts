@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { StatusService } from '../status.service';
+import { Subscriber } from 'rxjs';
+import { OrderedTaskService } from '../ordered-task.service';
 
 export interface Status {
   value: string;
@@ -13,22 +16,36 @@ export interface Status {
 })
 export class StatusChangeComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+  @Input("value") employeeId;
+  taskInfo: any = {};
 
-  // @Input()
+
+  Status: Array<any> = []
+
+  constructor(private fb: FormBuilder, 
+              private statusService: StatusService,
+              private orderedTaskService:OrderedTaskService) { }
+
+
   statusForm: FormGroup;
-  status: Status[] = [
-    { value: 'PENDING', viewValue: 'Pending' },
-    { value: 'COMPLETED', viewValue: 'Completed' },
-    { value: 'INPROGRESS', viewValue: 'In Progress' }
-  ];
 
   ngOnInit() {
+
+    this.orderedTaskService.getOrderedTaskInfoByEmployeeId(this.employeeId)
+
+    this.orderedTaskService.getTaskInfoStream()
+    .subscribe((response:any)=>{
+      this.taskInfo = response;
+    })
+
+    this.statusService.getStatus()
+      .subscribe((response: any) => {
+        this.Status = response;
+      })
+
     this.statusForm = this.fb.group({
       status: ['']
     });
-
-
 
     const statusControl = this.statusForm.get('status');
     statusControl.valueChanges
@@ -38,8 +55,18 @@ export class StatusChangeComponent implements OnInit {
 
   }
 
+  ngDoCheck(){
+    this.taskInfo = this.orderedTaskService.getOrderedTaskInfo();
+  }
+
   handleFormSubmit(event) {
-      const formModel = this.statusForm.value;
-      console.log(formModel);
+    // this.taskInfo = this.orderedTaskService.getOrderedTaskInfo();
+
+    const statusObject = this.statusForm.value;
+
+    let orderedTaskId = this.taskInfo.orderedTask.orderTaskId;
+
+    this.orderedTaskService.changeTaskStatus(this.employeeId,orderedTaskId,statusObject.status);
+
   }
 }

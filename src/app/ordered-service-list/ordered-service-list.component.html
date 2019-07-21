@@ -1,21 +1,21 @@
 <div class="orderedService">
     <div class="row">
-        <div class="mx-5 my-2 col-md-8 col-sm-6">
-            <h4>Services</h4>
-        </div>
-        <button class="btn btn-outline-dark nav-link mx-auto" (click)="open(content)" *ngIf="type==='Project Manager'">
-            <span class="fa fa-plus"></span> Add Service
-        </button>
+    <h3 *ngIf="type==='PROJECT MANAGER'" class="col-md-8"> Project Manager</h3>
+    <h3 *ngIf="type==='SERVICE MANAGER'" class="col-md-8"> Service Manager</h3>
+    <button class="btn btn-outline-dark nav-link mx-auto" (click)="open(content)" *ngIf="type==='PROJECT MANAGER'">
+        <span class="fa fa-plus"></span> Add Service
+    </button>
     </div>
     <hr>
+
     <table class="table table-responsive-md">
         <thead class="thead-dark shadow mb-2">
             <tr>
                 <th>Service</th>
                 <th>Status</th>
                 <th>Progress</th>
-                <th *ngIf="type==='Project Manager'">Service Manager</th>
-                <th *ngIf="type==='Service Manager'">Project Name</th>
+                <th *ngIf="type==='PROJECT MANAGER'">Service Manager</th>
+                <th *ngIf="type==='SERVICE MANAGER'">Project Name</th>
                 <th>Send Message</th>
             </tr>
         </thead>
@@ -23,22 +23,18 @@
             <tr *ngFor="let orderedService of orderedServices" class="shadow-sm mx-2">
                 <td>{{orderedService.service.name}}</td>
                 <td><span [ngClass]="{'bg bg-info':true, 'rounded-lg':true, 'border border-dark':true, 'p-2':true,
-                    'bg bg-success':orderedService.serviceStatus==='Completed',
-                               'bg bg-danger':orderedService.serviceStatus==='Cancelled',
-                               'bg bg-warning':orderedService.serviceStatus==='Pending',
-                               'bg bg-info':orderedService.serviceStatus==='InProgress',
-                            'bg bg-secondary':orderedService.serviceStatus=='NotStarted'}
+                    'bg bg-success':orderedService.serviceStatus==='COMPLETED',
+                               'bg bg-danger':orderedService.serviceStatus==='CANCELLED',
+                               'bg bg-warning':orderedService.serviceStatus==='PENDING',
+                               'bg bg-info':orderedService.serviceStatus==='IN_PROGRESS',
+                            'bg bg-secondary':orderedService.serviceStatus=='NOT_STARTED'}
                             ">{{orderedService.serviceStatus}}</span></td>
-                <td>
-                    <p>
-                        <ngb-progressbar type="success" [value]="orderedService.progress" [striped]="true"
-                            [animated]="true"><i>{{orderedService.progress}}%</i></ngb-progressbar>
-                    </p>
-                </td>
-                <td *ngIf="type==='Project Manager'">{{orderedService.employee.firstName}}</td>
-                <td *ngIf="type==='Service Manager'">{{orderedService.project.name}}</td>
-                <td><button class="btn btn-outline-dark"><i class="fa fa-envelope" style="font-size: 26px"></i></button>
-                </td>
+                <td><p>
+                    <ngb-progressbar type="success" [value]="orderedService.progress" [striped]="true" [animated]="true"><i>{{orderedService.progress}}%</i></ngb-progressbar>
+                </p></td>
+                <td *ngIf="type==='PROJECT MANAGER'">{{orderedService.employee.firstName}}</td>
+                <td *ngIf="type==='SERVICE MANAGER'">{{orderedService.project.name}}</td>
+                <td><button class="btn btn-outline-dark"><i class="fa fa-envelope" style="font-size: 26px"></i></button></td>
             </tr>
         </tbody>
     </table>
