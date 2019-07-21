@@ -12,10 +12,10 @@ export class ProjectManagerComponent implements OnInit {
 
   serviceExists=true;
   orderedServices:any= [];
-  type = 'Project Manager';
+  type = 'PROJECT MANAGER';
   projectManagerId=5;
 
-  constructor(private orderService: OrderedServiceService,
+  constructor(private orderedService: OrderedServiceService,
               private service: ServiceService,
               private modalService: NgbModal) { }
 
@@ -24,10 +24,17 @@ export class ProjectManagerComponent implements OnInit {
     if(this.orderedServices.length!=0){
       this.serviceExists=true;
     }
-    this.orderedServices = this.orderService.getOrderedServiceList();
-    this.orderService.getOrderedService()
-    this.orderService. getorderServiceStream()
-    .subscribe(e => this.orderedServices.concat(e));
+
+    this.orderedService.loadOrderedServices(this.type,this.projectManagerId);
+
+    this.orderedService.getOrderedServiceStream(this.type)
+    .subscribe((resoponse:any)=>{
+      this.orderedServices=resoponse;
+    })
+  }
+
+  ngDoCheck(){
+    this.orderedServices = this.orderedService.getOrderedServices(this.type);
   }
 
   closeResult: string;

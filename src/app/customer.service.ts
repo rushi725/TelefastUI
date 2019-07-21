@@ -20,22 +20,21 @@ export class CustomerService {
     return this.customerStream;
   }
 
-  getCustomers(){
+  loadCustomers(){
     let apiUrl="http://localhost:8081/sfs/customer";
     this._http.get(apiUrl)
     .subscribe(e=>{
       this.customerList=e;
+      this.publishStream();
     })
-    this.publishStream();
 
   }
 
   addCustomer(customer){
-    this.customerList.push(customer);
     let apiUrl="http://localhost:8081/sfs/customer";
     this._http.post(apiUrl,customer)
     .subscribe(e=>{
-      this.publishStream();
+      this.loadCustomers();
     })
   }
 

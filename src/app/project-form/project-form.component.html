@@ -1,9 +1,14 @@
 <div>
   <div *ngIf="isSubmitted">Task Added Successfully</div>
-  <form [formGroup]="taskForm" (ngSubmit)="handleFormSubmit($event)" *ngIf="true">
+  <form [formGroup]="customerForm" (ngSubmit)="handleFormSubmit($event)" *ngIf="true">
+
+    <div class="form-group">
+      <input type="hidden" class="form-control" formControlName="projectManager" [value]="projectManager">
+    </div>
+
     <div class="form-group">
       <label>Name:</label>
-      <input (blur)="handleBlur(taskForm.get('name'))" autofocus class="form-control" [class.is-invalid]="errors.name"
+      <input (blur)="handleBlur(customerForm.get('name'))" autofocus class="form-control" [class.is-invalid]="errors.name"
         formControlName="name" />
       <div class="text-danger">{{errors.name}}</div>
     </div>
@@ -12,23 +17,25 @@
       <textarea type="text" class="form-control"></textarea>
     </div>
     <div class="form-group">
-      <label>Select Customer:</label>&nbsp;
-      <select formControlName="id" (change)="setId(customer)">
-        <option *ngFor="let customer of customerOptions" [value]="customer.firstName">
-          {{customer.firstName}}
-        </option>
-      </select>
+      <mat-form-field>
+        <mat-label>Select Customer</mat-label>
+        <mat-select formControlName='customer'>
+          <mat-option *ngFor="let customer of customerOptions" [value]="customer">
+            {{customer.firstName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div class="form-group">
       <label>Start Date:</label>
-      <input type="date" class="form-control" formControlName="startDate"/>
+      <input type="date" class="form-control" formControlName="startDate" />
     </div>
 
     <div class="form-group">
-        <label>Expected Delivery Date:</label>
-        <input type="date" class="form-control" formControlName="deliveryDate"/>
-  
-      </div>
+      <label>Expected Delivery Date:</label>
+      <input type="date" class="form-control" formControlName="deliveryDate" />
+
+    </div>
 
     <button class="btn btn-dark">submit</button>
   </form>

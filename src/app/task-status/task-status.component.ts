@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { StatusService } from '../status.service';
+import { OrderedTaskService } from '../ordered-task.service';
 
 @Component({
   selector: 'app-task-status',
@@ -8,13 +10,21 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TaskStatusComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
-  empId = 19;
-  employee;
-  ngOnInit() {
-    const api = 'http://localhost:8081/sfs/employees/empId';
-    this.http.get(api).subscribe((e: any) => this.employee = e);
-    console.log(this.employee);
-  }
+  employeeId = 64;
+  taskInfo: any = {};
+  constructor(private orderedTaskService: OrderedTaskService) { }
 
-}
+  ngOnInit() {
+
+    this.orderedTaskService.getOrderedTaskInfoByEmployeeId(this.employeeId)
+
+    this.orderedTaskService.getTaskInfoStream()
+    .subscribe((response:any)=>{
+      this.taskInfo = response;
+    })
+    }
+
+    ngDoCheck(){
+      this.taskInfo = this.orderedTaskService.getOrderedTaskInfo();
+    }
+  }

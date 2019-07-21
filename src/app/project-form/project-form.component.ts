@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { TaskService } from '../task.service';
 import { CustomerService } from '../customer.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ProjectService } from '../project.service';
 
 
 @Component({
@@ -14,49 +15,48 @@ export class ProjectFormComponent implements OnInit {
   
   myControl = new FormControl();
 
+  projectManager={
+    "id":5
+  }
+
   cid = this.myControl.value;
   isSubmitted = false;
-  taskForm: FormGroup;
+  customerForm: FormGroup;
   customerOptions: Array<any> = [];
 
   errors = {};
 
   constructor(private fb: FormBuilder,
-    private taskService: TaskService,
     private customeService:CustomerService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private projectService:ProjectService) { }
 
   ngOnInit() {
 
-     this.activatedRoute.queryParamMap.subscribe((paramMap:ParamMap)=>{
-      const refresh = paramMap.get('refresh');
-      if(refresh) {
-        this.customerOptions = this.customeService.getCustomerList();
-      }
-    })
-    this.customeService.getCustomers();
+    this.customeService.loadCustomers();
 
     this.customeService.getCustomerStream()
     .subscribe((e:any)=>{
       this.customerOptions=e;
+      console.log("inside project form subscribe()---->")
+      console.log(this.customerOptions);
     })
 
-    this.taskForm = this.fb.group({
+    this.customerForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       // desc: '',
-      id:'',
+      projectManager:'',
+      customer:'',
       startDate:'',
       deliveryDate:''
     });
     this.isSubmitted = false;
 
-    const nameControl = this.taskForm.get('name');
+    const nameControl = this.customerForm.get('name');
     nameControl.valueChanges
       .subscribe(e => {
          //console.log(e)
       });
-
-
 
     nameControl.statusChanges
       .subscribe(e => {
@@ -72,23 +72,21 @@ export class ProjectFormComponent implements OnInit {
           delete this.errors['name'];
         }
       });
-
-
   }
 
-
-  setId(customer) {
-    this.taskForm.get("id").patchValue(customer.firstName);
-   }
+  ngDoCheck(){
+    this.customerOptions = this.customeService.getCustomerList();
+  }
 
   handleBlur(control) {
     control.setValue(control.value);
   }
   handleFormSubmit(event) {
-    if (this.taskForm.valid) {
-      const formModel = this.taskForm.value;
-      this.taskService.addTask(formModel);
+    if (this.customerForm.valid) {
+      const formModel = this.customerForm.value;
       this.isSubmitted = true;
+      this.projectService.addProject(formModel);
+      
     } else {
       console.log('invalid form..');
     }

@@ -11,9 +11,9 @@ export class ProjectService {
   addProject(project) {
     console.log("inside project service")
     console.log(project)
-    let apiUrl = "http://localhost:8081/sfs/projects";
-    this._http.post(apiUrl, project)
-      .subscribe(e => {
-      })
+    // let apiUrl = "http://localhost:8081/sfs/projects";
+    // this._http.post(apiUrl, project)
+    //   .subscribe(e => {
+    //   })
   }
 }
