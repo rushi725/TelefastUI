@@ -3,6 +3,7 @@ import { UserService } from './user.service';
 import {HttpHeaders,HttpClient} from '@angular/common/http'
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -44,5 +45,16 @@ export class EmployeeService {
     .subscribe((e:any)=>{
       console.log(e);
     })
+  }
+ 
+
+  getAvailableEmployees(teamId) {
+    const apiUrl = `http://localhost:8081/sfs/employees/${teamId}/employees`;
+    return this._http.get(apiUrl);
+  }
+
+  getEmployeeStream() {
+    const api = 'http://localhost:8081/sfs/employees';
+    return this._http.get(api);
   }
 }

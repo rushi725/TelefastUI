@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderedServiceService } from '../ordered-service.service';
 import { ServiceService } from '../service.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ProjectService } from '../project.service';
 
 @Component({
   selector: 'app-project-manager',
@@ -10,36 +11,28 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ProjectManagerComponent implements OnInit {
 
-  serviceExists=true;
-  orderedServices:any= [];
-  type = 'Project Manager';
-  projectManagerId=5;
+  constructor(private orderedService: OrderedServiceService,
+              private orderService: OrderedServiceService,
+              private projectService: ProjectService) { }
 
-  constructor(private orderService: OrderedServiceService,
-              private service: ServiceService,
-              private modalService: NgbModal) { }
-
+  serviceExists = true;
+  orderedServices: any = [];
+  type = 'PROJECT MANAGER';
+  projectManagerId = 60;
+  project = null;
 
   ngOnInit() {
-    if(this.orderedServices.length!=0){
-      this.serviceExists=true;
-    }
-    this.orderedServices = this.orderService.getOrderedServiceList();
-    this.orderService.getOrderedService()
-    this.orderService. getorderServiceStream()
-    .subscribe(e => this.orderedServices.concat(e));
+    this.projectService.getProjectByManager(this.projectManagerId)
+      .subscribe((e: any) => this.project = e
+      );
+
+    this.orderedService.loadOrderedServices(this.type, this.projectManagerId);
+
+    this.orderedService.getOrderedServiceStream(this.type).subscribe((e: any) => this.orderedServices = e);
+
+    this.projectService.getProjectStream().subscribe((e: any) => this.project = e.project);
   }
-
-  closeResult: string;
-
-  // open(content) {
-  //   console.log("Modal open")
-  //   this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-  //     this.closeResult = `Closed with: ${result}`;
-  //   }, (reason) => {
-  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //   });
-  // }
-
-
+  ngDoCheck() {
+    this.orderedServices = this.orderedService.getOrderedServices(this.type);
+  }
 }

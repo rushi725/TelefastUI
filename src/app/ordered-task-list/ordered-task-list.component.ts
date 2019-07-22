@@ -14,23 +14,31 @@ export class OrderedTaskListComponent implements OnInit {
   teamManagerId=14;
   orderedTasks:Array<any> = [];
   isClicked=false;
+  orderedTask;
 
   ngOnInit() {
+    this.orderedTaskservice.getOrderedTasksByTeamManager(this.teamManagerId);
 
-    this.orderedTaskservice.getOrderedTasksByTeamManager(this.teamManagerId)
+
+    this.orderedTaskservice.getOrderedTaskStream()
     .subscribe((response:any)=>{
-      this.orderedTasks = response;
-      
-    console.log("in subscribe()");
-    console.log(this.orderedTasks);
+      this.orderedTasks =response;
     })
 
-
-    this.orderedTaskservice.getStream().subscribe(e =>
-    this.orderedTasks.concat(e));
   }
 
-  transferTask() {
+  ngDoCheck(){
+
+    this.orderedTasks=this.orderedTaskservice.getOrderedTaskList();
+
+  }
+
+  cancelTask(orderedTask){
+    this.orderedTaskservice.cancelOrderedTask(orderedTask.orderTaskId,this.teamManagerId);
+  }
+
+  transferTask(orderedTask) {
+    this.orderedTask = orderedTask;
     this.isClicked = true;
   }
 

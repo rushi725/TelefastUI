@@ -1,7 +1,8 @@
+<div *ngIf = "!project">
 <div class="row detail">
     <div class="col-sm-12 col-md-6">
         <app-project-detail value="Project 1" type="Project">
-            <app-project-form></app-project-form> 
+            <app-project-form [value] = "projectManagerId"></app-project-form> 
         </app-project-detail>
     </div>
     <div class="col-sm-12 col-md-6">
@@ -10,7 +11,7 @@
         </app-project-detail>
     </div>
 </div>
-<hr />
-<div *ngIf="serviceExists">
-    <app-ordered-service-list [value]="orderedServices" [type]="type"></app-ordered-service-list>
+</div>
+<div *ngIf="project">
+    <app-ordered-service-list [value]="orderedServices" [type]="type" [project] = "project"></app-ordered-service-list>
 </div>

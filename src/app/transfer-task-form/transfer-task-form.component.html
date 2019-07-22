@@ -6,13 +6,11 @@
         <form [formGroup]="transferTaskForm" class="example-form" (ngSubmit)="handleFormSubmit($event)"
             *ngIf="!isSubmitted">
             <mat-form-field class="example-full-width">
-                <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl"
-                    [matAutocomplete]="auto" formControlName="teamMember">
-                <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of options" [value]="option">
-                        {{option}}
-                    </mat-option>
-                </mat-autocomplete>
+                    <mat-select formControlName="teamMember" placeholder="Pick Team Member">
+                        <mat-option *ngFor="let employee of employees" [value]="employee">
+                            {{employee.firstName}}
+                        </mat-option>
+                    </mat-select>
             </mat-form-field>
             <button class="btn btn-dark">Sumbit</button>
         </form>

@@ -51,20 +51,26 @@ import { ProjectFormComponent } from './project-form/project-form.component';
 import { CustomerFormComponent } from './customer-form/customer-form.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CreateWorkflowComponent } from './create-workflow/create-workflow.component';
+import { OrderedServiceFormComponent } from './ordered-service-form/ordered-service-form.component';
+import { WorkflowResolverService } from './workflow-resolver.service';
 
 const routes: Routes = [
   // { path: '', component: NavbarComponent},
   { path: 'dashboard', component: ServiceListComponent },
   // { path:'dashboard',outlet:"addService",component:ServiceFormComponent},
   // { path:'dashboard',outlet:"addTeam",component:TeamFormComponent},
-  { path: 'dashboard', component: TeamListComponent},
-  { path: 'orderedTasks', component: OrderedTaskListComponent},
-  {path : 'orderedTask', component: TaskStatusComponent},
-  {path : 'orderedServices', component: ProjectManagerComponent},
-  {path : 'serviceManager', component: ServiceManagerComponent},
-  {path : 'workflow', component: ViewWorkflowComponent},
-  { path: 'login', component: LoginFormComponent },
-  { path: 'employee', component: EmployeeComponent}
+  { path: 'dashboard', component: TeamListComponent },
+  { path: 'orderedTasks', component: OrderedTaskListComponent },
+  { path: 'orderedTask', component: TaskStatusComponent },
+  { path: 'orderedServices', component: ProjectManagerComponent },
+  { path: 'serviceManager', component: ServiceManagerComponent },
+  { path: 'workflow',
+    component: ViewWorkflowComponent,
+    resolve: {
+      taskWorkflow: WorkflowResolverService
+    }
+  },
+  { path: 'cworkflow', component: CreateWorkflowComponent }
 ];
 
 @NgModule({
@@ -94,7 +100,8 @@ const routes: Routes = [
     EmployeeComponent,
     ProjectFormComponent,
     CustomerFormComponent,
-    CreateWorkflowComponent
+    CreateWorkflowComponent,
+    OrderedServiceFormComponent
   ],
   imports: [
     BrowserModule,

@@ -19,119 +19,24 @@ export class TaskNode {
   }
 }
 
-export class WorkflowService implements OnInit {
+export class WorkflowService {
 
   constructor(private http: HttpClient) { }
 
   workFlowStream: Subject<any> = new Subject();
 
-  ngOnInit() {
-    // const api = 'http://localhost:8081/sfs/serviceWorkFlow';
-    // this.http.get(api).subscribe((e: any) => this.workFlow = e);
-
-    // const api2 = 'http://localhost:8081/sfs/orderedTask';
-    // this.http.get(api2).subscribe((e: any) => this.orderedTasks = e);
-  }
-
-  // orderedTasks = [];
-  // tslint:disable-next-line: member-ordering
-  workFlow = [
-    {
-      id : 1,
-      task : new Task(1, 'Task 1', 'Desc 1', 10, true),
-      team : new Team(100, 'Team 1', 'Desc 1'),
-      seqNo : 1,
-      prev : null
-    },
-    {
-      id : 2,
-      task : new Task(2, 'Task 2', 'Desc 2', 10, true),
-      team : new Team(102, 'Team 2', 'Desc 2'),
-      seqNo : 2,
-      prev : 1
-    }
-    ,
-    {
-      id : 3,
-      task : new Task(3, 'Task 3', 'Desc 2', 10, true),
-      team : new Team(103, 'Team 3', 'Desc 2'),
-      seqNo : 3,
-      prev : 1
-    },
-    {
-      id : 4,
-      task : new Task(4, 'Task 4', 'Desc 3', 10, true),
-      team : new Team(104, 'Team 4', 'Desc 3'),
-      seqNo : 4,
-      prev : 2
-    },
-    {
-      id : 5,
-      task : new Task(5, 'Task 4', 'Desc 4', 10, true),
-      team : new Team(103, 'Team 4', 'Desc 4'),
-      seqNo : 5,
-      prev : 3
-    },
-  ];
-  // tslint:disable-next-line: member-ordering
-  orderedTasks = [
-    {
-        id: 1,
-        task: new Task(1, 'Task 1', 'Desc 1', 10, true),
-        employee : new Employee(10, new Team(100, 'Team 1', 'Desc 1'), 'Rushabh', 'Shah', 'Team_Member', 'Address 1', '9096678120', false),
-        status : 'In Progress',
-        date : '04/05/2018',
-        approved : null,
-        denialReason : null
-    },
-    {
-      id: 2,
-      task: new Task(2, 'Task 2', 'Desc 1', 10, true),
-      employee : new Employee(10, new Team(100, 'Team 1', 'Desc 1'), 'Rushabh', 'Shah', 'Team_Member', 'Address 1', '9096678120', false),
-      status : 'In Progress',
-      date : '04/05/2018',
-      approved : null,
-      denialReason : null
-  },
-  {
-    id: 3,
-    task: new Task(3, 'Task 3', 'Desc 1', 10, true),
-    employee : new Employee(10, new Team(100, 'Team 1', 'Desc 1'), 'Rushabh', 'Shah', 'Team_Member', 'Address 1', '9096678120', false),
-    status : 'In Progress',
-    date : '04/05/2018',
-    approved : null,
-    denialReason : null
-  },
-  {
-    id: 4,
-    task: new Task(4, 'Task 4', 'Desc 1', 10, true),
-    employee : new Employee(10, new Team(100, 'Team 1', 'Desc 1'), 'Rushabh', 'Shah', 'Team_Member', 'Address 1', '9096678120', false),
-    status : 'In Progress',
-    date : '04/05/2018',
-    approved : null,
-    denialReason : null
-  },
-  {
-    id: 5,
-    task: new Task(5, 'Task 5', 'Desc 1', 10, true),
-    employee : new Employee(10, new Team(100, 'Team 1', 'Desc 1'), 'Rushabh', 'Shah', 'Team_Member', 'Address 1', '9096678120', false),
-    status : 'In Progress',
-    date : '04/05/2018',
-    approved : null,
-    denialReason : null
-  }
-  ];
+  workFlow: Array<any> = [];
+  orderedTasks: Array<any> = [];
 
   taskWorkflow = [];
 
-
   getWorkFlowStream() {
-    this.publishStream();
     return this.workFlowStream;
   }
 
-  getWorkFlow() {
-    this.createWorkflow();
+  getWorkFlow(serviceId, orderedServiceId) {
+    this.initTaskWorkflow(serviceId, orderedServiceId);
+    //this.createWorkflow();
     return this.taskWorkflow;
   }
 
@@ -141,13 +46,24 @@ export class WorkflowService implements OnInit {
   }
 
   publishStream() {
-    this.workFlowStream.next(e => {taskWorkFlow : this.taskWorkflow;});
+    this.workFlowStream.next(this.taskWorkflow);
+  }
+
+  initTaskWorkflow(serviceId, orderedServiceId) {
+    const api = `http://localhost:8081/sfs/serviceWorkFlow/${serviceId}`;
+    this.http.get(api).subscribe((e: any) => {
+      this.workFlow = e;
+      const api2 = `http://localhost:8081/sfs/orderedTask/${orderedServiceId}`;
+      this.http.get(api2).subscribe((e: any) => {
+        this.orderedTasks = e;
+        this.createWorkflow();
+      });
+    });
   }
   createWorkflow() {
       this.taskWorkflow = [];
       const queue: Array<TaskNode> = [];
-      const currentTasks: Array<any> = this.orderedTasks.filter(t => t.task.id === this.workFlow.find(e => e.prev === null).task.id);
-      console.log(currentTasks);
+      const currentTasks: Array<any> = this.orderedTasks.filter(t => t.task.id === this.workFlow.find(e => !e.nextTasks).task.id);
       currentTasks.forEach(e => {
         const taskNode = new TaskNode(e);
         queue.push(taskNode);
@@ -155,7 +71,7 @@ export class WorkflowService implements OnInit {
       });
       while (queue.length !== 0) {
           const node: TaskNode = queue.shift();
-          const childs: Array<any> =  this.workFlow.filter(e => e.prev === node.task.id);
+          const childs: Array<any> = this.workFlow.filter(e => e.nextTasks === node.task.task.id);
           if (childs) {
             const childrenTasks: Array<any> = this.orderedTasks.filter(t => childs.find(e => e.task.id === t.task.id));
             childrenTasks.forEach(e => {
@@ -167,7 +83,8 @@ export class WorkflowService implements OnInit {
           });
         }
       }
-      this.taskWorkflow.push(new TaskNode({name: 'Workflow', task: new Task(0, 'Workflow', 'Desc 1', 10, true), }));
+      this.taskWorkflow.push(new TaskNode({name: 'Workflow', task: new Task(0, 'Workflow', 'Desc 1', 10, true), taskStatus: 'Completed'}));
+      this.publishStream();
   }
 
 }

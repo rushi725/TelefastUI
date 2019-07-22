@@ -14,6 +14,8 @@ export class ServiceService {
   services: Array<any> = [];
 
   currentService = null;
+
+  serviceStream: Subject<any> = new Subject();
   getServicesStream() {
     const api = 'http://localhost:8081/sfs/services';
     return this.http.get(api);
@@ -21,9 +23,6 @@ export class ServiceService {
   }
 
   getServices() {
-    const api = 'http://localhost:8081/sfs/services';
-    this.http.get(api).subscribe((e: any) => this.services = e);
-    console.log(this.services);
     return this.services;
   }
 
@@ -31,8 +30,9 @@ export class ServiceService {
   addService(service) {
     const api = 'http://localhost:8081/sfs/services';
     this.http.post(api, service).subscribe((e: any) => {
-      this.currentService = e,
-        this.router.navigate(['/cworkflow'], {
+      this.currentService = e;
+      this.services.push(e);
+      this.router.navigate(['/cworkflow'], {
           // queryParams: { service: this.currentService  }
           state: { service: this.currentService }
         });

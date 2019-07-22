@@ -6,40 +6,62 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class OrderedServiceService {
-  orderServiceStream: Subject<any> = new Subject();
-  orderedServices:any=[];
+  orderedServicesForServiceManagerStream: Subject<any> = new Subject();
+  orderedServicesForProjectManagerStream: Subject<any> = new Subject();
+  orderedServicesForServiceManager: any = [];
 
-  constructor(private _http:HttpClient) { }
+  orderedServicesForProjectManager: any = [];
 
-  getorderServiceStream() {
-    this.publishStream();
-    return this.orderServiceStream;
+
+  constructor(private _http: HttpClient) { }
+
+  getOrderedServices(role) {
+    if (role === 'SERVICE MANAGER') {
+      return this.orderedServicesForServiceManager;
+    } else {
+      return this.orderedServicesForProjectManager;
+    }
   }
 
-  getOrderedServiceList() {
-    return this.orderedServices;
-  }
-
-  getOrderedService(){
-    let apiUrl="http://localhost:8081/sfs/orderedServices";
-    this._http.get(apiUrl)
-    .subscribe(e=>{
-      this.orderedServices = e;
-    })
-    this.publishStream();
+  getOrderedServiceStream(role) {
+    if (role === 'SERVICE MANAGER') {
+      return this.orderedServicesForServiceManagerStream;
+    } else {
+      return this.orderedServicesForProjectManagerStream;
+    }
   }
 
 
+  loadOrderedServices(role, ManagerId) {
+    if (role === 'SERVICE MANAGER') {
+      const apiUrl = `http://localhost:8081/sfs/orderedServices/serviceManager/${ManagerId}`;
+      this._http.get(apiUrl)
+    .subscribe((response: any) => {
+      this.orderedServicesForServiceManager = response;
+      this.publishStreamForServiceManager();
+    });
+    } else {
+      const apiUrl = `http://localhost:8081/sfs/orderedServices/projectManager/${ManagerId}`;
+      this._http.get(apiUrl)
+      .subscribe((response: any) => {
+        this.orderedServicesForProjectManager = response;
+        this.publishStreamProjectManager();
+      });
+    }
+
+  }
+  publishStreamForServiceManager() {
+    this.orderedServicesForServiceManagerStream.next(this.orderedServicesForServiceManager);
+  }
+
+  publishStreamProjectManager() {
+    this.orderedServicesForProjectManagerStream.next(this.orderedServicesForProjectManager);
+
+  }
 
   addOrderedServices(service) {
-    let apiUrl="http://localhost:8081/sfs/orderedServices";
-    this._http.post(apiUrl,service)
-    .subscribe(e=>{
-      this.publishStream();
-    })    
-  }
-
-  publishStream() {
-    this.orderServiceStream.next(e => {orderedServices: this.orderedServices; });
+    const apiUrl = 'http://localhost:8081/sfs/orderedServices';
+    this._http.post(apiUrl, service)
+      .subscribe();
   }
 }
