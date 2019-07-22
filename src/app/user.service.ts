@@ -54,6 +54,8 @@ export class UserService {
         this.userStream.next({ isLoggedIn: true })
         this.getRole().subscribe((e:any)=>{
           this.role=e
+          console.log(e);
+          
           if(this.role==="ROLE_SUPER"){
             this.router.navigate(['employee'])
           }

@@ -30,8 +30,7 @@ export class LoginFormComponent implements OnInit {
     if (this.loginForm.valid) {
       let credentials = this.loginForm.value;
       this.userService.doLogin(credentials);
-      
-      
+    
       }
     }
   }

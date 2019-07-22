@@ -1,1 +1,45 @@
-<p>employee works!</p>
+
+<div class="row">
+      <div class="card" >
+        <div class="card-header">ReviewForm</div>
+        <div class="card-body">
+          <form [formGroup]="reviewForm" (submit)="handleFormSubmit($event)">
+            <div class="form-group">
+                <label>firstName</label>
+                <input class="form-control" formControlName="firstName" /> 
+            </div>
+            <div class="form-group">
+              <label>lastName</label>
+              <input class="form-control" formControlName="lastName" />
+            </div>
+            <div class="form-group">
+                <label>empRole</label>
+                <input class="form-control" formControlName="empRole" />
+              </div>
+            <div class="form-group">
+              <label>empAddress</label>
+              <textarea class="form-control" formControlName="empAddress"></textarea>
+            </div>
+            <div class="form-group">
+                <label>contactNumber</label>
+                <input class="form-control" formControlName="contactNumber" />
+            </div>
+            <div class="form-group">
+                <label>email</label>
+                <input class="form-control" formControlName="email" />
+            </div>
+            <div class="form-group">
+                <label>password</label>
+                <input class="form-control" formControlName="password" />
+            </div>
+            <div class="form-group">
+                <label>teamId</label>
+                <input class="form-control" formControlName="teamId" />
+            </div>
+            <button  type="button" class="btn btn-danger">cancel</button>&nbsp;
+            <button class="btn btn-dark">submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  

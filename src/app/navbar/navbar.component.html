@@ -36,7 +36,7 @@
                 </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" routerLink="/cworkflow"><i class="fa fa-cog" style="font-size:25px;"></i>&nbsp; Create Work Flow
+            <a class="nav-link" *ngIf="role==='ROLE_PRODUCT_MANAGER'"  routerLink="/cworkflow"><i class="fa fa-cog" style="font-size:25px;"></i>&nbsp; Create Work Flow
             </a>
         </li>
         <!-- <li class="nav-item">
