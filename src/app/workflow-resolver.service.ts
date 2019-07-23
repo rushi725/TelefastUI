@@ -11,6 +11,6 @@ export class WorkflowResolverService implements Resolve<any> {
   constructor(private workflowService: WorkflowService) { }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
     console.log('resolving...')
-    return this.workflowService.getWorkFlow(91, 100);
+    return this.workflowService.getWorkFlow(128, 132);
   }
 }

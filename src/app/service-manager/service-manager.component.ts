@@ -8,7 +8,7 @@ import { OrderedServiceService } from '../ordered-service.service';
 })
 export class ServiceManagerComponent implements OnInit {
 
-  serviceManagerId = 19;
+  serviceManagerId = 121;
 
   constructor(private orderedService: OrderedServiceService) { }
   orderedServices = [];

@@ -10,10 +10,12 @@ import { OrderedServiceService } from '../ordered-service.service';
 })
 export class OrderedServiceListComponent implements OnInit {
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal,
+              private orderedServiceService:OrderedServiceService) { }
   @Input('value') orderedServices;
   @Input('type') type;
   @Input('project') project;
+  isServiceStarted=false;
 
   ngOnInit(){
 
@@ -39,4 +41,10 @@ export class OrderedServiceListComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+
+  startService(orderedServiceId){
+    this.isServiceStarted=true;
+    this.orderedServiceService.startService(orderedServiceId);
+  }
+
 }

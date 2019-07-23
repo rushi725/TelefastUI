@@ -11,22 +11,27 @@
                 <th>Send Message</th>
                 <th>Transfer Task</th>
                 <th>Cancel task</th>
+                <th>Approve / Reject Task</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let orderedTask of orderedTasks" class="shadow-sm mx-2">
-                <td>{{orderedTask.task.name}}</td>
+                <td>{{orderedTask.task.name}}==> {{orderedTask.task.id}}</td>
                 <td><span [ngClass]="{'bg bg-info':true, 'rounded-lg':true, 'border border-dark':true, 'p-2':true,
                     'bg bg-success':orderedTask.taskStatus==='COMPLETED',
                                'bg bg-danger':orderedTask.taskStatus==='CANCELLED',
                                'bg bg-warning':orderedTask.taskStatus==='PENDING',
                                'bg bg-info':orderedTask.taskStatus==='IN_PROGRESS',
-                            'bg bg-secondary':orderedTask.taskStatus=='NOT_STARTED'}
+                            'bg bg-secondary':orderedTask.taskStatus=='NOT_STARTED',
+                            'bg bg-secondary':orderedTask.taskStatus=='SENT_FOR_APPROVAL'}
                             ">{{orderedTask.taskStatus}}</span></td>
-                <td>{{orderedTask.employee.firstName}}</td>
-                <td><button class="btn btn-outline-dark"><i class="fa fa-envelope" style="font-size: 26px"></i></button></td>
+                            <td *ngIf="!orderedTask.employee">Employee Not allocated</td>
+                            <td *ngIf="orderedTask.employee">{{orderedTask.employee.firstName}} -> {{orderedTask.employee.id}}</td>    
+                                        <td><button class="btn btn-outline-dark"><i class="fa fa-envelope" style="font-size: 26px"></i></button></td>
                 <td><button class="btn btn-outline-dark"  (click)="transferTask(orderedTask)"><i class="fa fa-share-square" style="font-size: 26px"></i></button></td>
                 <td><button *ngIf="orderedTask.taskStatus!=='CANCELLED'" class="btn btn-outline-danger" (click)="cancelTask(orderedTask)"><i class="fa fa-close" style="font-size: 26px"></i></button></td>
+                <td><button *ngIf="orderedTask.taskStatus=='SENT_FOR_APPROVAL'"  class="btn btn-outline-dark" (click)="approveTask(orderedTask)"><i class="fa fa-check" aria-hidden="true"></i></button> 
+                    &nbsp;<button *ngIf="orderedTask.taskStatus=='SENT_FOR_APPROVAL'"  class="btn btn-outline-dark" (click)="rejectTask(orderedTask)"><i class="fa fa-times" aria-hidden="true"></i></button></td>
             </tr>
         </tbody>
     </table>

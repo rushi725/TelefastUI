@@ -177,7 +177,7 @@ export class CreateWorkflowComponent implements OnInit {
             task: ['', [Validators.required]],
             team: ['', [Validators.required]],
             seqNumber: this.seqNum,
-            nextTasks: null,
+            prevTasks: null,
             service: null
         });
 
@@ -191,7 +191,7 @@ export class CreateWorkflowComponent implements OnInit {
     handleFormSubmit(event, node) {
         if (this.flowForm.valid) {
             let formModel = this.flowForm.value;
-            formModel.nextTasks = this.prev.id;
+            formModel.prevTasks = this.prev.id;
             this.seqNum++;
             formModel.seqNumber = this.seqNum;
             formModel.service = this.service;

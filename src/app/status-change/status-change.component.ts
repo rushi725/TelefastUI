@@ -16,8 +16,8 @@ export interface Status {
 })
 export class StatusChangeComponent implements OnInit {
 
-  @Input("value") employeeId;
-  taskInfo: any = {};
+  @Input("value") currentTask;
+  taskInfo: Array<any> = [];
 
 
   Status: Array<any> = []
@@ -31,13 +31,6 @@ export class StatusChangeComponent implements OnInit {
 
   ngOnInit() {
 
-    this.orderedTaskService.getOrderedTaskInfoByEmployeeId(this.employeeId)
-
-    this.orderedTaskService.getTaskInfoStream()
-    .subscribe((response:any)=>{
-      this.taskInfo = response;
-    })
-
     this.statusService.getStatus()
       .subscribe((response: any) => {
         this.Status = response;
@@ -50,23 +43,21 @@ export class StatusChangeComponent implements OnInit {
     const statusControl = this.statusForm.get('status');
     statusControl.valueChanges
       .subscribe(e => {
-        console.log(e);
       });
 
   }
 
-  ngDoCheck(){
-    this.taskInfo = this.orderedTaskService.getOrderedTaskInfo();
-  }
-
   handleFormSubmit(event) {
+
+    console.log("sjkdjskd")
+    
     // this.taskInfo = this.orderedTaskService.getOrderedTaskInfo();
 
     const statusObject = this.statusForm.value;
 
-    let orderedTaskId = this.taskInfo.orderedTask.orderTaskId;
+    console.log(statusObject.status)
 
-    this.orderedTaskService.changeTaskStatus(this.employeeId,orderedTaskId,statusObject.status);
+    this.orderedTaskService.changeTaskStatus(this.currentTask,statusObject.status);
 
   }
 }

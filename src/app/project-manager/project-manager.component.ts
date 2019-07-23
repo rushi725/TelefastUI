@@ -18,7 +18,7 @@ export class ProjectManagerComponent implements OnInit {
   serviceExists = true;
   orderedServices: any = [];
   type = 'PROJECT MANAGER';
-  projectManagerId = 60;
+  projectManagerId = 120;
   project = null;
 
   ngOnInit() {

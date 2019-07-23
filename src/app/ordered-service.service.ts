@@ -31,6 +31,16 @@ export class OrderedServiceService {
     }
   }
 
+  startService(orderedServiceId){
+    const apiUrl = `http://localhost:8081/sfs/startService/${orderedServiceId}`;
+    this._http.put(apiUrl,'start')
+    .subscribe(e=>{
+
+      console.log(e);
+
+    })
+   }
+
 
   loadOrderedServices(role, ManagerId) {
     if (role === 'SERVICE MANAGER') {
@@ -60,6 +70,7 @@ export class OrderedServiceService {
   }
 
   addOrderedServices(service) {
+    console.log(service)
     const apiUrl = 'http://localhost:8081/sfs/orderedServices';
     this._http.post(apiUrl, service)
       .subscribe();

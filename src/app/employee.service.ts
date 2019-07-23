@@ -14,7 +14,7 @@ export class EmployeeService {
   }
 
   getEmployeeStream() {
-    const api = 'http://localhost:8081/sfs/employees';
+    const api = 'http://localhost:8081/sfs/employees/serviceManager';
     return this._http.get(api);
   }
 }
