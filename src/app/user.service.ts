@@ -54,6 +54,8 @@ export class UserService {
         this.userStream.next({ isLoggedIn: true })
         this.getRole().subscribe((e:any)=>{
           this.role=e
+          console.log(e);
+          
           if(this.role==="ROLE_SUPER"){
             this.router.navigate(['employee'])
           }
@@ -69,7 +71,7 @@ export class UserService {
     
   }
   getRole(){
-    let url=`http://localhost:8081/sfs/user/${this.user}/getUserRole`;
+    let url=`http://localhost:8081/user/getUserRole/${this.user}`;
     return this._http.get(url)
   }
 

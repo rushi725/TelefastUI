@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
   }
   ngDoCheck(){
     this.user=this.userService.getUser()
-  this.role=this.userService.getRoles()
+    this.role=this.userService.getRoles()
   }
   
   handleLogout(){

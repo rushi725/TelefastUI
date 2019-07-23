@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { RouterModule, Routes } from '@angular/router';
@@ -55,7 +55,7 @@ import { OrderedServiceFormComponent } from './ordered-service-form/ordered-serv
 import { WorkflowResolverService } from './workflow-resolver.service';
 
 const routes: Routes = [
-  // { path: '', component: NavbarComponent},
+  { path: '', component: NavbarComponent},
   { path: 'dashboard', component: ServiceListComponent },
   // { path:'dashboard',outlet:"addService",component:ServiceFormComponent},
   // { path:'dashboard',outlet:"addTeam",component:TeamFormComponent},
@@ -64,6 +64,8 @@ const routes: Routes = [
   { path: 'orderedTask', component: TaskStatusComponent },
   { path: 'orderedServices', component: ProjectManagerComponent },
   { path: 'serviceManager', component: ServiceManagerComponent },
+  {path : 'login', component: LoginFormComponent},
+  {path : 'employee', component: EmployeeComponent},
   { path: 'workflow',
     component: ViewWorkflowComponent,
     resolve: {
