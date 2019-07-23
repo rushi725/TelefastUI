@@ -1,1 +1,59 @@
-<p>employee works!</p>
+<br/>
+<div class="row">
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header">Employee Form</div>
+      <div class="card-body">
+        <form [formGroup]="reviewForm" (submit)="handleFormSubmit($event)">
+          <div class="form-group">
+            <label>firstName</label>
+            <input class="form-control" formControlName="firstName" />
+          </div>
+          <div class="form-group">
+            <label>lastName</label>
+            <input class="form-control" formControlName="lastName" />
+          </div>
+          <mat-form-field class="formGroup">
+            <mat-label>Assign Role</mat-label>
+            <mat-select formControlName="empRole">
+              <mat-option *ngFor="let role of roleOptions" [value]="role.value">
+                {{role.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <br />
+          <mat-form-field class="formGroup">
+            <mat-label>Assign Team</mat-label>
+            <mat-select formControlName="team">
+              <mat-option *ngFor="let team of teamOptions" [value]="team">
+                {{team.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <br />
+          <div class="form-group">
+            <label>empAddress</label>
+            <textarea class="form-control" formControlName="empAddress"></textarea>
+          </div>
+          <div class="form-group">
+            <label>contactNumber</label>
+            <input class="form-control" formControlName="contactNumber" />
+          </div>
+          <div class="form-group">
+            <label>email</label>
+            <input class="form-control" formControlName="email" />
+          </div>
+          <div class="form-group">
+            <label>password</label>
+            <input class="form-control" formControlName="password" />
+          </div>
+          <button type="button" class="btn btn-danger">cancel</button>&nbsp;
+          <button class="btn btn-dark">submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <app-team-list></app-team-list>
+  </div>
+</div>

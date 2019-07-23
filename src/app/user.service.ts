@@ -51,12 +51,13 @@ export class UserService {
       .subscribe((e: any) => {
         this.userAuthToken = e.token;
         this.decodeToken();
-        localStorage.setItem('user-token', e.token);
-        this.userStream.next({ isLoggedIn: true });
+        localStorage.setItem('user-token', e.token)
+        this.userStream.next({ isLoggedIn: true })
         this.getRole().subscribe((e: any) => {
           this.role = e;
-          if (this.role === "ROLE_SUPER") {
-            this.router.navigate(['employee']);
+          console.log(e);
+          if (this.role === 'ROLE_SUPER') {
+            this.router.navigate(['employee'])
           }
         });
 
@@ -70,7 +71,7 @@ export class UserService {
 
   }
   getRole() {
-    const url = `http://localhost:8081/sfs/user/${this.user}/getUserRole`;
+    let url = `http://localhost:8081/sfs/user/${this.user}/getUserRole`;
     return this._http.get(url);
   }
 

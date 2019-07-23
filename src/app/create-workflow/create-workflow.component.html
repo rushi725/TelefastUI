@@ -1,4 +1,8 @@
-<h4>Design Service Workflow for service</h4>
+<br/><br/>
+<div class="row">
+<h4 *ngIf = "service" class="col-md-8">Design Service Workflow for service {{service.name}}</h4>
+<button class="btn btn-outline-dark" [routerLink]="['/sworkflow']" [queryParams]="{ serviceId: service.id}" >Submit Workflow</button>
+</div>
 <hr />
 <div class="card shadow">
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
