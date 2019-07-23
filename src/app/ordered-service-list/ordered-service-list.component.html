@@ -17,6 +17,7 @@
                 <th *ngIf="type==='PROJECT MANAGER'">Service Manager</th>
                 <th *ngIf="type==='SERVICE MANAGER'">Project Name</th>
                 <th>Send Message</th>
+                <th *ngIf="type==='SERVICE MANAGER'">Start Service</th>
             </tr>
         </thead>
         <tbody>
@@ -32,9 +33,10 @@
                 <td><p>
                     <ngb-progressbar type="success" [value]="orderedService.progress" [striped]="true" [animated]="true"><i>{{orderedService.progress}}%</i></ngb-progressbar>
                 </p></td>
-                <td *ngIf="type==='PROJECT MANAGER'">{{orderedService.employee.firstName}}</td>
+                <td *ngIf="type==='PROJECT MANAGER'">{{orderedService.employee.firstName}} </td>
                 <td *ngIf="type==='SERVICE MANAGER'">{{orderedService.project.name}}</td>
                 <td><button class="btn btn-outline-dark"><i class="fa fa-envelope" style="font-size: 26px"></i></button></td>
+                <td *ngIf="type==='SERVICE MANAGER'"><button *ngIf="orderedService.serviceStatus==='NOT_STARTED'" class="btn btn-success" (click)="startService(orderedService.orderId)">Start Service</button></td>
             </tr>
         </tbody>
     </table>

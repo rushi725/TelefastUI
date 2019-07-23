@@ -8,23 +8,14 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class OrderedTaskDetailComponent implements OnInit {
 
-  @Input("value") employeeId;
-  taskInfo:any={};
+  @Input("value") currentTask;
+  isTaskAssigned=false;
+  taskInfo:Array<any>=[];
   constructor(private orderedTaskService:OrderedTaskService) { }
   
   ngOnInit() {
 
-    this.orderedTaskService.getOrderedTaskInfoByEmployeeId(this.employeeId)
-
-    this.orderedTaskService.getTaskInfoStream()
-    .subscribe((response:any)=>{
-      this.taskInfo = response;
-    })
     
-  }
-
-  ngDoCheck(){
-    this.taskInfo = this.orderedTaskService.getOrderedTaskInfo();
   }
 
 }

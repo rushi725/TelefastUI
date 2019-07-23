@@ -17,19 +17,16 @@ export class OrderedTaskListComponent implements OnInit {
   orderedTask;
 
   ngOnInit() {
-    this.orderedTaskservice.getOrderedTasksByTeamManager(this.teamManagerId);
-
+    this.orderedTaskservice.getOrderedTasksByTeamManager(this.teamManagerId)
+    .subscribe((response: any) => {
+      this.orderedTasks = response;
+      console.log(this.orderedTasks);
+    });
 
     this.orderedTaskservice.getOrderedTaskStream()
     .subscribe((response: any) => {
       this.orderedTasks = response;
     });
-
-  }
-
-  ngDoCheck() {
-
-    this.orderedTasks = this.orderedTaskservice.getOrderedTaskList();
 
   }
 
@@ -40,6 +37,14 @@ export class OrderedTaskListComponent implements OnInit {
   transferTask(orderedTask) {
     this.orderedTask = orderedTask;
     this.isClicked = true;
+  }
+
+  approveTask(orderedTask) {
+    this.orderedTaskservice.approveTask(orderedTask, this.teamManagerId);
+  }
+
+  rejectTask(orderedTask) {
+    this.orderedTaskservice.rejectTask(orderedTask, this.teamManagerId);
   }
 
 

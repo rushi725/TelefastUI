@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { StatusService } from '../status.service';
 import { OrderedTaskService } from '../ordered-task.service';
+import { VirtualTimeScheduler } from 'rxjs';
 
 @Component({
   selector: 'app-task-status',
@@ -10,21 +11,51 @@ import { OrderedTaskService } from '../ordered-task.service';
 })
 export class TaskStatusComponent implements OnInit {
 
-  employeeId = 64;
-  taskInfo: any = {};
+  employeeId = 115;
+  taskInfo: Array<any> = [];
+  currentTask;
   constructor(private orderedTaskService: OrderedTaskService) { }
 
   ngOnInit() {
 
     this.orderedTaskService.getOrderedTaskInfoByEmployeeId(this.employeeId)
+    .subscribe((response:any)=>{
+      this.taskInfo = response;
+      console.log(this.taskInfo)
+      this.currentTask = this.taskInfo.find(e =>{
+        console.log(e.taskStatus);
+        
+        return e.taskStatus!=="COMPLETED"
+    })
+    console.log(this.currentTask)
+    })
 
     this.orderedTaskService.getTaskInfoStream()
     .subscribe((response:any)=>{
       this.taskInfo = response;
+      console.log(this.taskInfo)
+      this.currentTask = this.taskInfo.find(e =>{
+        console.log(e.taskStatus);
+        
+        return e.taskStatus!=="COMPLETED"
     })
+    console.log(this.currentTask)
+    })
+
     }
 
-    ngDoCheck(){
-      this.taskInfo = this.orderedTaskService.getOrderedTaskInfo();
-    }
+    // ngDoCheck(){
+    //   this.orderedTaskService.getTaskInfoStream()
+    //   .subscribe((response:any)=>{
+    //     this.taskInfo = response;
+    //     console.log(this.taskInfo)
+    //     this.currentTask = this.taskInfo.find(e =>{
+    //       console.log(e.taskStatus);
+          
+    //       return e.taskStatus!=="COMPLETED"
+    //   })
+    //   console.log(this.currentTask)
+    //   })
+  
+    // }
   }

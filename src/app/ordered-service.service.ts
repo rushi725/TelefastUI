@@ -31,22 +31,30 @@ export class OrderedServiceService {
     }
   }
 
+  startService(orderedServiceId) {
+    const apiUrl = `http://localhost:8081/sfs/startService/${orderedServiceId}`;
+    this._http.put(apiUrl, 'start')
+      .subscribe(e => {
+        console.log(e);
+      });
+  }
+
 
   loadOrderedServices(role, ManagerId) {
     if (role === 'SERVICE MANAGER') {
       const apiUrl = `http://localhost:8081/sfs/orderedServices/serviceManager/${ManagerId}`;
       this._http.get(apiUrl)
-    .subscribe((response: any) => {
-      this.orderedServicesForServiceManager = response;
-      this.publishStreamForServiceManager();
-    });
+        .subscribe((response: any) => {
+          this.orderedServicesForServiceManager = response;
+          this.publishStreamForServiceManager();
+        });
     } else {
       const apiUrl = `http://localhost:8081/sfs/orderedServices/projectManager/${ManagerId}`;
       this._http.get(apiUrl)
-      .subscribe((response: any) => {
-        this.orderedServicesForProjectManager = response;
-        this.publishStreamProjectManager();
-      });
+        .subscribe((response: any) => {
+          this.orderedServicesForProjectManager = response;
+          this.publishStreamProjectManager();
+        });
     }
 
   }
