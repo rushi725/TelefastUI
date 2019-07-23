@@ -71,7 +71,7 @@ export class UserService {
     
   }
   getRole(){
-    let url=`http://localhost:8081/sfs/user/${this.user}/getUserRole`;
+    let url=`http://localhost:8081/user/getUserRole/${this.user}`;
     return this._http.get(url)
   }
 

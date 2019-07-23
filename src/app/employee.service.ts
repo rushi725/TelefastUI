@@ -28,19 +28,19 @@ export class EmployeeService {
         "Authorization": `Bearer ${this.userService.getUserAuthToken()}`
       })
     }
-    let apiUrl=`http://localhost:8081/sfs/employees/${formData.teamId}`;
-    let url = `http://localhost:8081/sfs/employees/id/${formData.contactNumber}`
+    let apiUrl=`http://localhost:8081/employees/${formData.teamId}`;
+    let url = `http://localhost:8081/employees/id/${formData.contactNumber}`
     this._http.post(apiUrl,this.employee,httpOptions)
     .subscribe((e:any)=>{
       console.log(e);
       this._http.get(url).subscribe((e:any)=>{
-        this.postUser(e,httpOptions) 
+      this.postUser(e,httpOptions) 
       })
     })
   }
   postUser(e,httpOptions){
-    let apiUrl=`http://localhost:8081/sfs/user/register/${e}`;
-    console.log(httpOptions.Authorization)
+    let apiUrl=`http://localhost:8081/user/register/${e}`;
+    
     this._http.post(apiUrl,this.user,httpOptions)
     .subscribe((e:any)=>{
       console.log(e);
@@ -49,12 +49,12 @@ export class EmployeeService {
  
 
   getAvailableEmployees(teamId) {
-    const apiUrl = `http://localhost:8081/sfs/employees/${teamId}/employees`;
+    const apiUrl = `http://localhost:8081/employees/${teamId}/employees`;
     return this._http.get(apiUrl);
   }
 
   getEmployeeStream() {
-    const api = 'http://localhost:8081/sfs/employees';
+    const api = 'http://localhost:8081/employees';
     return this._http.get(api);
   }
 }
