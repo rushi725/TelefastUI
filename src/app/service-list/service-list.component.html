@@ -9,11 +9,12 @@
     <hr>
         <div class="row">
             <div *ngFor = "let ser of services" class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card shadow-sm">
+                <a [routerLink]="['/sworkflow']" [queryParams]="{ serviceId: ser.id}"><div class="card shadow-sm">
                    <div class="card-body">
                        <h5>{{ser.name}}</h5>
                    </div>
               </div>
+            </a>
           </div>  
     </div>
 

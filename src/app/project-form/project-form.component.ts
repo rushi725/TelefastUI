@@ -17,9 +17,9 @@ export class ProjectFormComponent implements OnInit {
 
   myControl = new FormControl();
 
-  projectManager={
-    "id":5
-  }
+  projectManager = {
+    'id': 5
+  };
 
   cid = this.myControl.value;
   isSubmitted = false;
@@ -51,13 +51,17 @@ export class ProjectFormComponent implements OnInit {
       this.customerOptions = e;
     });
 
+     this.customerService.getCustomerStream2()
+     .subscribe((e: any) => this.customerOptions = e);
+
      this.projectForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       // desc: '',
-      progress:0,
+      progress: 0,
       customer: '',
       startDate: '',
       deliveryDate: '',
+      description: '',
       projectManager: {id: this.projectManagerId}
     });
      this.isSubmitted = false;
@@ -93,7 +97,7 @@ export class ProjectFormComponent implements OnInit {
       console.log(formModel);
       this.projectService.addProject(formModel);
       this.isSubmitted = true;
-      this.projectService.addProject(formModel);     
+      this.projectService.addProject(formModel);
     } else {
       console.log('invalid form..');
     }

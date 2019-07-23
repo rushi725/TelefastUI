@@ -11,9 +11,9 @@ export class OrderedTaskListComponent implements OnInit {
 
   constructor(private orderedTaskservice: OrderedTaskService, private modalService: NgbModal ) { }
 
-  teamManagerId=14;
-  orderedTasks:Array<any> = [];
-  isClicked=false;
+  teamManagerId = 112;
+  orderedTasks: Array<any> = [];
+  isClicked = false;
   orderedTask;
 
   ngOnInit() {
@@ -21,20 +21,20 @@ export class OrderedTaskListComponent implements OnInit {
 
 
     this.orderedTaskservice.getOrderedTaskStream()
-    .subscribe((response:any)=>{
-      this.orderedTasks =response;
-    })
+    .subscribe((response: any) => {
+      this.orderedTasks = response;
+    });
 
   }
 
-  ngDoCheck(){
+  ngDoCheck() {
 
-    this.orderedTasks=this.orderedTaskservice.getOrderedTaskList();
+    this.orderedTasks = this.orderedTaskservice.getOrderedTaskList();
 
   }
 
-  cancelTask(orderedTask){
-    this.orderedTaskservice.cancelOrderedTask(orderedTask.orderTaskId,this.teamManagerId);
+  cancelTask(orderedTask) {
+    this.orderedTaskservice.cancelOrderedTask(orderedTask.orderTaskId, this.teamManagerId);
   }
 
   transferTask(orderedTask) {

@@ -62,6 +62,9 @@ export class OrderedServiceService {
   addOrderedServices(service) {
     const apiUrl = 'http://localhost:8081/sfs/orderedServices';
     this._http.post(apiUrl, service)
-      .subscribe();
+      .subscribe(e => {
+        this.orderedServicesForProjectManager.push(e);
+        this.publishStreamProjectManager();
+      });
   }
 }

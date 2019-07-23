@@ -16,32 +16,32 @@ export interface Status {
 })
 export class StatusChangeComponent implements OnInit {
 
-  @Input("value") employeeId;
+  @Input('value') employeeId;
   taskInfo: any = {};
 
 
-  Status: Array<any> = []
+  Status: Array<any> = [];
 
-  constructor(private fb: FormBuilder, 
+  constructor(private fb: FormBuilder,
               private statusService: StatusService,
-              private orderedTaskService:OrderedTaskService) { }
+              private orderedTaskService: OrderedTaskService) { }
 
 
   statusForm: FormGroup;
 
   ngOnInit() {
 
-    this.orderedTaskService.getOrderedTaskInfoByEmployeeId(this.employeeId)
+    this.orderedTaskService.getOrderedTaskInfoByEmployeeId(this.employeeId);
 
     this.orderedTaskService.getTaskInfoStream()
-    .subscribe((response:any)=>{
+    .subscribe((response: any) => {
       this.taskInfo = response;
-    })
+    });
 
     this.statusService.getStatus()
       .subscribe((response: any) => {
         this.Status = response;
-      })
+      });
 
     this.statusForm = this.fb.group({
       status: ['']
@@ -55,7 +55,7 @@ export class StatusChangeComponent implements OnInit {
 
   }
 
-  ngDoCheck(){
+  ngDoCheck() {
     this.taskInfo = this.orderedTaskService.getOrderedTaskInfo();
   }
 
@@ -64,9 +64,9 @@ export class StatusChangeComponent implements OnInit {
 
     const statusObject = this.statusForm.value;
 
-    let orderedTaskId = this.taskInfo.orderedTask.orderTaskId;
+    const orderedTaskId = this.taskInfo.orderedTask.orderTaskId;
 
-    this.orderedTaskService.changeTaskStatus(this.employeeId,orderedTaskId,statusObject.status);
+    this.orderedTaskService.changeTaskStatus(this.employeeId, orderedTaskId, statusObject.status);
 
   }
 }

@@ -18,7 +18,7 @@ export class ProjectManagerComponent implements OnInit {
   serviceExists = true;
   orderedServices: any = [];
   type = 'PROJECT MANAGER';
-  projectManagerId = 60;
+  projectManagerId = 9;
   project = null;
 
   ngOnInit() {
@@ -32,7 +32,8 @@ export class ProjectManagerComponent implements OnInit {
 
     this.projectService.getProjectStream().subscribe((e: any) => this.project = e.project);
   }
-  ngDoCheck() {
-    this.orderedServices = this.orderedService.getOrderedServices(this.type);
-  }
+
+  // ngDoCheck() {
+  //   this.orderedServices = this.orderedService.getOrderedServices(this.type);
+  // }
 }

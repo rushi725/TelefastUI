@@ -21,7 +21,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let orderedService of orderedServices" class="shadow-sm mx-2">
-                <td>{{orderedService.service.name}}</td>
+                <a [routerLink]="['/workflow']" [queryParams]="{ orderedServiceId: orderedService.orderId, serviceId: orderedService.service.id }"><td>{{orderedService.service.name}}</td></a>
                 <td><span [ngClass]="{'bg bg-info':true, 'rounded-lg':true, 'border border-dark':true, 'p-2':true,
                     'bg bg-success':orderedService.serviceStatus==='COMPLETED',
                                'bg bg-danger':orderedService.serviceStatus==='CANCELLED',

@@ -22,6 +22,10 @@ export class CustomerService {
     return this._http.get(apiUrl);
   }
 
+  getCustomerStream2() {
+    return this.customerStream;
+  }
+
   getCustomers() {
     const apiUrl = 'http://localhost:8081/sfs/customer';
     this._http.get(apiUrl)
@@ -29,7 +33,6 @@ export class CustomerService {
       this.customerList = e;
     });
     this.publishStream();
-
   }
 
   addCustomer(customer) {
@@ -42,6 +45,6 @@ export class CustomerService {
   }
 
   publishStream() {
-    this.customerStream.next({customerList: this.customerList});
+    this.customerStream.next(this.customerList);
   }
 }
