@@ -58,6 +58,7 @@ import { StaticWorkflowService } from './static-workflow.service';
 import { TaskHistoryComponent } from './task-history/task-history.component';
 import { TeamInfoComponent } from './team-info/team-info.component';
 
+
 const routes: Routes = [
   { path: '', component: NavbarComponent},
   { path: 'dashboard', component: ServiceListComponent },

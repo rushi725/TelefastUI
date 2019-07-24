@@ -22,11 +22,14 @@
     <div class="form-group">
       <label>Start Date:</label>
       <input type="date" class="form-control" formControlName="startDate" />
+      <div class="text-danger" *ngIf="errors.startDate">{{errors.startDate}}</div>
     </div>
 
     <div class="form-group">
       <label>Expected Delivery Date:</label>
       <input type="date" class="form-control" formControlName="deliveryDate" />
+      <div class="text-danger">{{errors.date}}</div>
     </div>
     <button class="btn btn-dark">submit</button>
+    
 </form>

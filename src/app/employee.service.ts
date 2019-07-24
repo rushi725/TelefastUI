@@ -10,6 +10,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 export class EmployeeService {
   employee = {};
   user = {};
+  password=''
   constructor(private userService: UserService, private _http: HttpClient) { }
   postEmployeeUser(formData) {
     this.employee['firstName'] = formData.firstName;
