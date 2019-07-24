@@ -56,8 +56,8 @@ export class ProjectFormComponent implements OnInit {
       // desc: '',
       progress:0,
       customer: '',
-      startDate: '',
-      deliveryDate: '',
+      startDate: ['',[Validators.required]],
+      deliveryDate: ['',[Validators.required]],
       projectManager: {id: this.projectManagerId}
     });
      this.isSubmitted = false;

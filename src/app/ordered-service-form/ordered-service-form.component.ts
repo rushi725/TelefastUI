@@ -41,8 +41,8 @@ export class OrderedServiceFormComponent implements OnInit {
     this.orderedServiceForm = this.fb.group({
       installationAddress: '',
       progress: 0,
-      startDate: '',
-      deliveryDate: '',
+      startDate: ['',[Validators.required]],
+      deliveryDate: ['',[Validators.required]],
       serviceStatus: 'NOT_STARTED',
       service: [],
       project: this.project,
