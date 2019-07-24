@@ -53,13 +53,14 @@ export class UserService {
         this.decodeToken();
         localStorage.setItem('user-token', e.token)
         this.userStream.next({ isLoggedIn: true })
-        this.getRole().subscribe((e: any) => {
-          this.role = e;
-          console.log(e);
-          if (this.role === 'ROLE_SUPER') {
-            this.router.navigate(['employee'])
-          }
-        });
+        // this.getRole().subscribe((e: any) => {
+        //   this.role = e;
+        //   console.log(e);
+        //   
+        // });
+        if (this.role === 'ROLE_SUPER') {
+              this.router.navigate(['employee'])
+            } 
 
       }, error => {
         this.userStream.next({ isLoggedIn: false });
@@ -68,11 +69,13 @@ export class UserService {
   decodeToken() {
     let decoded = jwt_decode(this.userAuthToken);
     this.user = decoded['sub'];
-
+    this.role=decoded['autho'][0].authority;
+    console.log(decoded['autho'][0].authority);
+    
   }
-  getRole() {
-    let url = `http://localhost:8081/sfs/user/${this.user}/getUserRole`;
-    return this._http.get(url);
-  }
+  // getRole() {
+  //   let url = `http://localhost:8081/sfs/user/${this.user}/getUserRole`;
+  //   return this._http.get(url);
+  // }
 
 }

@@ -17,8 +17,8 @@ export class TransferTaskFormComponent implements OnInit {
   employees: any[] = [];
   transferTaskForm: FormGroup;
   errors = {};
-  teamManagerId = 14;
-  teamId=4;
+  teamManagerId = 12;
+  teamId=3;
 
   isSubmitted = false;
 
@@ -36,7 +36,13 @@ export class TransferTaskFormComponent implements OnInit {
     .subscribe((response:any)=>{
       this.employees = response;
       this.employees = this.employees.filter(e=>e.firstName!=this.orderedTask.employee.firstName)
+      console.log(this.employees)
     })
+
+    // this.employeeService.getEmployeeStream()
+    // .subscribe((response:any)=>{
+    //   this.employees=response;
+    // })
 
 
     this.isSubmitted = false;
@@ -74,7 +80,7 @@ export class TransferTaskFormComponent implements OnInit {
 
       //have to pass manager id for getting tasks by manager id
 
-      this.orderedTaskService.transferTaskToEmployeeId(this.orderedTask.orderTaskId,employee.teamMember.id,this.teamManagerId);
+      this.orderedTaskService.transferTaskToEmployeeId(this.orderedTask.orderTaskId,employee.teamMember.id,this.teamManagerId)
 
     } else {
       console.log('invalid form..');

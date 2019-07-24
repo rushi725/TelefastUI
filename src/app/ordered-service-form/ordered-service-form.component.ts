@@ -34,7 +34,7 @@ export class OrderedServiceFormComponent implements OnInit {
         this.serviceOptions = e;
       });
 
-    this.employeeService.getEmployeeStream()
+    this.employeeService.getServiceManagers()
       .subscribe((e: any) => {
         this.managerOptions = e;
       });

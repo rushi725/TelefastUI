@@ -8,10 +8,10 @@ import { HttpClient } from '@angular/common/http';
 export class OrderedServiceService {
   orderedServicesForServiceManagerStream: Subject<any> = new Subject();
   orderedServicesForProjectManagerStream: Subject<any> = new Subject();
-  orderedServicesForServiceManager: any = [];
+  orderedServicesForServiceManager: Array<any> = [];
 
-  orderedServicesForProjectManager: any = [];
-
+  orderedServicesForProjectManager: Array<any> = [];
+  managerId;
 
   constructor(private _http: HttpClient) { }
 
@@ -34,22 +34,23 @@ export class OrderedServiceService {
   startService(orderedServiceId) {
     const apiUrl = `http://localhost:8081/sfs/startService/${orderedServiceId}`;
     this._http.put(apiUrl, 'start')
-      .subscribe(e => {
-        console.log(e);
+      .subscribe((e: any) => {
+          this.loadOrderedServices('SERVICE MANAGER',this.managerId);
       });
   }
 
 
-  loadOrderedServices(role, ManagerId) {
+  loadOrderedServices(role, managerId) {
+    this.managerId = managerId;
     if (role === 'SERVICE MANAGER') {
-      const apiUrl = `http://localhost:8081/sfs/orderedServices/serviceManager/${ManagerId}`;
+      const apiUrl = `http://localhost:8081/sfs/orderedServices/serviceManager/${managerId}`;
       this._http.get(apiUrl)
         .subscribe((response: any) => {
           this.orderedServicesForServiceManager = response;
           this.publishStreamForServiceManager();
         });
     } else {
-      const apiUrl = `http://localhost:8081/sfs/orderedServices/projectManager/${ManagerId}`;
+      const apiUrl = `http://localhost:8081/sfs/orderedServices/projectManager/${managerId}`;
       this._http.get(apiUrl)
         .subscribe((response: any) => {
           this.orderedServicesForProjectManager = response;
@@ -58,6 +59,8 @@ export class OrderedServiceService {
     }
 
   }
+
+
   publishStreamForServiceManager() {
     this.orderedServicesForServiceManagerStream.next(this.orderedServicesForServiceManager);
   }

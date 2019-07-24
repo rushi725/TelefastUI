@@ -29,7 +29,7 @@ export class EmployeeService {
         "Authorization": `Bearer ${this.userService.getUserAuthToken()}`
       })
     };
-    let apiUrl = `http://localhost:8081/sfs/employees`;
+    let apiUrl = `http://localhost:8081/sfs/employees/${formData.team}`;
     this._http.post(apiUrl, this.employee, httpOptions)
       .subscribe((e: any) => {
         console.log(e);
@@ -51,7 +51,12 @@ export class EmployeeService {
     return this._http.get(apiUrl);
   }
 
-  getEmployeeStream() {
+  getAllEmployees(teamId){
+    const apiUrl = `http://localhost:8081/sfs/employees/${teamId}/allEmployees`;
+    return this._http.get(apiUrl);
+  }
+
+  getServiceManagers() {
     const api = 'http://localhost:8081/sfs/employees/serviceManager';
     return this._http.get(api);
   }

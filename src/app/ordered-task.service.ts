@@ -74,9 +74,9 @@ export class OrderedTaskService {
     let reason = "task cancelled BFO";
     let apiUrl = `http://localhost:8081/sfs/orderedTask/${orderedTaskId}/cancel`;
     this._http.put(apiUrl, reason)
-      .subscribe(e => {
-        this.getOrderedTasksByTeamManager(teamManagerId);
-      })
+      // .subscribe(e => {
+      //   this.getOrderedTasksByTeamManager(teamManagerId);
+      // })
   }
 
   transferTaskToEmployeeId(orderedTaskId, employeeId, teamManagerId) {
@@ -88,7 +88,10 @@ export class OrderedTaskService {
     let apiUrl = `http://localhost:8081/sfs/assignTask/${orderedTaskId}/${employeeId}`;
     this._http.put(apiUrl, send)
       .subscribe(e => {
-        this.getOrderedTasksByTeamManager(teamManagerId);
+        this.getOrderedTasksByTeamManager(teamManagerId)
+        .subscribe((response:any)=>{
+          this.orderedTasksStream.next(response);
+        })
       })
 
   }
@@ -128,7 +131,10 @@ export class OrderedTaskService {
     let apiUrl = `http://localhost:8081/sfs/orderedTask/${orderedTaskId}/reject`;
     this._http.put(apiUrl, send)
       .subscribe(e => {
-        this.getOrderedTasksByTeamManager(teamManagerId);
+        this.getOrderedTasksByTeamManager(teamManagerId)
+      .subscribe((response:any)=>{
+        this.orderedTasksStream.next(response);
+      })
       })
   }
 

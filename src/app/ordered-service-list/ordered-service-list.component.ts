@@ -19,6 +19,15 @@ export class OrderedServiceListComponent implements OnInit {
 
   ngOnInit(){
 
+
+    this.orderedServiceService.getOrderedServiceStream(this.type)
+    .subscribe((response:any)=>{
+      this.orderedServices = response;
+
+    })
+
+
+
   }
 
   closeResult: string;

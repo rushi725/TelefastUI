@@ -22,6 +22,9 @@
 <!-- <div class="container" *ngIf="true">
     <h3>No Task Allocated right Now!!!!</h3>
 </div> -->
+<div class="card-body" *ngIf="!currentTask">
+    <h3>No task is allocated yet</h3>
+</div>
 
 
 <div class="card shadows-sm" *ngIf="currentTask">

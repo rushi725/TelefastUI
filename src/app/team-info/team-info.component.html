@@ -1,0 +1,24 @@
+<div class="orderedTask">
+        <div class="row">
+            <h3 class="col-sm-12 col-md-8">Info of Employees in a Team</h3>
+        </div>
+        <table class="table table-responsive-md">
+            <thead class="thead-dark shadow mb-2">
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Available</th>
+                    <th>Address </th>
+                    <th>Contact No</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employee of employeeInfo" class="shadow-sm mx-2">
+                    <td>{{employee.firstName}} {{employee.lastName}}</td>
+                    <td *ngIf="employee.availableStatus"><i class="fa fa-check" aria-hidden="true"></i></td>
+                    <td *ngIf="!employee.availableStatus"><i class="fa fa-times" aria-hidden="true"></i></td>
+                    <td>{{employee.empAddress}}</td>
+                    <td>{{employee.empContactNo}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>

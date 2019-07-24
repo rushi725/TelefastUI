@@ -55,6 +55,8 @@ import { OrderedServiceFormComponent } from './ordered-service-form/ordered-serv
 import { WorkflowResolverService } from './workflow-resolver.service';
 import { ViewStaticWorkflowComponent } from './view-static-workflow/view-static-workflow.component';
 import { StaticWorkflowService } from './static-workflow.service';
+import { TaskHistoryComponent } from './task-history/task-history.component';
+import { TeamInfoComponent } from './team-info/team-info.component';
 
 const routes: Routes = [
   { path: '', component: NavbarComponent},
@@ -107,7 +109,9 @@ const routes: Routes = [
     CustomerFormComponent,
     CreateWorkflowComponent,
     OrderedServiceFormComponent,
-    ViewStaticWorkflowComponent
+    ViewStaticWorkflowComponent,
+    TaskHistoryComponent,
+    TeamInfoComponent
   ],
   imports: [
     BrowserModule,

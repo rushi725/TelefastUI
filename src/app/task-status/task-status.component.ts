@@ -11,7 +11,7 @@ import { VirtualTimeScheduler } from 'rxjs';
 })
 export class TaskStatusComponent implements OnInit {
 
-  employeeId = 115;
+  employeeId = 6;
   taskInfo: Array<any> = [];
   currentTask;
   constructor(private orderedTaskService: OrderedTaskService) { }
@@ -21,41 +21,21 @@ export class TaskStatusComponent implements OnInit {
     this.orderedTaskService.getOrderedTaskInfoByEmployeeId(this.employeeId)
     .subscribe((response:any)=>{
       this.taskInfo = response;
-      console.log(this.taskInfo)
       this.currentTask = this.taskInfo.find(e =>{
-        console.log(e.taskStatus);
         
         return e.taskStatus!=="COMPLETED"
     })
-    console.log(this.currentTask)
     })
 
     this.orderedTaskService.getTaskInfoStream()
     .subscribe((response:any)=>{
       this.taskInfo = response;
-      console.log(this.taskInfo)
       this.currentTask = this.taskInfo.find(e =>{
-        console.log(e.taskStatus);
         
         return e.taskStatus!=="COMPLETED"
     })
-    console.log(this.currentTask)
     })
 
     }
 
-    // ngDoCheck(){
-    //   this.orderedTaskService.getTaskInfoStream()
-    //   .subscribe((response:any)=>{
-    //     this.taskInfo = response;
-    //     console.log(this.taskInfo)
-    //     this.currentTask = this.taskInfo.find(e =>{
-    //       console.log(e.taskStatus);
-          
-    //       return e.taskStatus!=="COMPLETED"
-    //   })
-    //   console.log(this.currentTask)
-    //   })
-  
-    // }
   }
