@@ -14,12 +14,12 @@ import { Subject } from 'rxjs';
 export class ProjectFormComponent implements OnInit {
 
   @Input('value') projectManagerId;
-
+  invalidForm=''
   myControl = new FormControl();
 
-  projectManager={
-    "id":5
-  }
+  projectManager = {
+    'id': 5
+  };
 
   cid = this.myControl.value;
   isSubmitted = false;
@@ -51,15 +51,19 @@ export class ProjectFormComponent implements OnInit {
       this.customerOptions = e;
     });
 
+     this.customerService.getCustomerStream2()
+     .subscribe((e: any) => this.customerOptions = e);
+
      this.projectForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       // desc: '',
-      progress:0,
+      progress: 0,
       customer: '',
-      startDate: ['',[Validators.required]],
-      deliveryDate: ['',[Validators.required]],
+      startDate: ['',Validators.required],
+      deliveryDate: '',
+      description: '',
       projectManager: {id: this.projectManagerId}
-    });
+    }, {validator: this.dateLessThan('startDate', 'deliveryDate')});
      this.isSubmitted = false;
 
      const nameControl = this.projectForm.get('name');
@@ -82,7 +86,20 @@ export class ProjectFormComponent implements OnInit {
           delete this.errors['name'];
         }
       });
-  }
+      const nameControl1 = this.projectForm.get('startDate');
+      nameControl1.valueChanges
+      .subscribe(e=>{
+        let today = new Date();
+        let date =today.getFullYear()+'-'+(`0${today.getMonth()+1}`)+'-'+today.getDate();
+        if(nameControl1.value<date){
+          this.errors['startDate']="project cannot start in past";
+        }
+        else{
+          this.errors['startDate']=""
+        }
+      })
+    }
+  
 
   handleBlur(control) {
     control.setValue(control.value);
@@ -93,10 +110,21 @@ export class ProjectFormComponent implements OnInit {
       console.log(formModel);
       this.projectService.addProject(formModel);
       this.isSubmitted = true;
-      this.projectService.addProject(formModel);     
+      this.projectService.addProject(formModel);
     } else {
-      console.log('invalid form..');
+      this.errors["date"]="end date cannot be before start date"
     }
   }
-
+  dateLessThan(from: string, to: string) {
+    return (group: FormGroup): {[key: string]: any} => {
+      let f = group.controls[from];
+      let t = group.controls[to];
+      if (f.value > t.value) {
+        return {
+          dates: "Date from should be less than Date to"
+        };
+      }
+      return {};
+    }
+}
 }

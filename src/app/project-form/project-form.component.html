@@ -5,10 +5,10 @@
       formControlName="name" />
     <div class="text-danger">{{errors.name}}</div>
   </div>
-  <!-- <div class="form-group">
+  <div class="form-group">
       <label>Description</label>
-      <textarea type="text" class="form-control"></textarea>
-    </div> -->
+      <textarea type="text" class="form-control"  formControlName="description"></textarea>
+    </div>
 
   <mat-form-field>
     <mat-label>Select Customer</mat-label>
@@ -22,11 +22,14 @@
     <div class="form-group">
       <label>Start Date:</label>
       <input type="date" class="form-control" formControlName="startDate" />
+      <div class="text-danger" *ngIf="errors.startDate">{{errors.startDate}}</div>
     </div>
 
     <div class="form-group">
       <label>Expected Delivery Date:</label>
       <input type="date" class="form-control" formControlName="deliveryDate" />
+      <div class="text-danger">{{errors.date}}</div>
     </div>
     <button class="btn btn-dark">submit</button>
+    
 </form>

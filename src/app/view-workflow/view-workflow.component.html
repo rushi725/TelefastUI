@@ -12,7 +12,7 @@
               <h6 class="nod-status shadow bg bg-success">{{node.task.taskStatus}}</h6>
             </span>
             <span>
-              <h6 class="nod-status shadow" *ngIf = "node.task.employee">{{node.task.employee}}</h6>
+              <h6 class="nod-status shadow" *ngIf = "node.task.employee">{{node.task.employee.firstName}}</h6>
             </span>
           </div>
         </li>
@@ -30,7 +30,7 @@
               <h6 class="nod-status shadow bg bg-secondary">{{node.task.taskStatus}}</h6>
             </span>
             <span>
-              <h6 class="nod-status shadow" *ngIf = "node.task.employee">{{node.task.employee}}</h6>
+              <h6 class="nod-status shadow" *ngIf = "node.task.employee">{{node.task.employee.firstName}}</h6>
             </span>
 
           </div>

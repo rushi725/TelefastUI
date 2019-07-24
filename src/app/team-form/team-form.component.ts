@@ -8,7 +8,7 @@ import { TeamService } from '../team.service';
   styleUrls: ['./team-form.component.scss']
 })
 export class TeamFormComponent implements OnInit {
-  isSubmitted=false;
+  isSubmitted = false;
   teamForm: FormGroup;
   errors = {};
 
@@ -17,7 +17,6 @@ export class TeamFormComponent implements OnInit {
 
   ngOnInit() {
     this.teamForm = this.fb.group({
-      manager_id : [],
       name: ['', [Validators.required, Validators.minLength(3)]],
       desc: ''
     });

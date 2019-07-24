@@ -53,6 +53,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { CreateWorkflowComponent } from './create-workflow/create-workflow.component';
 import { OrderedServiceFormComponent } from './ordered-service-form/ordered-service-form.component';
 import { WorkflowResolverService } from './workflow-resolver.service';
+import { ViewStaticWorkflowComponent } from './view-static-workflow/view-static-workflow.component';
+import { StaticWorkflowService } from './static-workflow.service';
 
 
 const routes: Routes = [
@@ -69,11 +71,12 @@ const routes: Routes = [
   {path : 'employee', component: EmployeeComponent},
   { path: 'workflow',
     component: ViewWorkflowComponent,
-    resolve: {
-      taskWorkflow: WorkflowResolverService
-    }
+    // resolve: {
+    //   taskWorkflow: WorkflowResolverService
+    // }
   },
-  { path: 'cworkflow', component: CreateWorkflowComponent }
+  { path: 'cworkflow', component: CreateWorkflowComponent },
+  { path: 'sworkflow', component: ViewStaticWorkflowComponent }
 ];
 
 @NgModule({
@@ -104,7 +107,8 @@ const routes: Routes = [
     ProjectFormComponent,
     CustomerFormComponent,
     CreateWorkflowComponent,
-    OrderedServiceFormComponent
+    OrderedServiceFormComponent,
+    ViewStaticWorkflowComponent
   ],
   imports: [
     BrowserModule,
@@ -128,7 +132,7 @@ const routes: Routes = [
     MatButtonToggleModule,
     HttpClientModule
   ],
-  providers: [WorkflowService],
+  providers: [WorkflowService, StaticWorkflowService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

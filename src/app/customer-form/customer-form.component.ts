@@ -31,11 +31,11 @@ export class CustomerFormComponent implements OnInit {
          //console.log(e)
       });
 
-      const lastNameControl = this.taskForm.get('lastName');
-      lastNameControl.valueChanges
-        .subscribe(e => {
-           //console.log(e)
-        });
+    const lastNameControl = this.taskForm.get('lastName');
+    lastNameControl.valueChanges
+      .subscribe(e => {
+          //console.log(e)
+      });
 
     firstNameControl.statusChanges
       .subscribe(e => {
@@ -51,22 +51,6 @@ export class CustomerFormComponent implements OnInit {
           delete this.errors['fisrtName'];
         }
       });
-
-      lastNameControl.statusChanges
-      .subscribe(e => {
-        if (e === 'INVALID') {
-          const errors = lastNameControl.errors;
-          if (errors.required) {
-            this.errors['lastName'] = ' This field is required';
-          }
-          if (errors.minlength) {
-            this.errors['lastName'] = ' This field requires min 3 chars';
-          }
-        } else {
-          delete this.errors['lastName'];
-        }
-      });
-
 
   }
   handleBlur(control) {

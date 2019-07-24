@@ -53,9 +53,11 @@ export class WorkflowService {
     const api = `http://localhost:8081/sfs/serviceWorkFlow/${serviceId}`;
     this.http.get(api).subscribe((e: any) => {
       this.workFlow = e;
+      console.log(e);
       const api2 = `http://localhost:8081/sfs/orderedTask/${orderedServiceId}`;
       this.http.get(api2).subscribe((e: any) => {
         this.orderedTasks = e;
+        console.log(e);
         this.createWorkflow();
       });
     });
@@ -63,7 +65,7 @@ export class WorkflowService {
   createWorkflow() {
       this.taskWorkflow = [];
       const queue: Array<TaskNode> = [];
-      const currentTasks: Array<any> = this.orderedTasks.filter(t => t.task.id === this.workFlow.find(e => !e.nextTasks).task.id);
+      const currentTasks: Array<any> = this.orderedTasks.filter(t => t.task.id === this.workFlow.find(e => !e.prevTask).task.id);
       currentTasks.forEach(e => {
         const taskNode = new TaskNode(e);
         queue.push(taskNode);
@@ -71,7 +73,7 @@ export class WorkflowService {
       });
       while (queue.length !== 0) {
           const node: TaskNode = queue.shift();
-          const childs: Array<any> = this.workFlow.filter(e => e.nextTasks === node.task.task.id);
+          const childs: Array<any> = this.workFlow.filter(e => e.prevTask === node.task.task.id);
           if (childs) {
             const childrenTasks: Array<any> = this.orderedTasks.filter(t => childs.find(e => e.task.id === t.task.id));
             childrenTasks.forEach(e => {

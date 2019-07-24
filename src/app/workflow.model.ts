@@ -3,5 +3,5 @@ export class Workflow {
     task;
     team;
     seqNumber;
-    nextTasks;
+    prevTask;
 }
