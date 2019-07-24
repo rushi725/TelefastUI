@@ -55,6 +55,9 @@ import { OrderedServiceFormComponent } from './ordered-service-form/ordered-serv
 import { WorkflowResolverService } from './workflow-resolver.service';
 import { ViewStaticWorkflowComponent } from './view-static-workflow/view-static-workflow.component';
 import { StaticWorkflowService } from './static-workflow.service';
+import { ProjectListComponent } from './project-list/project-list.component';
+import { AddServiceComponent } from './add-service/add-service.component';
+import { ViewOrderedServicesComponent } from './view-ordered-services/view-ordered-services.component';
 
 const routes: Routes = [
   { path: '', component: NavbarComponent},
@@ -75,7 +78,9 @@ const routes: Routes = [
     // }
   },
   { path: 'cworkflow', component: CreateWorkflowComponent },
-  { path: 'sworkflow', component: ViewStaticWorkflowComponent }
+  { path: 'sworkflow', component: ViewStaticWorkflowComponent },
+  { path: 'addService', component: AddServiceComponent},
+  { path: 'vservices', component: ViewOrderedServicesComponent}
 ];
 
 @NgModule({
@@ -107,7 +112,10 @@ const routes: Routes = [
     CustomerFormComponent,
     CreateWorkflowComponent,
     OrderedServiceFormComponent,
-    ViewStaticWorkflowComponent
+    ViewStaticWorkflowComponent,
+    ProjectListComponent,
+    AddServiceComponent,
+    ViewOrderedServicesComponent
   ],
   imports: [
     BrowserModule,

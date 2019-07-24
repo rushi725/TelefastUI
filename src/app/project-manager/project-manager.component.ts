@@ -19,18 +19,17 @@ export class ProjectManagerComponent implements OnInit {
   orderedServices: any = [];
   type = 'PROJECT MANAGER';
   projectManagerId = 9;
-  project = null;
+  projects = null;
 
   ngOnInit() {
     this.projectService.getProjectByManager(this.projectManagerId)
-      .subscribe((e: any) => this.project = e
+      .subscribe((e: any) => this.projects = e
       );
 
-    this.orderedService.loadOrderedServices(this.type, this.projectManagerId);
+    // this.orderedService.loadOrderedServices(this.type, this.projectManagerId);
 
-    this.orderedService.getOrderedServiceStream(this.type).subscribe((e: any) => this.orderedServices = e);
-
-    this.projectService.getProjectStream().subscribe((e: any) => this.project = e.project);
+    // this.orderedService.getOrderedServiceStream(this.type).subscribe((e: any) => this.orderedServices = e);
+    this.projectService.getProjectStream().subscribe((e: any) => this.projects = e);
   }
 
   // ngDoCheck() {

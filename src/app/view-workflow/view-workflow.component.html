@@ -9,7 +9,16 @@
           <div class="mat-tree-node">
             <h6 class="nod shadow">{{node.task.task.name}}</h6>
             <span>
-              <h6 class="nod-status shadow bg bg-success">{{node.task.taskStatus}}</h6>
+              <h6 [ngClass]="{
+                'shadow' :true, 
+                'nod-status': true,
+                'bg bg-success': node.task.taskStatus==='COMPLETED',
+                'bg bg-danger': node.task.taskStatus==='CANCELLED',
+                'bg bg-warning': node.task.taskStatus==='PENDING',
+                'bg bg-info': node.task.taskStatus==='IN_PROGRESS',
+                'bg bg-secondary': node.task.taskStatus==='NOT_STARTED',
+                'bg bg-primary': node.task.taskStatus==='SENT_FOR_APPROVAL'
+              }">{{node.task.taskStatus}}</h6>
             </span>
             <span>
               <h6 class="nod-status shadow" *ngIf = "node.task.employee">{{node.task.employee.firstName}}</h6>

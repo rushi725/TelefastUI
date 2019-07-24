@@ -65,7 +65,9 @@ export class WorkflowService {
   createWorkflow() {
       this.taskWorkflow = [];
       const queue: Array<TaskNode> = [];
-      const currentTasks: Array<any> = this.orderedTasks.filter(t => t.task.id === this.workFlow.find(e => !e.prevTask).task.id);
+      const startingTasks: Array<any> = this.workFlow.filter(e => !e.prevTask);
+      const currentTasks: Array<any> = this.orderedTasks.filter(t => startingTasks.find(e => e.task.id === t.task.id));
+      console.log(currentTasks);
       currentTasks.forEach(e => {
         const taskNode = new TaskNode(e);
         queue.push(taskNode);

@@ -10,7 +10,7 @@ import { OrderedTaskService } from '../ordered-task.service';
 })
 export class TransferTaskFormComponent implements OnInit {
 
-  @Input("value") orderedTask;
+  @Input('value') orderedTask;
 
 
   myControl = new FormControl();
@@ -18,13 +18,13 @@ export class TransferTaskFormComponent implements OnInit {
   transferTaskForm: FormGroup;
   errors = {};
   teamManagerId = 14;
-  teamId=4;
+  teamId = 4;
 
   isSubmitted = false;
 
-  constructor(private fb: FormBuilder, 
-              private employeeService:EmployeeService,
-              private orderedTaskService:OrderedTaskService) { }
+  constructor(private fb: FormBuilder,
+              private employeeService: EmployeeService,
+              private orderedTaskService: OrderedTaskService) { }
 
   ngOnInit() {
 
@@ -33,10 +33,10 @@ export class TransferTaskFormComponent implements OnInit {
     });
 
     this.employeeService.getAvailableEmployees(this.teamId)
-    .subscribe((response:any)=>{
+    .subscribe((response: any) => {
       this.employees = response;
-      this.employees = this.employees.filter(e=>e.firstName!=this.orderedTask.employee.firstName)
-    })
+      this.employees = this.employees.filter(e => e.firstName !== this.orderedTask.employee.firstName);
+    });
 
 
     this.isSubmitted = false;
@@ -72,9 +72,9 @@ export class TransferTaskFormComponent implements OnInit {
       const employee = this.transferTaskForm.value;
       this.isSubmitted = true;
 
-      //have to pass manager id for getting tasks by manager id
+      // have to pass manager id for getting tasks by manager id
 
-      this.orderedTaskService.transferTaskToEmployeeId(this.orderedTask.orderTaskId,employee.teamMember.id,this.teamManagerId);
+      this.orderedTaskService.transferTaskToEmployeeId(this.orderedTask.orderTaskId, employee.teamMember.id, this.teamManagerId);
 
     } else {
       console.log('invalid form..');

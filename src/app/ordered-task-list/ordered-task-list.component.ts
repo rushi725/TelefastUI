@@ -11,7 +11,7 @@ export class OrderedTaskListComponent implements OnInit {
 
   constructor(private orderedTaskservice: OrderedTaskService, private modalService: NgbModal ) { }
 
-  teamManagerId = 112;
+  teamManagerId = 115;
   orderedTasks: Array<any> = [];
   isClicked = false;
   orderedTask;
@@ -28,6 +28,28 @@ export class OrderedTaskListComponent implements OnInit {
       this.orderedTasks = response;
     });
 
+  }
+
+  closeResult: string;
+
+  open(content, orderedTask) {
+    this.orderedTask = orderedTask;
+    console.log('Modal open');
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   cancelTask(orderedTask) {

@@ -2,17 +2,17 @@
 <div class="card shadows-sm" >
     <div class="card-header">
         <h3>employee: {{employeeId}}</h3>
-        <h3>taskId: {{currentTask.orderedTask.task.id}}</h3>
+        <h3>taskId: {{currentTask.currentTask.task.id}}</h3>
 
 
-        <h3>{{currentTask.orderedTask.task.name}}</h3>
+        <h3>{{currentTask.currentTask.task.name}}</h3>
     </div>
     <div class="card-body">
         <h4>Project : {{currentTask.orderedService.project.name}}</h4>
         <hr>
         <h4>Service : {{currentTask.orderedService.service.name}}</h4>
         <hr>
-        <h4>Status : <span class="bg bg-info rounded-lg border border-dark p-1">{{currentTask.orderedTask.taskStatus}}</span></h4>
+        <h4>Status : <span class="bg bg-info rounded-lg border border-dark p-1">{{currentTask.currentTask.taskStatus}}</span></h4>
     </div>
     <div class="card-footer">
         <h4>Manager : {{currentTask.employee.firstName}}</h4>
@@ -37,7 +37,17 @@
         <hr>
         <h4>Service : {{currentTask.orderedService.service.name}}</h4>
         <hr>
-        <h4>Status : <span class="bg bg-info rounded-lg border border-dark p-1">{{currentTask.taskStatus}}</span></h4>
+        <h4>Status : <span class="{
+                    'rounded-lg':true, 
+                    'border border-dark':true, 
+                    'p-2':true,
+                    'bg bg-success':currentTask.taskStatus==='COMPLETED',
+                    'bg bg-danger':currentTask.taskStatus==='CANCELLED',
+                    'bg bg-warning':currentTask.taskStatus==='PENDING',
+                    'bg bg-info':currentTask.taskStatus==='IN_PROGRESS',
+                    'bg bg-secondary':currentTask.taskStatus==='NOT_STARTED',
+                    'bg bg-primary':currentTask.taskStatus==='SENT_FOR_APPROVAL'
+                }">{{currentTask.taskStatus}}</span></h4>
     </div>
     <div class="card-footer">
         <h4>Manager : {{currentTask.employee.firstName}}</h4>

@@ -15,6 +15,7 @@ export class EmployeeService {
     this.employee['firstName'] = formData.firstName;
     this.employee["lastName"] = formData.lastName;
     this.employee["empContactNo"] = formData.contactNumber;
+    this.employee["availableStatus"] = true;
     this.user["email"] = formData.email;
     this.employee["empAddress"] = formData.empAddress;
     this.employee["empRole"] = formData.empRole;

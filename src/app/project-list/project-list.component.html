@@ -1,0 +1,82 @@
+<div class="project">
+    <div class="row">
+        <h4 class="col-md-7">Project Manager</h4>
+        <button class="btn btn-outline-dark nav-link mx-auto col-md-2" (click)="open(content)">
+            <span class="fa fa-plus"></span> Add Project
+        </button>
+        <button class="btn btn-outline-dark nav-link mx-auto col-md-2" (click)="open(content2)">
+            <span class="fa fa-plus"></span> Add Customer
+        </button>
+    </div>
+    <hr>
+
+    <table class="table table-responsive-md">
+        <thead class="thead-dark shadow mb-2">
+            <tr>
+                <th>Project</th>
+                <th>Status</th>
+                <th>Progress</th>
+                <th>Start Date</th>
+                <th>Delivery Date</th>
+                <th>Customer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let project of projects" class="shadow-sm mx-2">
+                <a [routerLink]="['/vservices']" [queryParams]="{type: type, projectId: project.projectId}">
+                    <td>{{project.name}}</td>
+                </a>
+                <td><span [ngClass]="{
+                    'rounded-lg':true, 
+                    'border border-dark':true, 
+                    'p-2':true,
+                    'bg bg-success':project.status==='COMPLETED',
+                    'bg bg-danger':project.status==='CANCELLED',
+                    'bg bg-warning':project.status==='PENDING',
+                    'bg bg-info':project.status==='IN_PROGRESS',
+                    'bg bg-secondary':project.status=='NOT_STARTED'
+                }">{{project.status}}</span></td>
+                <td>
+                    <p>
+                        <ngb-progressbar type="success" [value]="project.progress" [striped]="true" [animated]="true">
+                            <i>{{project.progress}}%</i></ngb-progressbar>
+                    </p>
+                </td>
+                <td>{{project.startDate}}</td>
+                <td>{{project.deliveryDate}}</td>
+                <td>{{project.customer.firstName}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Add Project</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <app-project-form [value]="projectManagerId"></app-project-form>
+        </div>
+        <!-- <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">submit</button>
+                </div> -->
+    </ng-template>
+
+    <ng-template #content2 let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Add Customer</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <app-customer-form></app-customer-form>
+        </div>
+        <!-- <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">submit</button>
+                    </div> -->
+    </ng-template>
+</div>

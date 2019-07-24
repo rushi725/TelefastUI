@@ -8,7 +8,7 @@
     </div>
     <hr>
 
-    <table class="table table-responsive-md">
+    <table class="table table-responsive-md" *ngIf = "orderedServices">
         <thead class="thead-dark shadow mb-2">
             <tr>
                 <th>Service</th>
@@ -16,6 +16,7 @@
                 <th>Progress</th>
                 <th *ngIf="type==='PROJECT MANAGER'">Service Manager</th>
                 <th *ngIf="type==='SERVICE MANAGER'">Project Name</th>
+                <th *ngIf="type==='SERVICE MANAGER'">Project Manager</th>
                 <th>Send Message</th>
                 <th *ngIf="type==='SERVICE MANAGER'">Start Service</th>
             </tr>
@@ -23,18 +24,23 @@
         <tbody>
             <tr *ngFor="let orderedService of orderedServices" class="shadow-sm mx-2">
                 <a [routerLink]="['/workflow']" [queryParams]="{ orderedServiceId: orderedService.orderId, serviceId: orderedService.service.id }"><td>{{orderedService.service.name}}</td></a>
-                <td><span [ngClass]="{'bg bg-info':true, 'rounded-lg':true, 'border border-dark':true, 'p-2':true,
+                <td><span [ngClass]="{
+                    'bg bg-info':true, 
+                    'rounded-lg':true, 
+                    'border border-dark':true, 
+                    'p-2':true,
                     'bg bg-success':orderedService.serviceStatus==='COMPLETED',
-                               'bg bg-danger':orderedService.serviceStatus==='CANCELLED',
-                               'bg bg-warning':orderedService.serviceStatus==='PENDING',
-                               'bg bg-info':orderedService.serviceStatus==='IN_PROGRESS',
-                            'bg bg-secondary':orderedService.serviceStatus=='NOT_STARTED'}
-                            ">{{orderedService.serviceStatus}}</span></td>
+                    'bg bg-danger':orderedService.serviceStatus==='CANCELLED',
+                    'bg bg-warning':orderedService.serviceStatus==='PENDING',
+                    'bg bg-info':orderedService.serviceStatus==='IN_PROGRESS',
+                    'bg bg-secondary':orderedService.serviceStatus==='NOT_STARTED'
+                }">{{orderedService.serviceStatus}}</span></td>
                 <td><p>
                     <ngb-progressbar type="success" [value]="orderedService.progress" [striped]="true" [animated]="true"><i>{{orderedService.progress}}%</i></ngb-progressbar>
                 </p></td>
                 <td *ngIf="type==='PROJECT MANAGER'">{{orderedService.employee.firstName}} </td>
                 <td *ngIf="type==='SERVICE MANAGER'">{{orderedService.project.name}}</td>
+                <td *ngIf="type==='SERVICE MANAGER'">{{orderedService.project.projectManager.firstName}}</td>
                 <td><button class="btn btn-outline-dark"><i class="fa fa-envelope" style="font-size: 26px"></i></button></td>
                 <td *ngIf="type==='SERVICE MANAGER'"><button *ngIf="orderedService.serviceStatus==='NOT_STARTED'" class="btn btn-success" (click)="startService(orderedService.orderId)">Start Service</button></td>
             </tr>

@@ -1,4 +1,5 @@
-<form [formGroup]="projectForm" (ngSubmit)="handleFormSubmit($event)" *ngIf="true">
+<div *ngIf = "isSubmitted">Project Added Successfully</div>
+<form [formGroup]="projectForm" (ngSubmit)="handleFormSubmit($event)" *ngIf="!isSubmitted">
   <div class="form-group">
     <label>Name:</label>
     <input (blur)="handleBlur(projectForm.get('name'))" autofocus class="form-control" [class.is-invalid]="errors.name"

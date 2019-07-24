@@ -58,6 +58,7 @@ export class ProjectFormComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3)]],
       // desc: '',
       progress: 0,
+      status: 'NOT_STARTED',
       customer: '',
       startDate: '',
       deliveryDate: '',
@@ -97,7 +98,6 @@ export class ProjectFormComponent implements OnInit {
       console.log(formModel);
       this.projectService.addProject(formModel);
       this.isSubmitted = true;
-      this.projectService.addProject(formModel);
     } else {
       console.log('invalid form..');
     }

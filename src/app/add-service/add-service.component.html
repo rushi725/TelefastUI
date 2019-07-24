@@ -1,0 +1,4 @@
+<app-ordered-service-list [value]="orderedServices" [type]="type" [project]="project"></app-ordered-service-list>
+
+<hr/>
+<button class="btn btn-outline-dark" *ngIf ="orderedServices" [routerLink]="['/vservices']" [queryParams]="{type: type, projectId: project.projectId}">Submit Services</button>

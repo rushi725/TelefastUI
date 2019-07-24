@@ -1,8 +1,9 @@
-<div class="card shadow">
-    <div class="card-header">
+<!-- <div class="card shadow">
+     <div class="card-header">
         <div>Transfer Task</div>
     </div>
-    <div class="card-body">
+    <div class="card-body"> --> 
+        <div *ngIf="isSubmitted">Task Transfered Succesfully</div>
         <form [formGroup]="transferTaskForm" class="example-form" (ngSubmit)="handleFormSubmit($event)"
             *ngIf="!isSubmitted">
             <mat-form-field class="example-full-width">
@@ -14,5 +15,5 @@
             </mat-form-field>
             <button class="btn btn-dark">Sumbit</button>
         </form>
-    </div>
-</div>
+    <!-- </div>
+</div> -->
