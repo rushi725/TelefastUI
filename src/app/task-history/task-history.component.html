@@ -1,0 +1,33 @@
+<div class="orderedTask">
+    <div class="row">
+        <h3 class="col-sm-12 col-md-8">History of Previous Tasks</h3>
+    </div>
+    <table class="table table-responsive-md">
+        <thead class="thead-dark shadow mb-2">
+            <tr>
+                <th>Task</th>
+                <th>Status</th>
+                <th>Start Date</th>
+                <th>Delivery Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let orderedTask of orderedTasks" class="shadow-sm mx-2">
+                <td>{{orderedTask.task.name}}==> {{orderedTask.task.id}}</td>
+                <td><span [ngClass]="{'bg bg-info':true, 'rounded-lg':true, 'border border-dark':true, 'p-2':true,
+                    'bg bg-success':orderedTask.taskStatus==='COMPLETED',
+                               'bg bg-danger':orderedTask.taskStatus==='CANCELLED',
+                               'bg bg-warning':orderedTask.taskStatus==='PENDING',
+                               'bg bg-info':orderedTask.taskStatus==='IN_PROGRESS',
+                            'bg bg-secondary':orderedTask.taskStatus=='NOT_STARTED',
+                            'bg bg-secondary':orderedTask.taskStatus=='SENT_FOR_APPROVAL'}
+                            ">{{orderedTask.taskStatus}}</span></td>
+                <td>{{orderedTask.startDate}}</td>
+                <td>{{orderedTask.endDate}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class=" col-md-6">
+        <app-transfer-task-form [value]="orderedTask" *ngIf="isClicked"></app-transfer-task-form>
+    </div>
+</div>

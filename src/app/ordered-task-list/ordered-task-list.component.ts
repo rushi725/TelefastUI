@@ -20,7 +20,6 @@ export class OrderedTaskListComponent implements OnInit {
     this.orderedTaskservice.getOrderedTasksByTeamManager(this.teamManagerId)
     .subscribe((response: any) => {
       this.orderedTasks = response;
-      console.log(this.orderedTasks);
     });
 
     this.orderedTaskservice.getOrderedTaskStream()
@@ -66,7 +65,7 @@ export class OrderedTaskListComponent implements OnInit {
   }
 
   rejectTask(orderedTask) {
-    this.orderedTaskservice.rejectTask(orderedTask, this.teamManagerId);
+    this.orderedTaskservice.rejectTask(orderedTask, this.teamManagerId)
   }
 
 

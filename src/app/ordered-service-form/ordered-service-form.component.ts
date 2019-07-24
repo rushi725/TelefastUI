@@ -34,21 +34,33 @@ export class OrderedServiceFormComponent implements OnInit {
         this.serviceOptions = e;
       });
 
-    this.employeeService.getEmployeeStream()
+    this.employeeService.getServiceManagers()
       .subscribe((e: any) => {
         this.managerOptions = e;
       });
     this.orderedServiceForm = this.fb.group({
       installationAddress: '',
       progress: 0,
-      startDate: '',
-      deliveryDate: '',
+      startDate: ['',[Validators.required]],
+      deliveryDate: ['',[Validators.required]],
       serviceStatus: 'NOT_STARTED',
       service: [],
       project: this.project,
       employee: [],
-    });
+    },{validator: this.dateLessThan('startDate', 'deliveryDate')});
     this.isSubmitted = false;
+    const nameControl1 = this.orderedServiceForm.get('startDate');
+    nameControl1.statusChanges
+    .subscribe(e=>{
+      let today = new Date();
+      let date = today.getFullYear()+'-'+(`0${today.getMonth()+1}`)+'-'+today.getDate();
+      if(nameControl1.value<date){
+        this.errors['startDate']="service cannot start in past";
+      }
+      else{
+        this.errors['startDate']=""
+      }
+    })
   }
   handleFormSubmit(event) {
     if (this.orderedServiceForm.valid) {
@@ -57,8 +69,19 @@ export class OrderedServiceFormComponent implements OnInit {
       this.orderedServiceService.addOrderedServices(formModel);
       this.isSubmitted = true;
     } else {
-      console.log('invalid form..');
+      this.errors["date"]="end date cannot be before start date"
     }
   }
-
+  dateLessThan(from: string, to: string) {
+    return (group: FormGroup): {[key: string]: any} => {
+      let f = group.controls[from];
+      let t = group.controls[to];
+      if (f.value > t.value) {
+        return {
+          dates: "Date from should be less than Date to"
+        };
+      }
+      return {};
+    }
+}
 }

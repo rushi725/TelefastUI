@@ -38,6 +38,11 @@ export class TransferTaskFormComponent implements OnInit {
       this.employees = this.employees.filter(e => e.firstName !== this.orderedTask.employee.firstName);
     });
 
+    // this.employeeService.getEmployeeStream()
+    // .subscribe((response:any)=>{
+    //   this.employees=response;
+    // })
+
 
     this.isSubmitted = false;
     const teamMemberControl = this.transferTaskForm.get('teamMember');

@@ -21,7 +21,7 @@ export class CustomerFormComponent implements OnInit {
       firstName: ['', [Validators.required, Validators.minLength(3)]],
       lastName: ['', [Validators.required, Validators.minLength(3)]],
       address: '',
-      contactNo:''
+      contactNo:['',[Validators.minLength(10)]]
     });
     this.isSubmitted = false;
 

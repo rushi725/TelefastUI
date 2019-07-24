@@ -58,6 +58,9 @@ import { StaticWorkflowService } from './static-workflow.service';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { AddServiceComponent } from './add-service/add-service.component';
 import { ViewOrderedServicesComponent } from './view-ordered-services/view-ordered-services.component';
+import { TaskHistoryComponent } from './task-history/task-history.component';
+import { TeamInfoComponent } from './team-info/team-info.component';
+
 
 const routes: Routes = [
   { path: '', component: NavbarComponent},
@@ -115,7 +118,9 @@ const routes: Routes = [
     ViewStaticWorkflowComponent,
     ProjectListComponent,
     AddServiceComponent,
-    ViewOrderedServicesComponent
+    ViewOrderedServicesComponent,
+    TaskHistoryComponent,
+    TeamInfoComponent
   ],
   imports: [
     BrowserModule,

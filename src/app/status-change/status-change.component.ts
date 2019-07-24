@@ -49,7 +49,6 @@ export class StatusChangeComponent implements OnInit {
 
   handleFormSubmit(event) {
     const statusObject = this.statusForm.value;
-    console.log(statusObject.status);
     this.orderedTaskService.changeTaskStatus(this.currentTask, statusObject.status);
   }
 }

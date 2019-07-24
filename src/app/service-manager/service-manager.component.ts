@@ -8,7 +8,7 @@ import { OrderedServiceService } from '../ordered-service.service';
 })
 export class ServiceManagerComponent implements OnInit {
 
-  serviceManagerId = 11;
+  serviceManagerId = 14;
 
   constructor(private orderedService: OrderedServiceService) { }
   orderedServices = [];
@@ -22,10 +22,5 @@ export class ServiceManagerComponent implements OnInit {
     .subscribe((response: any) => {
       this.orderedServices = response;
     });
-  }
-
-  // tslint:disable-next-line: use-lifecycle-interface
-  ngDoCheck() {
-    this.orderedServices = this.orderedService.getOrderedServices(this.type);
   }
 }

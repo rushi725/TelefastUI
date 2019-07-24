@@ -19,43 +19,22 @@ export class TaskStatusComponent implements OnInit {
   ngOnInit() {
 
     this.orderedTaskService.getOrderedTaskInfoByEmployeeId(this.employeeId)
-    .subscribe((response:any)=>{
+    .subscribe((response: any) => {
       this.taskInfo = response;
-      console.log(this.taskInfo)
-      this.currentTask = this.taskInfo.find(e =>{
-        console.log(e.taskStatus);
-        
-        return e.taskStatus!=="COMPLETED"
-    })
-    console.log(this.currentTask)
-    })
+      this.currentTask = this.taskInfo.find(e => {
+        return e.taskStatus !== 'COMPLETED';
+    });
+    });
 
     this.orderedTaskService.getTaskInfoStream()
-    .subscribe((response:any)=>{
+    .subscribe((response: any) => {
       this.taskInfo = response;
-      console.log(this.taskInfo)
-      this.currentTask = this.taskInfo.find(e =>{
-        console.log(e.taskStatus);
-        
-        return e.taskStatus!=="COMPLETED"
-    })
-    console.log(this.currentTask)
-    })
+      this.currentTask = this.taskInfo.find(e => {
+
+        return e.taskStatus !== 'COMPLETED';
+    });
+    });
 
     }
 
-    // ngDoCheck(){
-    //   this.orderedTaskService.getTaskInfoStream()
-    //   .subscribe((response:any)=>{
-    //     this.taskInfo = response;
-    //     console.log(this.taskInfo)
-    //     this.currentTask = this.taskInfo.find(e =>{
-    //       console.log(e.taskStatus);
-          
-    //       return e.taskStatus!=="COMPLETED"
-    //   })
-    //   console.log(this.currentTask)
-    //   })
-  
-    // }
   }

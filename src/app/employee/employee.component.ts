@@ -9,6 +9,7 @@ import { TeamService } from '../team.service';
 })
 export class EmployeeComponent implements OnInit {
   reviewForm: FormGroup
+  formData=''
   roleOptions: Array<any> = [
     { value: 'ROLE_PRODUCT _MANAGER', viewValue: 'Product Manager' },
     { value: 'ROLE_PROJECT_MANAGER', viewValue: 'Project Manager' },
@@ -33,14 +34,26 @@ export class EmployeeComponent implements OnInit {
       empRole: [""],
       empAddress: [""],
       contactNumber: [""],
-      email: ['user@email.com',Validators.email],
-      password: ['']
+      email: ["",Validators.email],
+      password: [`${this.getPassword()}`]
     })
   }
   handleFormSubmit() {
     if (this.reviewForm.valid) {
-      let formData = this.reviewForm.value;
-      this.empService.postEmployeeUser(formData);
+      this.formData = this.reviewForm.value;
+      this.empService.postEmployeeUser(this.formData);
     }
   }
+
+  getPassword(){
+  let chars = "0123456789!@#$%^&*ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+  let string_length = 8;
+  let randomstring = '';
+  for (var i=0; i<string_length; i++) {
+      var rnum = Math.floor(Math.random() * chars.length);
+      randomstring += chars.substring(rnum,rnum+1);
+  }
+  return randomstring;
+}
+
 }
