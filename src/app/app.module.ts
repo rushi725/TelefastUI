@@ -60,22 +60,25 @@ import { AddServiceComponent } from './add-service/add-service.component';
 import { ViewOrderedServicesComponent } from './view-ordered-services/view-ordered-services.component';
 import { TaskHistoryComponent } from './task-history/task-history.component';
 import { TeamInfoComponent } from './team-info/team-info.component';
+import { AuthAndRoleService } from './auth-and-role.service';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
 
 
 const routes: Routes = [
   { path: '', component: NavbarComponent},
-  { path: 'dashboard', component: ServiceListComponent },
+  { path: 'dashboard', component: ServiceListComponent, canActivate: [AuthAndRoleService] },
   // { path:'dashboard',outlet:"addService",component:ServiceFormComponent},
   // { path:'dashboard',outlet:"addTeam",component:TeamFormComponent},
-  { path: 'dashboard', component: TeamListComponent },
-  { path: 'orderedTasks', component: OrderedTaskListComponent },
-  { path: 'orderedTask', component: TaskStatusComponent },
-  { path: 'orderedServices', component: ProjectManagerComponent },
-  { path: 'serviceManager', component: ServiceManagerComponent },
+  // { path: 'dashboard', component: TeamListComponent },
+  { path: 'orderedTasks', component: OrderedTaskListComponent, canActivate: [AuthAndRoleService]},
+  { path: 'orderedTask', component: TaskStatusComponent, canActivate: [AuthAndRoleService] },
+  { path: 'orderedServices', component: ProjectManagerComponent, canActivate: [AuthAndRoleService] },
+  { path: 'serviceManager', component: ServiceManagerComponent, canActivate: [AuthAndRoleService] },
   {path : 'login', component: LoginFormComponent},
-  {path : 'employee', component: EmployeeComponent},
+  { path: 'employee', component: EmployeeComponent, canActivate: [AuthAndRoleService]},
   { path: 'workflow',
     component: ViewWorkflowComponent,
+    canActivate: [AuthAndRoleService]
     // resolve: {
     //   taskWorkflow: WorkflowResolverService
     // }
@@ -83,7 +86,8 @@ const routes: Routes = [
   { path: 'cworkflow', component: CreateWorkflowComponent },
   { path: 'sworkflow', component: ViewStaticWorkflowComponent },
   { path: 'addService', component: AddServiceComponent},
-  { path: 'vservices', component: ViewOrderedServicesComponent}
+  { path: 'vservices', component: ViewOrderedServicesComponent},
+  { path: 'forbidden', component: ForbiddenComponent}
 ];
 
 @NgModule({
@@ -120,7 +124,8 @@ const routes: Routes = [
     AddServiceComponent,
     ViewOrderedServicesComponent,
     TaskHistoryComponent,
-    TeamInfoComponent
+    TeamInfoComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,
