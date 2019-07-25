@@ -39,7 +39,7 @@ export class OrderedServiceFormComponent implements OnInit {
         this.managerOptions = e;
       });
     this.orderedServiceForm = this.fb.group({
-      installationAddress: '',
+      installationAddress: ['',[Validators.required]],
       progress: 0,
       startDate: ['',[Validators.required]],
       deliveryDate: ['',[Validators.required]],

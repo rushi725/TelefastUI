@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from '../employee.service';
 import { TeamService } from '../team.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
@@ -21,28 +22,38 @@ export class EmployeeComponent implements OnInit {
   teamOptions: Array<any> = [];
   constructor(private fb: FormBuilder,
               private empService: EmployeeService,
-              private teamService: TeamService) { }
-
+              private teamService: TeamService,
+              private router:Router) { }
+  errors = {};
   ngOnInit() {
-
     this.teamService.getTeamStream()
     .subscribe((e: any) => this.teamOptions = e);
     this.reviewForm = this.fb.group({
-      firstName: [""],
-      lastName: [""],
-      team:[""],
-      empRole: [""],
+      firstName: ["",[Validators.required]],
+      lastName: ["",[Validators.required]],
+      team:["",[Validators.required]],
+      empRole: ["",[Validators.required]],
       empAddress: [""],
-      contactNumber: [""],
-      email: ["",Validators.email],
+      contactNumber: ["",[Validators.minLength(10)]],
+      email: ["",[Validators.email,Validators.required]],
       password: [`${this.getPassword()}`]
     })
+   
   }
   handleFormSubmit() {
     if (this.reviewForm.valid) {
       this.formData = this.reviewForm.value;
       this.empService.postEmployeeUser(this.formData);
+      this.ngOnInit()
     }
+    else{      
+      if(this.reviewForm.value.contactNumber.length<10){
+        this.errors['cont']="min 10 digits"
+      }
+    }
+  }
+  handleCancel(){
+    this.ngOnInit()
   }
 
   getPassword(){

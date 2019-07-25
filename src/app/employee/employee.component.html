@@ -21,6 +21,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <div class="text-danger" *ngIf="errors.roles">{{errors.roles}}</div>
           <br />
           <mat-form-field class="formGroup">
             <mat-label>Assign Team</mat-label>
@@ -30,6 +31,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <div class="text-danger" *ngIf="errors.team">{{errors.team}}</div>
           <br />
           <div class="form-group">
             <label>empAddress</label>
@@ -38,17 +40,19 @@
           <div class="form-group">
             <label>contactNumber</label>
             <input class="form-control" formControlName="contactNumber" />
+            <div class="text-danger" *ngIf="errors.cont">{{errors.cont}}</div>
           </div>
           <div class="form-group">
             <label>email</label>
             <input class="form-control" formControlName="email" placeholder="firstName.lastName@telefast.com"/>
+            <div class="text-danger" *ngIf="errors.email">{{errors.email}}</div>
           </div>
           <div class="form-group">
             <label>password</label>
             <input class="form-control" formControlName="password" />
           </div>
-          <button type="button" class="btn btn-danger">cancel</button>&nbsp;
-          <button class="btn btn-dark">submit</button>
+          <button type="button" (click)="handleCancel()" class="btn btn-danger">cancel</button>&nbsp;
+          <button class="btn btn-dark" >submit</button>
         </form>
       </div>
     </div>

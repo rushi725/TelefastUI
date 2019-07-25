@@ -14,7 +14,8 @@ export class UserService {
   user = '';
   role = '';
   userStream = new ReplaySubject();
-
+  employee=''
+  team=''
   constructor(private _http: HttpClient, private router: Router) {
     this.userAuthToken = localStorage.getItem('user-token') || '';
     if (this.userAuthToken) {
@@ -50,8 +51,8 @@ export class UserService {
     this._http.post(url, credentials)
       .subscribe((e: any) => {
         this.userAuthToken = e.token;
-        this.decodeToken();
         localStorage.setItem('user-token', e.token)
+        this.decodeToken();
         this.userStream.next({ isLoggedIn: true })
           if(this.role==="ROLE_SUPER"){
             this.router.navigate(['employee'])
@@ -59,20 +60,27 @@ export class UserService {
           if(this.role==="ROLE_PROJECT_MANAGER"){
             this.router.navigate(['orderedServices'])
           }
-  
-        
+          if(this.role==="ROLE_TEAM_MANAGER"){
+            this.router.navigate(['orderedTasks'])
+          }
+          if(this.role==="ROLE_PRODUCT_MANAGER"){
+            this.router.navigate(['dashboard'])
+          }
+          if(this.role==="ROLE_TEAM_MEMBER"){
+            this.router.navigate(['orderedTask'])
+          }
+          if(this.role==="ROLE_SERVICE_MANAGER"){
+            this.router.navigate(['serviceManager'])
+          }
       }, error => {
         this.userStream.next({ isLoggedIn: false });
       });
   }
   decodeToken() {
     var decoded = jwt_decode(this.userAuthToken);
+    this.employee=decoded["employee"]
+    this.team= this.employee['team']
     this.role=decoded["autho"][0].authority;
     this.user = decoded["sub"];
   }
-  // getRole() {
-  //   let url = `http://localhost:8081/sfs/user/${this.user}/getUserRole`;
-  //   return this._http.get(url);
-  // }
-
 }

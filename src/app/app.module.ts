@@ -45,7 +45,7 @@ import { TransferTaskFormComponent } from './transfer-task-form/transfer-task-fo
 import { ViewWorkflowComponent } from './view-workflow/view-workflow.component';
 import { WorkflowService } from './workflow.service';
 import { LoginFormComponent } from './login-form/login-form.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { EmployeeComponent } from './employee/employee.component';
 import { ProjectFormComponent } from './project-form/project-form.component';
 import { CustomerFormComponent } from './customer-form/customer-form.component';
@@ -60,6 +60,7 @@ import { AddServiceComponent } from './add-service/add-service.component';
 import { ViewOrderedServicesComponent } from './view-ordered-services/view-ordered-services.component';
 import { TaskHistoryComponent } from './task-history/task-history.component';
 import { TeamInfoComponent } from './team-info/team-info.component';
+import { TokenInterceptor } from './jwt.interceptor';
 
 
 const routes: Routes = [
@@ -144,7 +145,11 @@ const routes: Routes = [
     MatButtonToggleModule,
     HttpClientModule
   ],
-  providers: [WorkflowService, StaticWorkflowService],
+  providers: [WorkflowService, StaticWorkflowService,{
+    provide:HTTP_INTERCEPTORS,
+    useClass:TokenInterceptor,
+    multi:true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

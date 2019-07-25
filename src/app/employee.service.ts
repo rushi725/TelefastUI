@@ -23,18 +23,15 @@ export class EmployeeService {
     this.employee["team"] = formData.team;
     this.user["password"] = formData.password;
     this.user["active"] = "false";
-    console.log(this.userService.getUserAuthToken());
-    console.log(this.employee);
 
     let httpOptions = {
       headers: new HttpHeaders({
         "Authorization": `Bearer ${this.userService.getUserAuthToken()}`
       })
     };
-    let apiUrl = `http://localhost:8081/sfs/employees/${formData.team}`;
-    this._http.post(apiUrl, this.employee, httpOptions)
+    let apiUrl = `http://localhost:8081/sfs/employees`;
+    this._http.post(apiUrl, this.employee)
       .subscribe((e: any) => {
-        console.log(e);
         this.user["employee"] = e;
         this.postUser(httpOptions);
       });
