@@ -1,41 +1,18 @@
-<!-- 
-<div class="card shadows-sm" >
-    <div class="card-header">
-        <h3>employee: {{employeeId}}</h3>
-        <h3>taskId: {{currentTask.currentTask.task.id}}</h3>
 
-
-        <h3>{{currentTask.currentTask.task.name}}</h3>
-    </div>
-    <div class="card-body">
-        <h4>Project : {{currentTask.orderedService.project.name}}</h4>
-        <hr>
-        <h4>Service : {{currentTask.orderedService.service.name}}</h4>
-        <hr>
-        <h4>Status : <span class="bg bg-info rounded-lg border border-dark p-1">{{currentTask.currentTask.taskStatus}}</span></h4>
-    </div>
-    <div class="card-footer">
-        <h4>Manager : {{currentTask.employee.firstName}}</h4>
-    </div>
-</div> -->
-
-<!-- <div class="container" *ngIf="true">
-    <h3>No Task Allocated right Now!!!!</h3>
-</div> -->
 <div class="card-body" *ngIf="!currentTask">
     <h3>No task is allocated yet</h3>
 </div>
 
 
 <div class="card shadows-sm" *ngIf="currentTask">
-    <div class="card-header">
+    <div class="card-header" style="background-color: rgb(147, 181, 243)">
         <h3>employee: {{currentTask.employee.id}}</h3>
         <h3>taskId: {{currentTask.orderId}}</h3>
 
 
         <h3>{{currentTask.task.name}}</h3>
     </div>
-    <div class="card-body">
+    <div class="card-body" style="background-color:rgb(240, 234, 234)">
         <h4>Project : {{currentTask.orderedService.project.name}}</h4>
         <hr>
         <h4>Service : {{currentTask.orderedService.service.name}}</h4>
@@ -52,7 +29,7 @@
                     'bg bg-primary':currentTask.taskStatus==='SENT_FOR_APPROVAL'
                 }">{{currentTask.taskStatus}}</span></h4>
     </div>
-    <div class="card-footer">
+    <div class="card-footer" style="background-color: rgb(147, 181, 243)">
         <h4>Manager : {{currentTask.employee.firstName}}</h4>
     </div>
 </div>

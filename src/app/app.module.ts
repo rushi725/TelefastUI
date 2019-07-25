@@ -60,6 +60,8 @@ import { AddServiceComponent } from './add-service/add-service.component';
 import { ViewOrderedServicesComponent } from './view-ordered-services/view-ordered-services.component';
 import { TaskHistoryComponent } from './task-history/task-history.component';
 import { TeamInfoComponent } from './team-info/team-info.component';
+import { ServiceComponent } from './service/service.component';
+import { TaskComponent } from './task/task.component';
 
 
 const routes: Routes = [
@@ -120,7 +122,9 @@ const routes: Routes = [
     AddServiceComponent,
     ViewOrderedServicesComponent,
     TaskHistoryComponent,
-    TeamInfoComponent
+    TeamInfoComponent,
+    ServiceComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,

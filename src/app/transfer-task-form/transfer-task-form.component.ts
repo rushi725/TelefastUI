@@ -17,8 +17,8 @@ export class TransferTaskFormComponent implements OnInit {
   employees: any[] = [];
   transferTaskForm: FormGroup;
   errors = {};
-  teamManagerId = 14;
-  teamId = 4;
+  teamManagerId = 12;
+  teamId = 3;
 
   isSubmitted = false;
 

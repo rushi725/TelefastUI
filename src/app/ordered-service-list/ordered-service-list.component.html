@@ -9,7 +9,7 @@
     <hr>
 
     <table class="table table-responsive-md" *ngIf = "orderedServices">
-        <thead class="thead-dark shadow mb-2">
+        <thead class="thead-primary shadow mb-2" style="background-color: rgb(147, 181, 243)">
             <tr>
                 <th>Service</th>
                 <th>Status</th>
@@ -21,7 +21,7 @@
                 <th *ngIf="type==='SERVICE MANAGER'">Start Service</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody  style="background-color:rgb(240, 234, 234)">
             <tr *ngFor="let orderedService of orderedServices" class="shadow-sm mx-2">
                 <a [routerLink]="['/workflow']" [queryParams]="{ orderedServiceId: orderedService.orderId, serviceId: orderedService.service.id }"><td>{{orderedService.service.name}}</td></a>
                 <td><span [ngClass]="{
