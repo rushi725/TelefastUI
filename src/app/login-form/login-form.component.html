@@ -1,5 +1,6 @@
+<div class="login">
 <div class="row">
-    <div class="col-sm-4 col-md-4">
+    <div class="col-sm-8 col-md-8">
       <div class="card card-body">
         <div *ngIf="message" class="alert alert-warning">{{message}}</div>
         <form [formGroup]="loginForm" (submit)="handleFormSubmit($event)">
@@ -16,3 +17,4 @@
       </div>
     </div>
   </div>
+</div>

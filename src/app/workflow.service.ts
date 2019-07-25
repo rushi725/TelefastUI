@@ -87,7 +87,7 @@ export class WorkflowService {
           });
         }
       }
-      this.taskWorkflow.push(new TaskNode({name: 'Workflow', task: new Task(0, 'Workflow', 'Desc 1', 10, true), taskStatus: 'Completed'}));
+      this.taskWorkflow.push(new TaskNode({name: 'Finish', task: new Task(0, 'END', 'Desc 1', 10, true)}));
       this.publishStream();
   }
 

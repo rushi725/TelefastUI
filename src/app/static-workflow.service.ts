@@ -69,7 +69,7 @@ export class StaticWorkflowService {
         });
       }
     }
-    this.taskWorkflow.push(new TaskNode({ name: 'Workflow', task: new Task(0, 'Workflow', 'Desc 1', 10, true) }));
+    this.taskWorkflow.push(new TaskNode({ name: 'Workflow', task: new Task(0, 'END', 'Desc 1', 10, true) }));
     this.publishStream();
   }
 

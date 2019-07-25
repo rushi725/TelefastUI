@@ -15,9 +15,9 @@
     <div class="card-body" style="background-color:rgb(240, 234, 234)">
         <h4>Project : {{currentTask.orderedService.project.name}}</h4>
         <hr>
-        <h4>Service : {{currentTask.orderedService.service.name}}</h4>
+        <h5>Service : {{currentTask.orderedService.service.name}}</h5>
         <hr>
-        <h4>Status : <span class="{
+        <h5>Status : <span [ngClass]="{
                     'rounded-lg':true, 
                     'border border-dark':true, 
                     'p-2':true,
@@ -27,9 +27,12 @@
                     'bg bg-info':currentTask.taskStatus==='IN_PROGRESS',
                     'bg bg-secondary':currentTask.taskStatus==='NOT_STARTED',
                     'bg bg-primary':currentTask.taskStatus==='SENT_FOR_APPROVAL'
-                }">{{currentTask.taskStatus}}</span></h4>
+                }">{{currentTask.taskStatus}}</span></h5>
     </div>
     <div class="card-footer" style="background-color: rgb(147, 181, 243)">
         <h4>Manager : {{currentTask.employee.firstName}}</h4>
     </div>
+    <!-- <div class="card-footer">
+        <h4>Manager : {{currentTask.}}</h4>
+    </div> -->
 </div>
