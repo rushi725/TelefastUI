@@ -31,7 +31,7 @@ export class EmployeeService {
         "Authorization": `Bearer ${this.userService.getUserAuthToken()}`
       })
     };
-    let apiUrl = `http://localhost:8081/sfs/employees/${formData.team}`;
+    let apiUrl = `http://localhost:8081/sfs/employees`;
     this._http.post(apiUrl, this.employee, httpOptions)
       .subscribe((e: any) => {
         console.log(e);

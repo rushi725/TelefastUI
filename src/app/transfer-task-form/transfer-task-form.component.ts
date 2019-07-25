@@ -35,7 +35,9 @@ export class TransferTaskFormComponent implements OnInit {
     this.employeeService.getAvailableEmployees(this.teamId)
     .subscribe((response: any) => {
       this.employees = response;
-      this.employees = this.employees.filter(e => e.firstName !== this.orderedTask.employee.firstName);
+      if (this.orderedTask.employee) {
+        this.employees = this.employees.filter(e => e.firstName !== this.orderedTask.employee.firstName);
+      }
     });
 
     // this.employeeService.getEmployeeStream()

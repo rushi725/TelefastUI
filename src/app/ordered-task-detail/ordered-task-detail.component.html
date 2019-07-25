@@ -22,25 +22,18 @@
 <!-- <div class="container" *ngIf="true">
     <h3>No Task Allocated right Now!!!!</h3>
 </div> -->
-<div class="card-body" *ngIf="!currentTask">
-    <h3>No task is allocated yet</h3>
-</div>
-
 
 <div class="card shadows-sm" *ngIf="currentTask">
-    <div class="card-header">
-        <h3>employee: {{currentTask.employee.id}}</h3>
-        <h3>taskId: {{currentTask.orderId}}</h3>
-
-
-        <h3>{{currentTask.task.name}}</h3>
+    <div class="card-header">   
+        <!-- <h3>employee: {{currentTask.employee.firstName}}</h3> -->
+        <h3>Task: {{currentTask.task.name}}</h3>
     </div>
     <div class="card-body">
-        <h4>Project : {{currentTask.orderedService.project.name}}</h4>
+        <h5>Project : {{currentTask.orderedService.project.name}}</h5>
         <hr>
-        <h4>Service : {{currentTask.orderedService.service.name}}</h4>
+        <h5>Service : {{currentTask.orderedService.service.name}}</h5>
         <hr>
-        <h4>Status : <span class="{
+        <h5>Status : <span [ngClass]="{
                     'rounded-lg':true, 
                     'border border-dark':true, 
                     'p-2':true,
@@ -50,9 +43,9 @@
                     'bg bg-info':currentTask.taskStatus==='IN_PROGRESS',
                     'bg bg-secondary':currentTask.taskStatus==='NOT_STARTED',
                     'bg bg-primary':currentTask.taskStatus==='SENT_FOR_APPROVAL'
-                }">{{currentTask.taskStatus}}</span></h4>
+                }">{{currentTask.taskStatus}}</span></h5>
     </div>
-    <div class="card-footer">
-        <h4>Manager : {{currentTask.employee.firstName}}</h4>
-    </div>
+    <!-- <div class="card-footer">
+        <h4>Manager : {{currentTask.}}</h4>
+    </div> -->
 </div>

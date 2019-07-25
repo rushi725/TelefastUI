@@ -10,6 +10,7 @@ import { TeamService } from '../team.service';
 export class EmployeeComponent implements OnInit {
   reviewForm: FormGroup
   formData=''
+  isSubmitted = false;
   roleOptions: Array<any> = [
     { value: 'ROLE_PRODUCT _MANAGER', viewValue: 'Product Manager' },
     { value: 'ROLE_PROJECT_MANAGER', viewValue: 'Project Manager' },
@@ -24,7 +25,7 @@ export class EmployeeComponent implements OnInit {
               private teamService: TeamService) { }
 
   ngOnInit() {
-
+    this.isSubmitted = false;
     this.teamService.getTeamStream()
     .subscribe((e: any) => this.teamOptions = e);
     this.reviewForm = this.fb.group({
@@ -42,6 +43,7 @@ export class EmployeeComponent implements OnInit {
     if (this.reviewForm.valid) {
       this.formData = this.reviewForm.value;
       this.empService.postEmployeeUser(this.formData);
+      this.isSubmitted = true;
     }
   }
 

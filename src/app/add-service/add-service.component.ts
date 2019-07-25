@@ -23,7 +23,6 @@ export class AddServiceComponent implements OnInit {
     this.project = window.history.state.project;
 
     this.orderedService.loadOrderedServices(this.type, this.project.projectId);
-
     this.orderedService.getOrderedServiceStream(this.type).subscribe((e: any) => this.orderedServices = e);
   }
 

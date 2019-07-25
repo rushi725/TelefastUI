@@ -2,8 +2,8 @@
     <div class="row">
         <h3 class="col-sm-12 col-md-8">Team Manager:{{teamManagerId}}</h3>
     </div>
-         
-    <table class="table table-responsive-md">
+    <div class="alert alert-warning" *ngIf="!orderedTasks">No Tasks </div>
+    <table class="table table-responsive-md" *ngIf= "orderedTasks">
         <thead class="thead-dark shadow mb-2">
             <tr>
                 <th>Task</th>

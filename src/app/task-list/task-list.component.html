@@ -7,6 +7,7 @@
   </button>
 </div>
 <hr>
+<div class="alert alert-warning" *ngIf="!tasks">No Tasks </div>
 <div class="row">
   <div *ngFor="let task of tasks" class="col-lg-4 col-md-6 col-sm-12">
     <div class="card shadow-sm">
