@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderedTaskService } from '../ordered-task.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { StatusService } from '../status.service';
 
 @Component({
   selector: 'app-ordered-task-list',
@@ -9,23 +10,41 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class OrderedTaskListComponent implements OnInit {
 
-  constructor(private orderedTaskservice: OrderedTaskService, private modalService: NgbModal ) { }
+  constructor(private orderedTaskservice: OrderedTaskService,
+    private modalService: NgbModal,
+    private statusService: StatusService) { }
 
-  teamManagerId = 115;
+  teamManagerId = 12;
+  teamId = 3;
+  type = "ORDEREDTASK";
   orderedTasks: Array<any> = [];
+
+  filteredTasks: Array<any> = [];
+
   isClicked = false;
   orderedTask;
+  Status: Array<any> = [];
+
 
   ngOnInit() {
     this.orderedTaskservice.getOrderedTasksByTeamManager(this.teamManagerId)
-    .subscribe((response: any) => {
-      this.orderedTasks = response;
-    });
+      .subscribe((response: any) => {
+        this.orderedTasks = response;
+        this.filteredTasks = this.orderedTasks;
+      });
+
+    this.statusService.getStatus()
+      .subscribe((response: any) => {
+        this.Status = response;
+        console.log(this.Status)
+      });
 
     this.orderedTaskservice.getOrderedTaskStream()
-    .subscribe((response: any) => {
-      this.orderedTasks = response;
-    });
+      .subscribe((response: any) => {
+        this.orderedTasks = response;
+        this.filteredTasks = this.orderedTasks;
+      });
+
 
   }
 
@@ -48,6 +67,19 @@ export class OrderedTaskListComponent implements OnInit {
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;
+    }
+  }
+
+  filterBy(index) {
+    // console.log(index);
+    // console.log(this.Status[index])
+    if (index === 7) {
+      this.filteredTasks = this.orderedTasks;
+    } else {
+
+      this.filteredTasks = this.orderedTasks.filter(e =>
+        e.taskStatus === this.Status[index]
+      )
     }
   }
 

@@ -24,7 +24,7 @@
         <tbody>
             <tr *ngFor="let project of projects" class="shadow-sm mx-2">
                 <a [routerLink]="['/vservices']" [queryParams]="{type: type, projectId: project.projectId}">
-                    <td>{{project.name}}</td>
+                    <td>{{project.name}}->{{project.projectId}}</td>
                 </a>
                 <td><span [ngClass]="{
                     'rounded-lg':true, 

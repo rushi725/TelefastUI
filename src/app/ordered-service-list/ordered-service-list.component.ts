@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { OrderedServiceService } from '../ordered-service.service';
+import { BindingFlags } from '@angular/compiler/src/core';
 
 
 @Component({
@@ -15,19 +16,21 @@ export class OrderedServiceListComponent implements OnInit {
   @Input('value') orderedServices;
   @Input('type') type;
   @Input('project') project;
+  @Input('flag') flag;
   isServiceStarted=false;
 
   ngOnInit(){
 
+    console.log("sssssssssssssssssss")
+    console.log(this.flag);
+
+    console.log("project---->")
+    console.log(this.project);
 
     this.orderedServiceService.getOrderedServiceStream(this.type)
     .subscribe((response:any)=>{
       this.orderedServices = response;
-
     })
-
-
-
   }
 
   closeResult: string;

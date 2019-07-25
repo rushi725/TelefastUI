@@ -1,19 +1,19 @@
 <div class="orderedService">
     <div class="row">
-    <h3 *ngIf="type==='PROJECT MANAGER'" class="col-md-8"> Project Manager</h3>
-    <h3 *ngIf="type==='SERVICE MANAGER'" class="col-md-8"> Service Manager</h3>
-    <button class="btn btn-outline-dark nav-link mx-auto" (click)="open(content)" *ngIf="type==='PROJECT MANAGER'">
+    <h3 *ngIf="type==='PROJECT MANAGER'" class="col-md-8"> Services</h3>
+    <h3 *ngIf="type==='SERVICE MANAGER'" class="col-md-8"> Services</h3>
+    <button class="btn btn-outline-dark nav-link mx-auto" (click)="open(content)" *ngIf="flag==='true'">
         <span class="fa fa-plus"></span> Add Service
     </button>
     </div>
     <hr>
-
+    <div class="alert alert-warning" *ngIf="!orderedServices">No Service Added</div>
     <table class="table table-responsive-md" *ngIf = "orderedServices">
-        <thead class="thead-dark shadow mb-2">
+        <thead class="thead-primary shadow mb-2" style="background-color: rgb(147, 181, 243)">
             <tr>
                 <th>Service</th>
-                <th>Status</th>
-                <th>Progress</th>
+                <th *ngIf= "flag==='false'">Status</th>
+                <th *ngIf= "flag==='false'">Progress</th>
                 <th *ngIf="type==='PROJECT MANAGER'">Service Manager</th>
                 <th *ngIf="type==='SERVICE MANAGER'">Project Name</th>
                 <th *ngIf="type==='SERVICE MANAGER'">Project Manager</th>
@@ -21,10 +21,10 @@
                 <th *ngIf="type==='SERVICE MANAGER'">Start Service</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody  style="background-color:rgb(240, 234, 234)">
             <tr *ngFor="let orderedService of orderedServices" class="shadow-sm mx-2">
                 <a [routerLink]="['/workflow']" [queryParams]="{ orderedServiceId: orderedService.orderId, serviceId: orderedService.service.id }"><td>{{orderedService.service.name}}</td></a>
-                <td><span [ngClass]="{
+                <td *ngIf= "flag==='false'"><span [ngClass]="{
                     'bg bg-info':true, 
                     'rounded-lg':true, 
                     'border border-dark':true, 
@@ -35,7 +35,7 @@
                     'bg bg-info':orderedService.serviceStatus==='IN_PROGRESS',
                     'bg bg-secondary':orderedService.serviceStatus==='NOT_STARTED'
                 }">{{orderedService.serviceStatus}}</span></td>
-                <td><p>
+                <td *ngIf= "flag==='false'"><p>
                     <ngb-progressbar type="success" [value]="orderedService.progress" [striped]="true" [animated]="true"><i>{{orderedService.progress}}%</i></ngb-progressbar>
                 </p></td>
                 <td *ngIf="type==='PROJECT MANAGER'">{{orderedService.employee.firstName}} </td>
@@ -46,8 +46,6 @@
             </tr>
         </tbody>
     </table>
-
-
     <ng-template #content let-modal>
         <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title">Add Service</h4>

@@ -8,7 +8,7 @@
         <li>
           <div class="mat-tree-node">
             <h6 class="nod shadow">{{node.task.task.name}}</h6>
-            <span>
+            <span *ngIf = "node.task.taskStatus">
               <h6 [ngClass]="{
                 'shadow' :true, 
                 'nod-status': true,
