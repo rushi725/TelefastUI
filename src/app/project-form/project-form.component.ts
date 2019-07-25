@@ -59,10 +59,10 @@ export class ProjectFormComponent implements OnInit {
       // desc: '',
       progress: 0,
       status: 'NOT_STARTED',
-      customer: '',
+      customer: ['',Validators.required],
       startDate: ['',Validators.required],
-      deliveryDate: '',
-      description: '',
+      deliveryDate:[ '',[Validators.required]],
+      description: ['',[Validators.required]],
       projectManager: {id: this.projectManagerId}
     }, {validator: this.dateLessThan('startDate', 'deliveryDate')});
      this.isSubmitted = false;
@@ -99,6 +99,7 @@ export class ProjectFormComponent implements OnInit {
           this.errors['startDate']=""
         }
       })
+      
     }
   
 

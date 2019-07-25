@@ -25,6 +25,6 @@ export class NavbarComponent implements OnInit {
   handleLogout(){
     this.user=""
     this.userService.doLogout()
-    window.location.reload()
+    // window.location.reload()
   }
 }

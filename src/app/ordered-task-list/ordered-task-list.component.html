@@ -1,10 +1,10 @@
-<div class="orderedTask">
+<!-- <div class="orderedTask">
     <div class="row">
         <h3 class="col-sm-12 col-md-8">Team Manager:{{teamManagerId}}</h3>
     </div>
-    <div class="alert alert-warning" *ngIf="!orderedTasks">No Tasks </div>
-    <table class="table table-responsive-md" *ngIf= "orderedTasks">
-        <thead class="thead-dark shadow mb-2">
+         
+    <table class="table table-responsive-md">
+        <thead class="thead-primary shadow mb-2" style="background-color: rgb(147, 181, 243)">
             <tr>
                 <th>Task</th>
                 <th>Status</th>
@@ -14,9 +14,9 @@
                 <th>Approve / Reject Task</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="background-color:rgb(240, 234, 234)">
             <tr *ngFor="let orderedTask of orderedTasks" class="shadow-sm mx-2">
-                <td>{{orderedTask.task.name}}==> {{orderedTask.task.id}}</td>
+                <td><button type="button"  class="font-italic" style="background-color:lightseagreen">{{orderedTask.task.name}}==> {{orderedTask.task.id}}</button></td>
                 <td><span [ngClass]="{
                     'rounded-lg':true, 
                     'border border-dark':true, 
@@ -26,14 +26,16 @@
                     'bg bg-warning':orderedTask.taskStatus==='PENDING',
                     'bg bg-info':orderedTask.taskStatus==='IN_PROGRESS',
                     'bg bg-secondary':orderedTask.taskStatus==='NOT_STARTED',
-                    'bg bg-primary':orderedTask.taskStatus==='SENT_FOR_APPROVAL'
+                    'bg bg-primary':orderedTask.taskStatus==='SENT_FOR_APPROVAL',
+                    'bg bg-primary':orderedTask.taskStatus==='BLOCKED'
+
                 }">{{orderedTask.taskStatus}}</span></td>
                 <td *ngIf="!orderedTask.employee">Employee Not allocated</td>
                 <td *ngIf="orderedTask.employee">{{orderedTask.employee.firstName}} -> {{orderedTask.employee.id}}</td>
-                <td><button class="btn btn-outline-dark"><i class="fa fa-envelope" style="font-size: 26px"></i></button>
+                <td><button class="btn btn-outline-dark"><i class="fa fa-envelope" style="font-size: 26px" style="color:cadetblue"></i></button>
                 </td>
                 <td><button class="btn btn-outline-dark" (click)="open(content,orderedTask)"><i
-                            class="fa fa-share-square" style="font-size: 26px"></i></button></td>
+                            class="fa fa-share-square" style="font-size: 26px" style="color: green"></i></button></td>
                 <td><button *ngIf="orderedTask.taskStatus=='SENT_FOR_APPROVAL'" class="btn btn-outline-dark"
                         (click)="approveTask(orderedTask)"><i class="fa fa-check" aria-hidden="true"></i></button>
                     &nbsp;<button *ngIf="orderedTask.taskStatus=='SENT_FOR_APPROVAL'" class="btn btn-outline-dark"
@@ -41,10 +43,10 @@
             </tr>
         </tbody>
     </table>
-    <!-- <div class=" col-md-6">
+    <div class=" col-md-6">
         <app-transfer-task-form [value]="orderedTask" *ngIf="isClicked"></app-transfer-task-form>
     </div> -->
-    <ng-template #content let-modal>
+    <!--<ng-template #content let-modal>
         <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title">Tranfer Task</h4>
             <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -54,8 +56,32 @@
         <div class="modal-body">
             <app-transfer-task-form [value]="orderedTask"></app-transfer-task-form>
         </div>
-        <!-- <div class="modal-footer">
-                      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">submit</button>
-                    </div> -->
+   
     </ng-template>
+</div> -->
+
+<div ngbDropdown class="d-inline-block">
+    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Filter by</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button (click)="filterBy(7)" ngbDropdownItem>All</button>
+        <button (click)="filterBy(0)" ngbDropdownItem>NOT_STARTED</button>
+        <button (click)="filterBy(1)" ngbDropdownItem>IN_PROGRESS</button>
+        <button (click)="filterBy(2)" ngbDropdownItem>COMPLETED</button>
+        <button (click)="filterBy(3)" ngbDropdownItem>PENDING</button>
+        <button (click)="filterBy(5)" ngbDropdownItem>SENT_FOR_APPROVAL</button>
+        <button (click)="filterBy(6)" ngbDropdownItem>BLOCKED</button>
+
+    </div>
 </div>
+
+
+<div class="row">
+    <div *ngFor="let orderedTask of filteredTasks" class="col-lg-4 col-md-6 col-sm-12">
+        <app-task [value]="orderedTask" [type]="type"></app-task>
+    </div>
+</div>
+
+
+
+
+<app-team-info [value]="teamId"></app-team-info>

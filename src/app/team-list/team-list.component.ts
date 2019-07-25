@@ -27,6 +27,7 @@ export class TeamListComponent implements OnInit {
     this.teamService.getTeamStream().subscribe((e: any) => {
         this.teams = e ;
     });
+    this.teamService.getTeams().subscribe((e: any) => this.teams = e);
   }
 
   open(content) {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from '../employee.service';
 import { OrderedTaskService } from '../ordered-task.service';
 
@@ -17,8 +17,8 @@ export class TransferTaskFormComponent implements OnInit {
   employees: any[] = [];
   transferTaskForm: FormGroup;
   errors = {};
-  teamManagerId = 14;
-  teamId = 4;
+  teamManagerId = 12;
+  teamId = 3;
 
   isSubmitted = false;
 
@@ -37,6 +37,9 @@ export class TransferTaskFormComponent implements OnInit {
       this.employees = response;
       if (this.orderedTask.employee) {
         this.employees = this.employees.filter(e => e.firstName !== this.orderedTask.employee.firstName);
+      }
+      else{
+        this.employees=response;
       }
     });
 

@@ -1,0 +1,36 @@
+<div class="container">
+    <br>
+    <div class="card" style="width:18rem"  >
+
+        <a [routerLink]="['/sworkflow']" [queryParams]="{ serviceId: ser.id}">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5>{{ser.name}}</h5>
+                </div>
+            </div>
+        </a>
+
+        <div class="card card-body" style="float: left">
+            <div class="row">
+                <div class="col-md-6 edit" >
+                    <a class="icon btn" href="path/to/settings" aria-label="Settings" >
+                        <i class="fa fa-pencil-square-o fa-xs" aria-hidden="true" style="color: gray;"></i> </a>
+                    <a class="icon btn" href="path/to/settings" aria-label="Delete">
+                        <i class="fa fa-trash fa-xs" aria-hidden="true" style="color: gray"></i></a>
+                </div>
+            </div>
+
+            <button class="btn btn-outline-primary" (click)="toggle()" *ngIf="hidden">Get Description</button>
+            <button class="btn btn-outline-primary" (click)="toggle()" *ngIf="!hidden">Hide Description</button>
+
+            <div class="wrapper" *ngIf="!hidden">
+                <div ng-hide="showme">{{ser.description}}</div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>

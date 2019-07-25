@@ -11,7 +11,7 @@ import { VirtualTimeScheduler } from 'rxjs';
 })
 export class TaskStatusComponent implements OnInit {
 
-  employeeId = 16;
+  employeeId = 6;
   taskInfo: Array<any> = [];
   currentTask;
   constructor(private orderedTaskService: OrderedTaskService) { }

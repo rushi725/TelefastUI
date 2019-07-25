@@ -24,11 +24,13 @@ export class TaskListComponent implements OnInit {
     //   }
     // });
 
-    this.service.getTaskStream().subscribe((e: any) => {
+    this.service.getTaskStream()
+    .subscribe((e: any) => {
       this.tasks = e;
     });
 
-    this.service.getTasks().subscribe((e: any) => this.tasks = e.tasks);
+    this.service.getTasks()
+    .subscribe((e: any) => this.tasks = e.tasks);
 
   }
   open(content) {

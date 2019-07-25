@@ -1,46 +1,31 @@
-
-<div class = "services">
-    <div class = "row">
-        <div class="mx-5 my-2 col-md-8 col-sm-6"><h4>Available Services</h4></div>
-        <button class="btn btn-outline-dark nav-link mx-auto" (click)="open(content)"> 
-            <span class="fa fa-plus"></span>  Add Service
+<div class="services">
+    <div class="row">
+        <div class="mx-5 my-2 col-md-8 col-sm-6">
+            <h4>Available Services</h4>
+        </div>
+        <button class="btn btn-outline-dark nav-link mx-auto" (click)="open(content)">
+            <span class="fa fa-plus"></span> Add Service
         </button>
     </div>
     <hr>
-        <div class="alert alert-warning" *ngIf="!services">No Service Available </div>
-        <div class="row">
-            <div *ngFor = "let ser of services" class="col-lg-4 col-md-6 col-sm-12">
-                <a [routerLink]="['/sworkflow']" [queryParams]="{ serviceId: ser.id}"><div class="card shadow-sm">
-                   <div class="card-body">
-                       <h5>{{ser.name}}</h5>
-                   </div>
-              </div>
-            </a>
-          </div>  
+    <div class="row">
+        <div *ngFor="let ser of services" class="col-lg-4 col-md-6 col-sm-12">
+            <app-service [value]="ser"></app-service>
+        </div>
     </div>
 
     <ng-template #content let-modal>
-            <div class="modal-header">
-              <h4 class="modal-title" id="modal-basic-title">Add Service</h4>
-              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Add Service</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
                 <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <app-service-form></app-service-form>
-            </div>
-            <!-- <div class="modal-footer">
-              <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">submit</button>
-            </div> -->
-    </ng-template>
- </div>
-    <!-- <h3>Available Services</h3>
-    <cdk-virtual-scroll-viewport itemSize="50">
-        <div *cdkVirtualFor="let ser of services" class="card shadow">
-            <div class="card-body">
-                <h3>{{ser.name}}</h3>
-            </div>
+            </button>
         </div>
-    </cdk-virtual-scroll-viewport> -->
+        <div class="modal-body">
+            <app-service-form></app-service-form>
+        </div>
+    </ng-template>
+</div>
+
 <hr>
 <app-task-list></app-task-list>

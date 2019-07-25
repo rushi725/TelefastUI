@@ -50,7 +50,7 @@ export class AuthAndRoleService implements CanActivate {
           this.router.navigate(['forbidden']);
           return false;
         }
-        case 'orderedServices': if (this.userService.getRoles() === 'ROLE_PROJECT_MEMBER') {
+        case 'orderedServices': if (this.userService.getRoles() === 'ROLE_PROJECT_MANAGER') {
           return true;
         } else {
           this.router.navigate(['forbidden']);

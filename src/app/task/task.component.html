@@ -1,0 +1,77 @@
+<div class="container">
+    <br>
+    <div class="card" style="width:18rem">
+        <div class="card card-header"   [ngClass]="{
+            'bg bg-success':task.taskStatus==='COMPLETED',
+            'bg bg-warning':task.taskStatus==='PENDING',
+            'bg bg-info':task.taskStatus==='IN_PROGRESS',
+            'bg bg-secondary':task.taskStatus==='NOT_STARTED',
+            'bg bg-primary':task.taskStatus==='SENT_FOR_APPROVAL',
+            'bg bg-danger':task.taskStatus==='BLOCKED'
+        }"> {{task.taskStatus}}
+        </div>
+
+        <div *ngIf="type==='ORDEREDTASK'" class="card card-body" style="float: left">
+            <h5>{{task.task.name}}</h5>
+            <div class="edit">
+            </div>
+            <div class="wrapper" >
+                <div *ngIf="task.taskStatus==='NOT_STARTED'" >
+                    <h6>Employee Not Allocated Yet</h6>
+                </div>
+
+                <div *ngIf="task.taskStatus==='BLOCKED'">
+                        <h6>Employee Not Allocated Yet</h6>
+                </div>
+
+                <div *ngIf="task.taskStatus==='COMPLETED' || task.taskStatus==='PENDING' || task.taskStatus==='SENT_FOR_APPROVAL' " >
+                    <h6>Employee:{{task.employee.firstName}} {{task.employee.lastName}}</h6>
+                    <h6>Service:{{task.orderedService.service.name}}</h6>
+                </div>
+
+                    <button class="btn btn-outline-dark" (click)="open(content,task)"><i class="fa fa-share-square" style="font-size: 26px" style="color: green"></i></button>
+
+                    <button *ngIf="task.taskStatus=='SENT_FOR_APPROVAL'" class="btn btn-outline-dark"
+                        (click)="approveTask(task)"><i class="fa fa-check" aria-hidden="true"></i></button>
+                        &nbsp;<button *ngIf="task.taskStatus=='SENT_FOR_APPROVAL'" class="btn btn-outline-dark"
+                        (click)="rejectTask(task)"><i class="fa fa-times" aria-hidden="true"></i></button>
+
+                        <ng-template #content let-modal>
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="modal-basic-title">Tranfer Task</h4>
+                                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <app-transfer-task-form [value]="orderedTask"></app-transfer-task-form>
+                                </div>
+                           
+                            </ng-template>
+            </div>
+        </div>
+
+
+        <div *ngIf="type!=='ORDEREDTASK'" class="card card-body" style="float: left">
+            <h6>{{task.name}}</h6>
+            <div class="row">
+                    <div class="col-md-6 edit">
+                        <a class="icon btn" href="path/to/settings" aria-label="Settings" >
+                            <i class="fa fa-pencil-square-o fa-xs" aria-hidden="true" style="color: gray;"></i> </a>
+                        <a class="icon btn" href="path/to/settings" aria-label="Delete">
+                            <i class="fa fa-trash fa-xs" aria-hidden="true" style="color: gray"></i></a>
+                    </div>
+                </div>
+
+            <button class="btn btn-outline-primary" (click)="toggle()" *ngIf="hidden">Get Info</button>
+            <button class="btn btn-outline-primary" (click)="toggle()" *ngIf="!hidden">Hide Info</button>
+
+            <div class="wrapper" *ngIf="!hidden">
+                <div ng-hide="showme">{{task.description}}</div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
