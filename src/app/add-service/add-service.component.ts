@@ -13,7 +13,7 @@ export class AddServiceComponent implements OnInit {
               private orderedService: OrderedServiceService) { }
   type = 'PROJECT MANAGER';
   project = null;
-  orderedServices: Array<any>;
+  orderedServices: Array<any> = [];
 
   ngOnInit() {
     this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {

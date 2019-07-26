@@ -1,6 +1,6 @@
 <div class="project">
     <div class="row">
-        <h4 class="col-md-7">Project Manager</h4>
+        <h4 class="col-md-7">Projects</h4>
         <button class="btn btn-outline-dark nav-link mx-auto col-md-2" (click)="open(content)">
             <span class="fa fa-plus"></span> Add Project
         </button>
@@ -24,7 +24,7 @@
         <tbody>
             <tr *ngFor="let project of projects" class="shadow-sm mx-2">
                 <a [routerLink]="['/vservices']" [queryParams]="{type: type, projectId: project.projectId}">
-                    <td>{{project.name}}->{{project.projectId}}</td>
+                    <td>{{project.name}}</td>
                 </a>
                 <td><span [ngClass]="{
                     'rounded-lg':true, 
