@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderedServiceService } from '../ordered-service.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-service-manager',
@@ -8,10 +9,12 @@ import { OrderedServiceService } from '../ordered-service.service';
 })
 export class ServiceManagerComponent implements OnInit {
 
-  serviceManagerId = 11;
+  constructor(private orderedService: OrderedServiceService,
+              private userService: UserService) { }
 
-  constructor(private orderedService: OrderedServiceService) { }
-  orderedServices = [];
+  employee = this.userService.getEmployee();
+  serviceManagerId = this.employee.id ;
+  orderedServices: Array<any> = null;
   type = 'SERVICE MANAGER';
 
 

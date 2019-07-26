@@ -14,23 +14,6 @@ export class AuthAndRoleService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isAuthenticated = true;
     if (this.userService.isUserLoggedIn()) {
-      //   if (route.url[0].path === 'orderedTask' && this.userService.getRoles() === 'ROLE_TEAM_MANAGER') {
-      //     return true;
-      //   } else {
-      //     this.router.navigate(['forbidden']);
-      //     return false;
-      //   }
-      //   if (route.url[0].path === 'orderedTask' && this.userService.getRoles() === 'ROLE_TEAM_MANAGER') {
-      //     return true;
-      //   } else {
-      //     this.router.navigate(['forbidden']);
-      //     return false;
-      //   }
-
-      // } else {
-      //   this.router.navigate(['login']);
-      //   return false;
-      // }
       switch (route.url[0].path) {
         case 'orderedTasks': if (this.userService.getRoles() === 'ROLE_TEAM_MANAGER') {
           return true;
@@ -79,6 +62,9 @@ export class AuthAndRoleService implements CanActivate {
         default:
           break;
       }
+    } else {
+      this.router.navigate(['home']);
+      return false;
     }
 
   }

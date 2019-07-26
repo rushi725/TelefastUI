@@ -3,6 +3,7 @@ import { OrderedServiceService } from '../ordered-service.service';
 import { ServiceService } from '../service.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ProjectService } from '../project.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-project-manager',
@@ -13,12 +14,14 @@ export class ProjectManagerComponent implements OnInit {
 
   constructor(private orderedService: OrderedServiceService,
               private orderService: OrderedServiceService,
-              private projectService: ProjectService) { }
+              private projectService: ProjectService,
+              private userService: UserService) { }
 
   serviceExists = true;
   orderedServices: any = [];
   type = 'PROJECT MANAGER';
-  projectManagerId = 16;
+  employee = this.userService.getEmployee();
+  projectManagerId = this.employee.id;
   projects = null;
 
   ngOnInit() {

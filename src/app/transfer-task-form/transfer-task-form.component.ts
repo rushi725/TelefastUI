@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from '../employee.service';
 import { OrderedTaskService } from '../ordered-task.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-transfer-task-form',
@@ -17,31 +18,36 @@ export class TransferTaskFormComponent implements OnInit {
   employees: any[] = [];
   transferTaskForm: FormGroup;
   errors = {};
-  teamManagerId = 12;
-  teamId = 3;
+  teamManagerId;
+  teamId;
+  employee;
 
   isSubmitted = false;
 
   constructor(private fb: FormBuilder,
-              private employeeService: EmployeeService,
-              private orderedTaskService: OrderedTaskService) { }
+    private employeeService: EmployeeService,
+    private orderedTaskService: OrderedTaskService,
+    private userService: UserService) { }
 
   ngOnInit() {
 
     this.transferTaskForm = this.fb.group({
       teamMember: ''
     });
+    this.employee = this.userService.getEmployee();
+    this.teamManagerId = this.employee.id;
+    this.teamId = this.employee.team.id;
 
     this.employeeService.getAvailableEmployees(this.teamId)
-    .subscribe((response: any) => {
-      this.employees = response;
-      if (this.orderedTask.employee) {
-        this.employees = this.employees.filter(e => e.firstName !== this.orderedTask.employee.firstName);
-      }
-      else{
-        this.employees=response;
-      }
-    });
+      .subscribe((response: any) => {
+        this.employees = response;
+        if (this.orderedTask.employee) {
+          this.employees = this.employees.filter(e => e.firstName !== this.orderedTask.employee.firstName);
+        }
+        else {
+          this.employees = response;
+        }
+      });
 
     // this.employeeService.getEmployeeStream()
     // .subscribe((response:any)=>{

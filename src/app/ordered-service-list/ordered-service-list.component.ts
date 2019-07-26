@@ -21,10 +21,7 @@ export class OrderedServiceListComponent implements OnInit {
 
   ngOnInit(){
 
-    console.log("sssssssssssssssssss")
     console.log(this.flag);
-
-    console.log("project---->")
     console.log(this.project);
 
     this.orderedServiceService.getOrderedServiceStream(this.type)

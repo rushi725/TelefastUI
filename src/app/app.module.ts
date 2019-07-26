@@ -65,10 +65,11 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { TokenInterceptor } from './jwt.interceptor';
 import { ServiceComponent } from './service/service.component';
 import { TaskComponent } from './task/task.component';
+import { HomeComponent } from './home/home.component';
 
 
 const routes: Routes = [
-  { path: '', component: LoginFormComponent},
+  { path: '', component: HomeComponent},
   { path: 'dashboard', component: ServiceListComponent, canActivate: [AuthAndRoleService] },
   // { path:'dashboard',outlet:"addService",component:ServiceFormComponent},
   // { path:'dashboard',outlet:"addTeam",component:TeamFormComponent},
@@ -90,7 +91,9 @@ const routes: Routes = [
   { path: 'sworkflow', component: ViewStaticWorkflowComponent },
   { path: 'addService', component: AddServiceComponent},
   { path: 'vservices', component: ViewOrderedServicesComponent},
-  { path: 'forbidden', component: ForbiddenComponent}
+  { path: 'forbidden', component: ForbiddenComponent},
+  { path: 'teamInfo', component: TeamInfoComponent},
+  { path: 'home', component: HomeComponent}
 ];
 
 @NgModule({
@@ -130,7 +133,8 @@ const routes: Routes = [
     TeamInfoComponent,
     ForbiddenComponent,
     ServiceComponent,
-    TaskComponent
+    TaskComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

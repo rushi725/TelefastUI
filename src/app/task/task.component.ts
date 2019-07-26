@@ -3,6 +3,7 @@ import { Task } from '../task.model';
 import { TaskService } from '../task.service';
 import { OrderedTaskService } from '../ordered-task.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-task',
@@ -13,10 +14,11 @@ export class TaskComponent implements OnInit {
 
   @Input("value") task;
   @Input("type") type;
-  teamManagerId = 12;
+  teamManagerId;
 
   isClicked = false;
   orderedTask;
+  employee;
 
   hidden=true;
 
@@ -26,9 +28,12 @@ export class TaskComponent implements OnInit {
 
   constructor(private taskService: TaskService,
               private orderedTaskservice:OrderedTaskService,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal,
+              private userService: UserService) { }
 
   ngOnInit() {
+    this.employee = this.userService.getEmployee();
+    this.teamManagerId = this.employee.id;
 
   }
 

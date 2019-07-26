@@ -53,11 +53,9 @@ export class WorkflowService {
     const api = `http://localhost:8081/sfs/serviceWorkFlow/${serviceId}`;
     this.http.get(api).subscribe((e: any) => {
       this.workFlow = e;
-      console.log(e);
       const api2 = `http://localhost:8081/sfs/orderedTask/${orderedServiceId}`;
       this.http.get(api2).subscribe((e: any) => {
         this.orderedTasks = e;
-        console.log(e);
         this.createWorkflow();
       });
     });
@@ -83,7 +81,6 @@ export class WorkflowService {
               queue.push(taskNode);
               const childs: Array<TaskNode> = node.children.getValue();
               childs.push(taskNode);
-              // node.children.next(childs)
           });
         }
       }

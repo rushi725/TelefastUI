@@ -13,8 +13,8 @@ export class ViewWorkflowComponent implements OnInit {
   recursive: boolean = false;
   levels = new Map<TaskNode, number>();
   treeControl: NestedTreeControl<TaskNode>;
-  serviceId = 128;
-  orderedServiceId = 132;
+  serviceId;
+  orderedServiceId;
   taskWorkflow: Array<any> = [];
 
 

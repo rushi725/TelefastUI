@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { OrderedTaskService } from '../ordered-task.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { StatusService } from '../status.service';
+import { UserService } from '../user.service';
+import { Employee } from '../employee.model';
 
 @Component({
   selector: 'app-ordered-task-list',
@@ -12,10 +14,13 @@ export class OrderedTaskListComponent implements OnInit {
 
   constructor(private orderedTaskservice: OrderedTaskService,
     private modalService: NgbModal,
-    private statusService: StatusService) { }
+    private statusService: StatusService,
+    private userService: UserService) { }
 
-  teamManagerId = 12;
-  teamId = 3;
+  employee = this.userService.getEmployee();
+  teamManagerId = this.employee.id;
+  teamId = this.employee.team.id;
+
   type = "ORDEREDTASK";
   orderedTasks: Array<any> = [];
 
@@ -27,6 +32,8 @@ export class OrderedTaskListComponent implements OnInit {
 
 
   ngOnInit() {
+    console.log(this.employee);
+
     this.orderedTaskservice.getOrderedTasksByTeamManager(this.teamManagerId)
       .subscribe((response: any) => {
         this.orderedTasks = response;
